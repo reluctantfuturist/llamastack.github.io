@@ -1,0 +1,287 @@
+
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Telemetry &mdash; llama-stack 0.2.13 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/my_theme.css?v=f1163765" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../_static/dark_mode_css/general.css?v=c0a7eb24" />
+      <link rel="stylesheet" type="text/css" href="../_static/dark_mode_css/dark.css?v=70edf1c7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=ba481074"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=09bf800d"></script>
+      <script src="../_static/js/detect_theme.js?v=76226c80"></script>
+      <script src="../_static/js/keyboard_shortcuts.js"></script>
+      <script src="../_static/design-tabs.js?v=f930bc37"></script>
+      <script src="../_static/dark_mode_js/default_light.js?v=c2e647ce"></script>
+      <script src="../_static/dark_mode_js/theme_switcher.js?v=358d3910"></script>
+    <script src="../_static/js/theme.js"></script>
+    <script src="../_static/js/versions.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Safety Guardrails" href="safety.html" />
+    <link rel="prev" title="Evaluations" href="evals.html" />
+ 
+
+<script src="../_static/version-loader.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            llama-stack
+          </a>
+              <div class="switch-menus">
+                <div class="version-switch"></div>
+                <div class="language-switch"></div>
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Llama Stack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/index.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/detailed_tutorial.html">Detailed Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../introduction/index.html">Why Llama Stack?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">Core Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openai/index.html">OpenAI API Compatibility</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../providers/index.html">Providers Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../distributions/index.html">Distributions Overview</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Building AI Applications (Examples)</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="rag.html">Retrieval Augmented Generation (RAG)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="agent.html">Agents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="agent_execution_loop.html">Agent Execution Loop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html">Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="evals.html">Evaluations</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Telemetry</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#events">Events</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#spans-and-traces">Spans and Traces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sinks">Sinks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#providers">Providers</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#meta-reference-provider">Meta-Reference Provider</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#configuration">Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#jaeger-to-visualize-traces">Jaeger to visualize traces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#querying-traces-stored-in-sqlite">Querying Traces Stored in SQLite</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="safety.html">Safety Guardrails</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../playground/index.html">Llama Stack Playground</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing/index.html">Contributing to Llama-Stack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../references/index.html">References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">llama-stack</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Building AI Applications (Examples)</a></li>
+      <li class="breadcrumb-item active">Telemetry</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/building_applications/telemetry.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="telemetry">
+<h1>Telemetry<a class="headerlink" href="#telemetry" title="Link to this heading"></a></h1>
+<p>The Llama Stack telemetry system provides comprehensive tracing, metrics, and logging capabilities. It supports multiple sink types including OpenTelemetry, SQLite, and Console output.</p>
+<section id="events">
+<h2>Events<a class="headerlink" href="#events" title="Link to this heading"></a></h2>
+<p>The telemetry system supports three main types of events:</p>
+<ul class="simple">
+<li><p><strong>Unstructured Log Events</strong>: Free-form log messages with severity levels</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">unstructured_log_event</span> <span class="o">=</span> <span class="n">UnstructuredLogEvent</span><span class="p">(</span>
+    <span class="n">message</span><span class="o">=</span><span class="s2">&quot;This is a log message&quot;</span><span class="p">,</span> <span class="n">severity</span><span class="o">=</span><span class="n">LogSeverity</span><span class="o">.</span><span class="n">INFO</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>Metric Events</strong>: Numerical measurements with units</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">metric_event</span> <span class="o">=</span> <span class="n">MetricEvent</span><span class="p">(</span><span class="n">metric</span><span class="o">=</span><span class="s2">&quot;my_metric&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;count&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>Structured Log Events</strong>: System events like span start/end. Extensible to add more structured log types.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">structured_log_event</span> <span class="o">=</span> <span class="n">SpanStartPayload</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;my_span&quot;</span><span class="p">,</span> <span class="n">parent_span_id</span><span class="o">=</span><span class="s2">&quot;parent_span_id&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="spans-and-traces">
+<h2>Spans and Traces<a class="headerlink" href="#spans-and-traces" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Spans</strong>: Represent operations with timing and hierarchical relationships</p></li>
+<li><p><strong>Traces</strong>: Collection of related spans forming a complete request flow</p></li>
+</ul>
+</section>
+<section id="sinks">
+<h2>Sinks<a class="headerlink" href="#sinks" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>OpenTelemetry</strong>: Send events to an OpenTelemetry Collector. This is useful for visualizing traces in a tool like Jaeger.</p></li>
+<li><p><strong>SQLite</strong>: Store events in a local SQLite database. This is needed if you want to query the events later through the Llama Stack API.</p></li>
+<li><p><strong>Console</strong>: Print events to the console.</p></li>
+</ul>
+</section>
+<section id="providers">
+<h2>Providers<a class="headerlink" href="#providers" title="Link to this heading"></a></h2>
+<section id="meta-reference-provider">
+<h3>Meta-Reference Provider<a class="headerlink" href="#meta-reference-provider" title="Link to this heading"></a></h3>
+<p>Currently, only the meta-reference provider is implemented. It can be configured to send events to three sink types:</p>
+<ol class="arabic simple">
+<li><p>OpenTelemetry Collector</p></li>
+<li><p>SQLite</p></li>
+<li><p>Console</p></li>
+</ol>
+</section>
+<section id="configuration">
+<h3>Configuration<a class="headerlink" href="#configuration" title="Link to this heading"></a></h3>
+<p>Here’s an example that sends telemetry signals to all three sink types. Your configuration might use only one.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="nt">telemetry</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">provider_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">meta-reference</span>
+<span class="w">    </span><span class="nt">provider_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">inline::meta-reference</span>
+<span class="w">    </span><span class="nt">config</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">sinks</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;console&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;sqlite&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;otel_trace&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;otel_metric&#39;</span><span class="p p-Indicator">]</span>
+<span class="w">      </span><span class="nt">otel_trace_endpoint</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;http://localhost:4318/v1/traces&quot;</span>
+<span class="w">      </span><span class="nt">otel_metric_endpoint</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;http://localhost:4318/v1/metrics&quot;</span>
+<span class="w">      </span><span class="nt">sqlite_db_path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/path/to/telemetry.db&quot;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="jaeger-to-visualize-traces">
+<h2>Jaeger to visualize traces<a class="headerlink" href="#jaeger-to-visualize-traces" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">otel</span></code> sink works with any service compatible with the OpenTelemetry collector, traces and metrics has two separate endpoints.
+Let’s use Jaeger to visualize this data.</p>
+<p>Start a Jaeger instance with the OTLP HTTP endpoint at 4318 and the Jaeger UI at 16686 using the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>docker<span class="w"> </span>run<span class="w"> </span>--pull<span class="w"> </span>always<span class="w"> </span>--rm<span class="w"> </span>--name<span class="w"> </span>jaeger<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-p<span class="w"> </span><span class="m">16686</span>:16686<span class="w"> </span>-p<span class="w"> </span><span class="m">4318</span>:4318<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>jaegertracing/jaeger:2.1.0
+</pre></div>
+</div>
+<p>Once the Jaeger instance is running, you can visualize traces by navigating to http://localhost:16686/.</p>
+</section>
+<section id="querying-traces-stored-in-sqlite">
+<h2>Querying Traces Stored in SQLite<a class="headerlink" href="#querying-traces-stored-in-sqlite" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">sqlite</span></code> sink allows you to query traces without an external system. Here are some example queries. Refer to the notebook at <a class="reference external" href="https://github.com/meta-llama/llama-stack/blob/main/docs/getting_started.ipynb">Llama Stack Building AI Applications</a> for more examples on how to query traces and spaces.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="evals.html" class="btn btn-neutral float-left" title="Evaluations" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="safety.html" class="btn btn-neutral float-right" title="Safety Guardrails" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Meta.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book"> Read the Docs</span>
+    v: v0.2.13
+    <span class="fa fa-caret-down"></span>
+  </span>
+  <div class="rst-other-versions">
+    <dl>
+      <dt>Versions</dt>
+      <dd>
+        <a href="/v0.2.19/">latest</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.19/">v0.2.19</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.18/">v0.2.18</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.17/">v0.2.17</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.16/">v0.2.16</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.15/">v0.2.15</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.14/">v0.2.14</a>
+      </dd>
+      <dd class="rtd-current-item">
+        <a href="/v0.2.13/">v0.2.13</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.12/">v0.2.12</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.11/">v0.2.11</a>
+      </dd>
+    </dl>
+  </div>
+</div><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

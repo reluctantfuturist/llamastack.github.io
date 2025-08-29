@@ -1,0 +1,7 @@
+{# Extend RTD theme layout to add version selector initialization #}
+{% extends "!layout.html" %}
+
+{% block extrahead %}
+{{ super() }}
+{% include "version-selector-init.html" %}
+{% endblock %}

@@ -1,0 +1,490 @@
+
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Llama Stack Client Kotlin API Library &mdash; llama-stack 0.2.17 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/my_theme.css?v=f1163765" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/dark_mode_css/general.css?v=c0a7eb24" />
+      <link rel="stylesheet" type="text/css" href="../../_static/dark_mode_css/dark.css?v=70edf1c7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=46390ad3"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=09bf800d"></script>
+      <script src="../../_static/js/detect_theme.js?v=76226c80"></script>
+      <script src="../../_static/js/keyboard_shortcuts.js"></script>
+      <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+      <script src="../../_static/dark_mode_js/default_light.js?v=c2e647ce"></script>
+      <script src="../../_static/dark_mode_js/theme_switcher.js?v=358d3910"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <script src="../../_static/js/versions.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Build your own Distribution" href="../building_distro.html" />
+    <link rel="prev" title="iOS SDK" href="ios_sdk.html" />
+ 
+
+<script src="../../_static/version-loader.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            llama-stack
+          </a>
+              <div class="switch-menus">
+                <div class="version-switch"></div>
+                <div class="language-switch"></div>
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Llama Stack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../concepts/index.html">Core Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../providers/index.html">API Providers</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Distributions Overview</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../list_of_distributions.html">Available Distributions</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../list_of_distributions.html#quick-reference">Quick Reference</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../list_of_distributions.html#choose-your-distribution">Choose Your Distribution</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../list_of_distributions.html#detailed-documentation">Detailed Documentation</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../list_of_distributions.html#self-hosted-distributions">Self-Hosted Distributions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../list_of_distributions.html#remote-hosted-solutions">Remote-Hosted Solutions</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../list_of_distributions.html#mobile-sdks">Mobile SDKs</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../list_of_distributions.html#decision-flow">Decision Flow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../list_of_distributions.html#next-steps">Next Steps</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../building_distro.html">Build your own Distribution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../customizing_run_yaml.html">Customizing run.yaml Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../starting_llama_stack_server.html">Starting a Llama Stack Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../importing_as_library.html">Using Llama Stack as a Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../configuration.html">Configuring a “Stack”</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../advanced_apis/index.html">Advanced APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../building_applications/index.html">AI Application Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deploying/index.html">Deployment Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing/index.html">Contributing to Llama-Stack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../references/index.html">References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">llama-stack</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Distributions Overview</a></li>
+          <li class="breadcrumb-item"><a href="../list_of_distributions.html">Available Distributions</a></li>
+      <li class="breadcrumb-item active">Llama Stack Client Kotlin API Library</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/distributions/ondevice_distro/android_sdk.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="llama-stack-client-kotlin-api-library">
+<h1>Llama Stack Client Kotlin API Library<a class="headerlink" href="#llama-stack-client-kotlin-api-library" title="Link to this heading"></a></h1>
+<p>We are excited to share a guide for a Kotlin Library that brings front the benefits of Llama Stack to your Android device. This library is a set of SDKs that provide a simple and effective way to integrate AI capabilities into your Android app whether it is local (on-device) or remote inference.</p>
+<p>Features:</p>
+<ul class="simple">
+<li><p>Local Inferencing: Run Llama models purely on-device with real-time processing. We currently utilize ExecuTorch as the local inference distributor and may support others in the future.</p>
+<ul>
+<li><p><a class="reference external" href="https://github.com/pytorch/executorch/tree/main">ExecuTorch</a> is a complete end-to-end solution within the PyTorch framework for inferencing capabilities on-device with high portability and seamless performance.</p></li>
+</ul>
+</li>
+<li><p>Remote Inferencing: Perform inferencing tasks remotely with Llama models hosted on a remote connection (or serverless localhost).</p></li>
+<li><p>Simple Integration: With easy-to-use APIs, a developer can quickly integrate Llama Stack in their Android app. The difference with local vs remote inferencing is also minimal.</p></li>
+</ul>
+<p>Latest Release Notes: <a class="reference external" href="https://github.com/meta-llama/llama-stack-client-kotlin/tree/latest-release">link</a></p>
+<p><em>Tagged releases are stable versions of the project. While we strive to maintain a stable main branch, it’s not guaranteed to be free of bugs or issues.</em></p>
+<section id="android-demo-app">
+<h2>Android Demo App<a class="headerlink" href="#android-demo-app" title="Link to this heading"></a></h2>
+<p>Check out our demo app to see how to integrate Llama Stack into your Android app: <a class="reference external" href="https://github.com/meta-llama/llama-stack-client-kotlin/tree/latest-release/examples/android_app">Android Demo App</a></p>
+<p>The key files in the app are <code class="docutils literal notranslate"><span class="pre">ExampleLlamaStackLocalInference.kt</span></code>, <code class="docutils literal notranslate"><span class="pre">ExampleLlamaStackRemoteInference.kts</span></code>, and <code class="docutils literal notranslate"><span class="pre">MainActivity.java</span></code>. With encompassed business logic, the app shows how to use Llama Stack for both the environments.</p>
+</section>
+<section id="quick-start">
+<h2>Quick Start<a class="headerlink" href="#quick-start" title="Link to this heading"></a></h2>
+<section id="add-dependencies">
+<h3>Add Dependencies<a class="headerlink" href="#add-dependencies" title="Link to this heading"></a></h3>
+<section id="kotlin-library">
+<h4>Kotlin Library<a class="headerlink" href="#kotlin-library" title="Link to this heading"></a></h4>
+<p>Add the following dependency in your <code class="docutils literal notranslate"><span class="pre">build.gradle.kts</span></code> file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dependencies</span> <span class="p">{</span>
+ <span class="n">implementation</span><span class="p">(</span><span class="s2">&quot;com.llama.llamastack:llama-stack-client-kotlin:0.2.2&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This will download jar files in your gradle cache in a directory like <code class="docutils literal notranslate"><span class="pre">~/.gradle/caches/modules-2/files-2.1/com.llama.llamastack/</span></code></p>
+<p>If you plan on doing remote inferencing this is sufficient to get started.</p>
+</section>
+<section id="dependency-for-local">
+<h4>Dependency for Local<a class="headerlink" href="#dependency-for-local" title="Link to this heading"></a></h4>
+<p>For local inferencing, it is required to include the ExecuTorch library into your app.</p>
+<p>Include the ExecuTorch library by:</p>
+<ol class="arabic simple">
+<li><p>Download the <code class="docutils literal notranslate"><span class="pre">download-prebuilt-et-lib.sh</span></code> script file from the <a class="reference external" href="https://github.com/meta-llama/llama-stack-client-kotlin/tree/latest-release/llama-stack-client-kotlin-client-local/download-prebuilt-et-lib.sh">llama-stack-client-kotlin-client-local</a> directory to your local machine.</p></li>
+<li><p>Move the script to the top level of your Android app where the <code class="docutils literal notranslate"><span class="pre">app</span></code> directory resides.</p></li>
+<li><p>Run <code class="docutils literal notranslate"><span class="pre">sh</span> <span class="pre">download-prebuilt-et-lib.sh</span></code> to create an <code class="docutils literal notranslate"><span class="pre">app/libs</span></code> directory and download the <code class="docutils literal notranslate"><span class="pre">executorch.aar</span></code> in that path. This generates an ExecuTorch library for the XNNPACK delegate.</p></li>
+<li><p>Add the <code class="docutils literal notranslate"><span class="pre">executorch.aar</span></code> dependency in your <code class="docutils literal notranslate"><span class="pre">build.gradle.kts</span></code> file:</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dependencies</span> <span class="p">{</span>
+  <span class="o">...</span>
+  <span class="n">implementation</span><span class="p">(</span><span class="n">files</span><span class="p">(</span><span class="s2">&quot;libs/executorch.aar&quot;</span><span class="p">))</span>
+  <span class="o">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>See other dependencies for the local RAG in Android app <a class="reference external" href="https://github.com/meta-llama/llama-stack-client-kotlin/tree/latest-release/examples/android_app#quick-start">README</a>.</p>
+</section>
+</section>
+</section>
+<section id="llama-stack-apis-in-your-android-app">
+<h2>Llama Stack APIs in Your Android App<a class="headerlink" href="#llama-stack-apis-in-your-android-app" title="Link to this heading"></a></h2>
+<p>Breaking down the demo app, this section will show the core pieces that are used to initialize and run inference with Llama Stack using the Kotlin library.</p>
+<section id="setup-remote-inferencing">
+<h3>Setup Remote Inferencing<a class="headerlink" href="#setup-remote-inferencing" title="Link to this heading"></a></h3>
+<p>Start a Llama Stack server on localhost. Here is an example of how you can do this using the firework.ai distribution:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">venv</span> <span class="n">stack</span><span class="o">-</span><span class="n">fireworks</span>
+<span class="n">source</span> <span class="n">stack</span><span class="o">-</span><span class="n">fireworks</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>  <span class="c1"># On Windows: stack-fireworks\Scripts\activate</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">cache</span> <span class="n">llama</span><span class="o">-</span><span class="n">stack</span><span class="o">==</span><span class="mf">0.2.2</span>
+<span class="n">llama</span> <span class="n">stack</span> <span class="n">build</span> <span class="o">--</span><span class="n">distro</span> <span class="n">fireworks</span> <span class="o">--</span><span class="n">image</span><span class="o">-</span><span class="nb">type</span> <span class="n">venv</span>
+<span class="n">export</span> <span class="n">FIREWORKS_API_KEY</span><span class="o">=&lt;</span><span class="n">SOME_KEY</span><span class="o">&gt;</span>
+<span class="n">llama</span> <span class="n">stack</span> <span class="n">run</span> <span class="n">fireworks</span> <span class="o">--</span><span class="n">port</span> <span class="mi">5050</span>
+</pre></div>
+</div>
+<p>Ensure the Llama Stack server version is the same as the Kotlin SDK Library for maximum compatibility.</p>
+<p>Other inference providers: <a class="reference external" href="https://llama-stack.readthedocs.io/en/latest/index.html#supported-llama-stack-implementations">Table</a></p>
+<p>How to set remote localhost in Demo App: <a class="reference external" href="https://github.com/meta-llama/llama-stack-client-kotlin/tree/latest-release/examples/android_app#settings">Settings</a></p>
+</section>
+<section id="initialize-the-client">
+<h3>Initialize the Client<a class="headerlink" href="#initialize-the-client" title="Link to this heading"></a></h3>
+<p>A client serves as the primary interface for interacting with a specific inference type and its associated parameters. Only after client is initialized then you can configure and start inferences.</p>
+<table>
+<tr>
+<th>Local Inference</th>
+<th>Remote Inference</th>
+</tr>
+<tr>
+<td>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">client</span> <span class="o">=</span> <span class="n">LlamaStackClientLocalClient</span>
+                    <span class="o">.</span><span class="n">builder</span><span class="p">()</span>
+                    <span class="o">.</span><span class="n">modelPath</span><span class="p">(</span><span class="n">modelPath</span><span class="p">)</span>
+                    <span class="o">.</span><span class="n">tokenizerPath</span><span class="p">(</span><span class="n">tokenizerPath</span><span class="p">)</span>
+                    <span class="o">.</span><span class="n">temperature</span><span class="p">(</span><span class="n">temperature</span><span class="p">)</span>
+                    <span class="o">.</span><span class="n">build</span><span class="p">()</span>
+</pre></div>
+</div>
+</td>
+<td>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">remoteURL</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">string</span> <span class="n">like</span> <span class="s2">&quot;http://localhost:5050&quot;</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">LlamaStackClientOkHttpClient</span>
+                <span class="o">.</span><span class="n">builder</span><span class="p">()</span>
+                <span class="o">.</span><span class="n">baseUrl</span><span class="p">(</span><span class="n">remoteURL</span><span class="p">)</span>
+                <span class="o">.</span><span class="n">build</span><span class="p">()</span>
+</pre></div>
+</div>
+</td>
+</tr>
+</table>
+</section>
+<section id="run-inference">
+<h3>Run Inference<a class="headerlink" href="#run-inference" title="Link to this heading"></a></h3>
+<p>With the Kotlin Library managing all the major operational logic, there are minimal to no changes when running simple chat inference for local or remote:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>val result = client!!.inference().chatCompletion(
+            InferenceChatCompletionParams.builder()
+                .modelId(modelName)
+                .messages(listOfMessages)
+                .build()
+        )
+
+// response contains string with response from model
+var response = result.asChatCompletionResponse().completionMessage().content().string();
+</pre></div>
+</div>
+<p>[Remote only] For inference with a streaming response:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>val result = client!!.inference().chatCompletionStreaming(
+            InferenceChatCompletionParams.builder()
+                .modelId(modelName)
+                .messages(listOfMessages)
+                .build()
+        )
+
+// Response can be received as a asChatCompletionResponseStreamChunk as part of a callback.
+// See Android demo app for a detailed implementation example.
+</pre></div>
+</div>
+</section>
+<section id="setup-custom-tool-calling">
+<h3>Setup Custom Tool Calling<a class="headerlink" href="#setup-custom-tool-calling" title="Link to this heading"></a></h3>
+<p>Android demo app for more details: <a class="reference external" href="https://github.com/meta-llama/llama-stack-client-kotlin/tree/latest-release/examples/android_app#tool-calling">Custom Tool Calling</a></p>
+</section>
+</section>
+<section id="advanced-users">
+<h2>Advanced Users<a class="headerlink" href="#advanced-users" title="Link to this heading"></a></h2>
+<p>The purpose of this section is to share more details with users that would like to dive deeper into the Llama Stack Kotlin Library. Whether you’re interested in contributing to the open source library, debugging or just want to learn more, this section is for you!</p>
+<section id="prerequisite">
+<h3>Prerequisite<a class="headerlink" href="#prerequisite" title="Link to this heading"></a></h3>
+<p>You must complete the following steps:</p>
+<ol class="arabic simple">
+<li><p>Clone the repo (<code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">https://github.com/meta-llama/llama-stack-client-kotlin.git</span> <span class="pre">-b</span> <span class="pre">latest-release</span></code>)</p></li>
+<li><p>Port the appropriate ExecuTorch libraries over into your Llama Stack Kotlin library environment.</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">llama</span><span class="o">-</span><span class="n">stack</span><span class="o">-</span><span class="n">client</span><span class="o">-</span><span class="n">kotlin</span><span class="o">-</span><span class="n">client</span><span class="o">-</span><span class="n">local</span>
+<span class="n">sh</span> <span class="n">download</span><span class="o">-</span><span class="n">prebuilt</span><span class="o">-</span><span class="n">et</span><span class="o">-</span><span class="n">lib</span><span class="o">.</span><span class="n">sh</span> <span class="o">--</span><span class="n">unzip</span>
+</pre></div>
+</div>
+<p>Now you will notice that the <code class="docutils literal notranslate"><span class="pre">jni/</span></code> , <code class="docutils literal notranslate"><span class="pre">libs/</span></code>, and <code class="docutils literal notranslate"><span class="pre">AndroidManifest.xml</span></code> files from the <code class="docutils literal notranslate"><span class="pre">executorch.aar</span></code> file are present in the local module. This way the local client module will be able to realize the ExecuTorch SDK.</p>
+</section>
+<section id="building-for-development-debugging">
+<h3>Building for Development/Debugging<a class="headerlink" href="#building-for-development-debugging" title="Link to this heading"></a></h3>
+<p>If you’d like to contribute to the Kotlin library via development, debug, or add play around with the library with various print statements, run the following command in your terminal under the llama-stack-client-kotlin directory.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sh</span> <span class="n">build</span><span class="o">-</span><span class="n">libs</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<p>Output: .jar files located in the build-jars directory</p>
+<p>Copy the .jar files over to the lib directory in your Android app. At the same time make sure to remove the llama-stack-client-kotlin dependency within your build.gradle.kts file in your app (or if you are using the demo app) to avoid having multiple llama stack client dependencies.</p>
+</section>
+<section id="additional-options-for-local-inferencing">
+<h3>Additional Options for Local Inferencing<a class="headerlink" href="#additional-options-for-local-inferencing" title="Link to this heading"></a></h3>
+<p>Currently we provide additional properties support with local inferencing. In order to get the tokens/sec metric for each inference call, add the following code in your Android app after you run your chatCompletion inference function. The Reference app has this implementation as well:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">var</span> <span class="n">tps</span> <span class="o">=</span> <span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">asChatCompletionResponse</span><span class="p">()</span><span class="o">.</span><span class="n">_additionalProperties</span><span class="p">()[</span><span class="s2">&quot;tps&quot;</span><span class="p">]</span> <span class="k">as</span> <span class="n">JsonNumber</span><span class="p">)</span><span class="o">.</span><span class="n">value</span> <span class="k">as</span> <span class="n">Float</span>
+</pre></div>
+</div>
+<p>We will be adding more properties in the future.</p>
+</section>
+<section id="additional-options-for-remote-inferencing">
+<h3>Additional Options for Remote Inferencing<a class="headerlink" href="#additional-options-for-remote-inferencing" title="Link to this heading"></a></h3>
+<section id="network-options">
+<h4>Network options<a class="headerlink" href="#network-options" title="Link to this heading"></a></h4>
+<section id="retries">
+<h5>Retries<a class="headerlink" href="#retries" title="Link to this heading"></a></h5>
+<p>Requests that experience certain errors are automatically retried 2 times by default, with a short exponential backoff. Connection errors (for example, due to a network connectivity problem), 408 Request Timeout, 409 Conflict, 429 Rate Limit, and &gt;=500 Internal errors will all be retried by default.
+You can provide a <code class="docutils literal notranslate"><span class="pre">maxRetries</span></code> on the client builder to configure this:</p>
+<div class="highlight-kotlin notranslate"><div class="highlight"><pre><span></span><span class="kd">val</span><span class="w"> </span><span class="nv">client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LlamaStackClientOkHttpClient</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
+<span class="w">    </span><span class="p">.</span><span class="na">fromEnv</span><span class="p">()</span>
+<span class="w">    </span><span class="p">.</span><span class="na">maxRetries</span><span class="p">(</span><span class="m">4</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="na">build</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="timeouts">
+<h5>Timeouts<a class="headerlink" href="#timeouts" title="Link to this heading"></a></h5>
+<p>Requests time out after 1 minute by default. You can configure this on the client builder:</p>
+<div class="highlight-kotlin notranslate"><div class="highlight"><pre><span></span><span class="kd">val</span><span class="w"> </span><span class="nv">client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LlamaStackClientOkHttpClient</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
+<span class="w">    </span><span class="p">.</span><span class="na">fromEnv</span><span class="p">()</span>
+<span class="w">    </span><span class="p">.</span><span class="na">timeout</span><span class="p">(</span><span class="n">Duration</span><span class="p">.</span><span class="na">ofSeconds</span><span class="p">(</span><span class="m">30</span><span class="p">))</span>
+<span class="w">    </span><span class="p">.</span><span class="na">build</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="proxies">
+<h5>Proxies<a class="headerlink" href="#proxies" title="Link to this heading"></a></h5>
+<p>Requests can be routed through a proxy. You can configure this on the client builder:</p>
+<div class="highlight-kotlin notranslate"><div class="highlight"><pre><span></span><span class="kd">val</span><span class="w"> </span><span class="nv">client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LlamaStackClientOkHttpClient</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
+<span class="w">    </span><span class="p">.</span><span class="na">fromEnv</span><span class="p">()</span>
+<span class="w">    </span><span class="p">.</span><span class="na">proxy</span><span class="p">(</span><span class="n">new</span><span class="w"> </span><span class="n">Proxy</span><span class="p">(</span>
+<span class="w">        </span><span class="n">Type</span><span class="p">.</span><span class="na">HTTP</span><span class="p">,</span>
+<span class="w">        </span><span class="n">new</span><span class="w"> </span><span class="n">InetSocketAddress</span><span class="p">(</span><span class="s">&quot;proxy.com&quot;</span><span class="p">,</span><span class="w"> </span><span class="m">8080</span><span class="p">)</span>
+<span class="w">    </span><span class="p">))</span>
+<span class="w">    </span><span class="p">.</span><span class="na">build</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="environments">
+<h5>Environments<a class="headerlink" href="#environments" title="Link to this heading"></a></h5>
+<p>Requests are made to the production environment by default. You can connect to other environments, like <code class="docutils literal notranslate"><span class="pre">sandbox</span></code>, via the client builder:</p>
+<div class="highlight-kotlin notranslate"><div class="highlight"><pre><span></span><span class="kd">val</span><span class="w"> </span><span class="nv">client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LlamaStackClientOkHttpClient</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
+<span class="w">    </span><span class="p">.</span><span class="na">fromEnv</span><span class="p">()</span>
+<span class="w">    </span><span class="p">.</span><span class="na">sandbox</span><span class="p">()</span>
+<span class="w">    </span><span class="p">.</span><span class="na">build</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="error-handling">
+<h3>Error Handling<a class="headerlink" href="#error-handling" title="Link to this heading"></a></h3>
+<p>This library throws exceptions in a single hierarchy for easy handling:</p>
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">LlamaStackClientException</span></code></strong> - Base exception for all exceptions</p>
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">LlamaStackClientServiceException</span></code></strong> - HTTP errors with a well-formed response body we were able to parse. The exception message and the <code class="docutils literal notranslate"><span class="pre">.debuggingRequestId()</span></code> will be set by the server.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>400</p></th>
+<th class="head"><p>BadRequestException</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>401</p></td>
+<td><p>AuthenticationException</p></td>
+</tr>
+<tr class="row-odd"><td><p>403</p></td>
+<td><p>PermissionDeniedException</p></td>
+</tr>
+<tr class="row-even"><td><p>404</p></td>
+<td><p>NotFoundException</p></td>
+</tr>
+<tr class="row-odd"><td><p>422</p></td>
+<td><p>UnprocessableEntityException</p></td>
+</tr>
+<tr class="row-even"><td><p>429</p></td>
+<td><p>RateLimitException</p></td>
+</tr>
+<tr class="row-odd"><td><p>5xx</p></td>
+<td><p>InternalServerException</p></td>
+</tr>
+<tr class="row-even"><td><p>others</p></td>
+<td><p>UnexpectedStatusCodeException</p></td>
+</tr>
+</tbody>
+</table>
+</li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">LlamaStackClientIoException</span></code></strong> - I/O networking errors</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">LlamaStackClientInvalidDataException</span></code></strong> - any other exceptions on the client side, e.g.:</p>
+<ul class="simple">
+<li><p>We failed to serialize the request body</p></li>
+<li><p>We failed to parse the response body (has access to response code and body)</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="reporting-issues">
+<h2>Reporting Issues<a class="headerlink" href="#reporting-issues" title="Link to this heading"></a></h2>
+<p>If you encountered any bugs or issues following this guide please file a bug/issue on our <a class="reference external" href="https://github.com/meta-llama/llama-stack-client-kotlin/issues">Github issue tracker</a>.</p>
+</section>
+<section id="known-issues">
+<h2>Known Issues<a class="headerlink" href="#known-issues" title="Link to this heading"></a></h2>
+<p>We’re aware of the following issues and are working to resolve them:</p>
+<ol class="arabic simple">
+<li><p>Streaming response is a work-in-progress for local and remote inference</p></li>
+<li><p>Due to #1, agents are not supported at the time. LS agents only work in streaming mode</p></li>
+<li><p>Changing to another model is a work in progress for local and remote platforms</p></li>
+</ol>
+</section>
+<section id="thanks">
+<h2>Thanks<a class="headerlink" href="#thanks" title="Link to this heading"></a></h2>
+<p>We’d like to extend our thanks to the ExecuTorch team for providing their support as we integrated ExecuTorch as one of the local inference distributors for Llama Stack. Checkout <a class="reference external" href="https://github.com/pytorch/executorch/tree/main">ExecuTorch Github repo</a> for more information.</p>
+<hr class="docutils" />
+<p>The API interface is generated using the OpenAPI standard with <a class="reference external" href="https://www.stainlessapi.com/">Stainless</a>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ios_sdk.html" class="btn btn-neutral float-left" title="iOS SDK" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../building_distro.html" class="btn btn-neutral float-right" title="Build your own Distribution" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Meta.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book"> Read the Docs</span>
+    v: v0.2.17
+    <span class="fa fa-caret-down"></span>
+  </span>
+  <div class="rst-other-versions">
+    <dl>
+      <dt>Versions</dt>
+      <dd>
+        <a href="/v0.2.19/">latest</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.19/">v0.2.19</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.18/">v0.2.18</a>
+      </dd>
+      <dd class="rtd-current-item">
+        <a href="/v0.2.17/">v0.2.17</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.16/">v0.2.16</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.15/">v0.2.15</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.14/">v0.2.14</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.13/">v0.2.13</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.12/">v0.2.12</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.11/">v0.2.11</a>
+      </dd>
+    </dl>
+  </div>
+</div><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

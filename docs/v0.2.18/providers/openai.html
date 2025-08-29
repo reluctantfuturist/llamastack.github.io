@@ -1,0 +1,388 @@
+
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OpenAI API Compatibility &mdash; llama-stack 0.2.18 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/my_theme.css?v=f1163765" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../_static/dark_mode_css/general.css?v=c0a7eb24" />
+      <link rel="stylesheet" type="text/css" href="../_static/dark_mode_css/dark.css?v=70edf1c7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=ae23a911"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=09bf800d"></script>
+      <script src="../_static/js/detect_theme.js?v=76226c80"></script>
+      <script src="../_static/js/keyboard_shortcuts.js?v=62563c3b"></script>
+      <script src="../_static/design-tabs.js?v=f930bc37"></script>
+      <script src="../_static/dark_mode_js/default_light.js?v=c2e647ce"></script>
+      <script src="../_static/dark_mode_js/theme_switcher.js?v=358d3910"></script>
+    <script src="../_static/js/theme.js"></script>
+    <script src="../_static/js/versions.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Inference" href="inference/index.html" />
+    <link rel="prev" title="Creating External Providers" href="external/external-providers-guide.html" />
+ 
+
+<script src="../_static/version-loader.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            llama-stack
+          </a>
+              <div class="switch-menus">
+                <div class="version-switch"></div>
+                <div class="language-switch"></div>
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Llama Stack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">Core Concepts</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">API Providers</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="external/index.html">External Providers</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">OpenAI API Compatibility</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#server-path">Server path</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#clients">Clients</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#llama-stack-client">Llama Stack Client</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#openai-client">OpenAI Client</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#apis-implemented">APIs implemented</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#models">Models</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#responses">Responses</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#chat-completions">Chat Completions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#completions">Completions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="inference/index.html">Inference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="agents/index.html">Agents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasetio/index.html">Datasetio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="safety/index.html">Safety</a></li>
+<li class="toctree-l2"><a class="reference internal" href="telemetry/index.html">Telemetry</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vector_io/index.html">Vector_Io</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tool_runtime/index.html">Tool_Runtime</a></li>
+<li class="toctree-l2"><a class="reference internal" href="files/index.html">Files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../distributions/index.html">Distributions Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced_apis/index.html">Advanced APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../building_applications/index.html">AI Application Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deploying/index.html">Deployment Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing/index.html">Contributing to Llama Stack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing/index.html#llama-stack-benchmark-suite-on-kubernetes">Llama Stack Benchmark Suite on Kubernetes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../references/index.html">References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">llama-stack</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">API Providers</a></li>
+      <li class="breadcrumb-item active">OpenAI API Compatibility</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/providers/openai.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="openai-api-compatibility">
+<h1>OpenAI API Compatibility<a class="headerlink" href="#openai-api-compatibility" title="Link to this heading"></a></h1>
+<section id="server-path">
+<h2>Server path<a class="headerlink" href="#server-path" title="Link to this heading"></a></h2>
+<p>Llama Stack exposes an OpenAI-compatible API endpoint at <code class="docutils literal notranslate"><span class="pre">/v1/openai/v1</span></code>. So, for a Llama Stack server running locally on port <code class="docutils literal notranslate"><span class="pre">8321</span></code>, the full url to the OpenAI-compatible API endpoint is <code class="docutils literal notranslate"><span class="pre">http://localhost:8321/v1/openai/v1</span></code>.</p>
+</section>
+<section id="clients">
+<h2>Clients<a class="headerlink" href="#clients" title="Link to this heading"></a></h2>
+<p>You should be able to use any client that speaks OpenAI APIs with Llama Stack. We regularly test with the official Llama Stack clients as well as OpenAI’s official Python client.</p>
+<section id="llama-stack-client">
+<h3>Llama Stack Client<a class="headerlink" href="#llama-stack-client" title="Link to this heading"></a></h3>
+<p>When using the Llama Stack client, set the <code class="docutils literal notranslate"><span class="pre">base_url</span></code> to the root of your Llama Stack server. It will automatically route OpenAI-compatible requests to the right server endpoint for you.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">llama_stack_client</span><span class="w"> </span><span class="kn">import</span> <span class="n">LlamaStackClient</span>
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">LlamaStackClient</span><span class="p">(</span><span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://localhost:8321&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="openai-client">
+<h3>OpenAI Client<a class="headerlink" href="#openai-client" title="Link to this heading"></a></h3>
+<p>When using an OpenAI client, set the <code class="docutils literal notranslate"><span class="pre">base_url</span></code> to the <code class="docutils literal notranslate"><span class="pre">/v1/openai/v1</span></code> path on your Llama Stack server.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenAI</span>
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">(</span><span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://localhost:8321/v1/openai/v1&quot;</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Regardless of the client you choose, the following code examples should all work the same.</p>
+</section>
+</section>
+<section id="apis-implemented">
+<h2>APIs implemented<a class="headerlink" href="#apis-implemented" title="Link to this heading"></a></h2>
+<section id="models">
+<h3>Models<a class="headerlink" href="#models" title="Link to this heading"></a></h3>
+<p>Many of the APIs require you to pass in a model parameter. To see the list of models available in your Llama Stack server:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">models</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">list</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="responses">
+<h3>Responses<a class="headerlink" href="#responses" title="Link to this heading"></a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The Responses API implementation is still in active development. While it is quite usable, there are still unimplemented parts of the API. We’d love feedback on any use-cases you try that do not work to help prioritize the pieces left to implement. Please open issues in the <a class="reference external" href="https://github.com/meta-llama/llama-stack">meta-llama/llama-stack</a> GitHub repository with details of anything that does not work.</p>
+</div>
+<section id="simple-inference">
+<h4>Simple inference<a class="headerlink" href="#simple-inference" title="Link to this heading"></a></h4>
+<p>Request:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">responses</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;meta-llama/Llama-3.2-3B-Instruct&quot;</span><span class="p">,</span>
+    <span class="nb">input</span><span class="o">=</span><span class="s2">&quot;Write a haiku about coding.&quot;</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">output_text</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Example output:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Pixels dancing slow
+Syntax whispers secrets sweet
+Code&#39;s gentle silence
+</pre></div>
+</div>
+</section>
+<section id="structured-output">
+<h4>Structured Output<a class="headerlink" href="#structured-output" title="Link to this heading"></a></h4>
+<p>Request:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">responses</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;meta-llama/Llama-3.2-3B-Instruct&quot;</span><span class="p">,</span>
+    <span class="nb">input</span><span class="o">=</span><span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;system&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;Extract the participants from the event information.&quot;</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;Alice and Bob are going to a science fair on Friday.&quot;</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">],</span>
+    <span class="n">text</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;json_schema&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;participants&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;schema&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;participants&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;array&quot;</span><span class="p">,</span> <span class="s2">&quot;items&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">}}</span>
+                <span class="p">},</span>
+                <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;participants&quot;</span><span class="p">],</span>
+            <span class="p">},</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">output_text</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Example output:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>{ &quot;participants&quot;: [&quot;Alice&quot;, &quot;Bob&quot;] }
+</pre></div>
+</div>
+</section>
+</section>
+<section id="chat-completions">
+<h3>Chat Completions<a class="headerlink" href="#chat-completions" title="Link to this heading"></a></h3>
+<section id="id1">
+<h4>Simple inference<a class="headerlink" href="#id1" title="Link to this heading"></a></h4>
+<p>Request:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">chat_completion</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;meta-llama/Llama-3.2-3B-Instruct&quot;</span><span class="p">,</span>
+    <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;Write a haiku about coding.&quot;</span><span class="p">}],</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">chat_completion</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Example output:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Lines of code unfold
+Logic flows like a river
+Code&#39;s gentle beauty
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h4>Structured Output<a class="headerlink" href="#id2" title="Link to this heading"></a></h4>
+<p>Request:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">chat_completion</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;meta-llama/Llama-3.2-3B-Instruct&quot;</span><span class="p">,</span>
+    <span class="n">messages</span><span class="o">=</span><span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;system&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;Extract the participants from the event information.&quot;</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;Alice and Bob are going to a science fair on Friday.&quot;</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">],</span>
+    <span class="n">response_format</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;json_schema&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;json_schema&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;participants&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;schema&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;participants&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;array&quot;</span><span class="p">,</span> <span class="s2">&quot;items&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">}}</span>
+                <span class="p">},</span>
+                <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;participants&quot;</span><span class="p">],</span>
+            <span class="p">},</span>
+        <span class="p">},</span>
+    <span class="p">},</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">chat_completion</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Example output:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>{ &quot;participants&quot;: [&quot;Alice&quot;, &quot;Bob&quot;] }
+</pre></div>
+</div>
+</section>
+</section>
+<section id="completions">
+<h3>Completions<a class="headerlink" href="#completions" title="Link to this heading"></a></h3>
+<section id="id3">
+<h4>Simple inference<a class="headerlink" href="#id3" title="Link to this heading"></a></h4>
+<p>Request:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">completion</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;meta-llama/Llama-3.2-3B-Instruct&quot;</span><span class="p">,</span> <span class="n">prompt</span><span class="o">=</span><span class="s2">&quot;Write a haiku about coding.&quot;</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">completion</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Example output:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Lines of code unfurl
+Logic whispers in the dark
+Art in hidden form
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="external/external-providers-guide.html" class="btn btn-neutral float-left" title="Creating External Providers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="inference/index.html" class="btn btn-neutral float-right" title="Inference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Meta.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book"> Read the Docs</span>
+    v: v0.2.18
+    <span class="fa fa-caret-down"></span>
+  </span>
+  <div class="rst-other-versions">
+    <dl>
+      <dt>Versions</dt>
+      <dd>
+        <a href="/v0.2.19/">latest</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.19/">v0.2.19</a>
+      </dd>
+      <dd class="rtd-current-item">
+        <a href="/v0.2.18/">v0.2.18</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.17/">v0.2.17</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.16/">v0.2.16</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.15/">v0.2.15</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.14/">v0.2.14</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.13/">v0.2.13</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.12/">v0.2.12</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.11/">v0.2.11</a>
+      </dd>
+    </dl>
+  </div>
+</div><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

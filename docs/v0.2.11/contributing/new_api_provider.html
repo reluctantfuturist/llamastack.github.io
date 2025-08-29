@@ -1,0 +1,248 @@
+
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Adding a New API Provider &mdash; llama-stack 0.2.11 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/my_theme.css?v=f1163765" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../_static/dark_mode_css/general.css?v=c0a7eb24" />
+      <link rel="stylesheet" type="text/css" href="../_static/dark_mode_css/dark.css?v=70edf1c7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=29c81e07"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=09bf800d"></script>
+      <script src="../_static/js/detect_theme.js?v=76226c80"></script>
+      <script src="../_static/js/keyboard_shortcuts.js"></script>
+      <script src="../_static/design-tabs.js?v=f930bc37"></script>
+      <script src="../_static/dark_mode_js/default_light.js?v=c2e647ce"></script>
+      <script src="../_static/dark_mode_js/theme_switcher.js?v=358d3910"></script>
+    <script src="../_static/js/theme.js"></script>
+    <script src="../_static/js/versions.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="References" href="../references/index.html" />
+    <link rel="prev" title="Contributing to Llama-Stack" href="index.html" />
+ 
+
+<script src="../_static/version-loader.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            llama-stack
+          </a>
+              <div class="switch-menus">
+                <div class="version-switch"></div>
+                <div class="language-switch"></div>
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Llama Stack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/index.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/detailed_tutorial.html">Detailed Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../introduction/index.html">Why Llama Stack?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">Core Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openai/index.html">OpenAI API Compatibility</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../providers/index.html">Providers Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../distributions/index.html">Distributions Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../building_applications/index.html">Building AI Applications (Examples)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../playground/index.html">Llama Stack Playground</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Contributing to Llama-Stack</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="index.html#discussions-issues-pull-requests">Discussions -&gt; Issues -&gt; Pull Requests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#contributor-license-agreement-cla">Contributor License Agreement (“CLA”)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#issues">Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#set-up-your-development-environment">Set up your development environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#pre-commit-hooks">Pre-commit Hooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#running-tests">Running tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#adding-a-new-dependency-to-the-project">Adding a new dependency to the project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#coding-style">Coding Style</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#common-tasks">Common Tasks</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#license">License</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Adding a New API Provider</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#testing-the-provider">Testing the Provider</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#submitting-your-pr">Submitting Your PR</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../references/index.html">References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">llama-stack</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Contributing to Llama-Stack</a></li>
+      <li class="breadcrumb-item active">Adding a New API Provider</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/contributing/new_api_provider.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="adding-a-new-api-provider">
+<h1>Adding a New API Provider<a class="headerlink" href="#adding-a-new-api-provider" title="Link to this heading"></a></h1>
+<p>This guide will walk you through the process of adding a new API provider to Llama Stack.</p>
+<ul class="simple">
+<li><p>Begin by reviewing the <a class="reference internal" href="../concepts/index.html"><span class="std std-doc">core concepts</span></a> of Llama Stack and choose the API your provider belongs to (Inference, Safety, VectorIO, etc.)</p></li>
+<li><p>Determine the provider type (<a class="reference external" href="https://github.com/llamastack/llama-stack/tree/main/llama_stack/providers/remote">Remote</a> or <a class="reference external" href="https://github.com/llamastack/llama-stack/tree/main/llama_stack/providers/inline">Inline</a>). Remote providers make requests to external services, while inline providers execute implementation locally.</p></li>
+<li><p>Add your provider to the appropriate <a class="reference external" href="https://github.com/llamastack/llama-stack/tree/main/llama_stack/providers/registry/">Registry</a>. Specify pip dependencies necessary.</p></li>
+<li><p>Update any distribution <a class="reference external" href="https://github.com/llamastack/llama-stack/tree/main/llama_stack/templates/">Templates</a> <code class="docutils literal notranslate"><span class="pre">build.yaml</span></code> and <code class="docutils literal notranslate"><span class="pre">run.yaml</span></code> files if they should include your provider by default. Run <a class="reference external" href="https://github.com/llamastack/llama-stack/tree/main/./scripts/distro_codegen.py">./scripts/distro_codegen.py</a> if necessary. Note that <code class="docutils literal notranslate"><span class="pre">distro_codegen.py</span></code> will fail if the new provider causes any distribution template to attempt to import provider-specific dependencies. This usually means the distribution’s <code class="docutils literal notranslate"><span class="pre">get_distribution_template()</span></code> code path should only import any necessary Config or model alias definitions from each provider and not the provider’s actual implementation.</p></li>
+</ul>
+<p>Here are some example PRs to help you get started:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/meta-llama/llama-stack/pull/609">Grok Inference Implementation</a></p></li>
+<li><p><a class="reference external" href="https://github.com/meta-llama/llama-stack/pull/355">Nvidia Inference Implementation</a></p></li>
+<li><p><a class="reference external" href="https://github.com/meta-llama/llama-stack/pull/665">Model context protocol Tool Runtime</a></p></li>
+</ul>
+<section id="testing-the-provider">
+<h2>Testing the Provider<a class="headerlink" href="#testing-the-provider" title="Link to this heading"></a></h2>
+<p>Before running tests, you must have required dependencies installed. This depends on the providers or distributions you are testing. For example, if you are testing the <code class="docutils literal notranslate"><span class="pre">together</span></code> distribution, you should install dependencies via <code class="docutils literal notranslate"><span class="pre">llama</span> <span class="pre">stack</span> <span class="pre">build</span> <span class="pre">--template</span> <span class="pre">together</span></code>.</p>
+<section id="integration-testing">
+<h3>1. Integration Testing<a class="headerlink" href="#integration-testing" title="Link to this heading"></a></h3>
+<p>Integration tests are located in <a class="reference external" href="https://github.com/llamastack/llama-stack/tree/main/tests/integration">tests/integration</a>. These tests use the python client-SDK APIs (from the <code class="docutils literal notranslate"><span class="pre">llama_stack_client</span></code> package) to test functionality. Since these tests use client APIs, they can be run either by pointing to an instance of the Llama Stack server or “inline” by using <code class="docutils literal notranslate"><span class="pre">LlamaStackAsLibraryClient</span></code>.</p>
+<p>Consult <a class="reference external" href="https://github.com/llamastack/llama-stack/tree/main/tests/integration/README.md">tests/integration/README.md</a> for more details on how to run the tests.</p>
+<p>Note that each provider’s <code class="docutils literal notranslate"><span class="pre">sample_run_config()</span></code> method (in the configuration class for that provider)
+typically references some environment variables for specifying API keys and the like. You can set these in the environment or pass these via the <code class="docutils literal notranslate"><span class="pre">--env</span></code> flag to the test command.</p>
+</section>
+<section id="unit-testing">
+<h3>2. Unit Testing<a class="headerlink" href="#unit-testing" title="Link to this heading"></a></h3>
+<p>Unit tests are located in <a class="reference external" href="https://github.com/llamastack/llama-stack/tree/main/tests/unit">tests/unit</a>. Provider-specific unit tests are located in <a class="reference external" href="https://github.com/llamastack/llama-stack/tree/main/tests/unit/providers">tests/unit/providers</a>. These tests are all run automatically as part of the CI process.</p>
+<p>Consult <a class="reference external" href="https://github.com/llamastack/llama-stack/tree/main/tests/unit/README.md">tests/unit/README.md</a> for more details on how to run the tests manually.</p>
+</section>
+<section id="additional-end-to-end-testing">
+<h3>3. Additional end-to-end testing<a class="headerlink" href="#additional-end-to-end-testing" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p>Start a Llama Stack server with your new provider</p></li>
+<li><p>Verify compatibility with existing client scripts in the <a class="reference external" href="https://github.com/meta-llama/llama-stack-apps/tree/main">llama-stack-apps</a> repository</p></li>
+<li><p>Document which scripts are compatible with your provider</p></li>
+</ol>
+</section>
+</section>
+<section id="submitting-your-pr">
+<h2>Submitting Your PR<a class="headerlink" href="#submitting-your-pr" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>Ensure all tests pass</p></li>
+<li><p>Include a comprehensive test plan in your PR summary</p></li>
+<li><p>Document any known limitations or considerations</p></li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Contributing to Llama-Stack" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../references/index.html" class="btn btn-neutral float-right" title="References" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Meta.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book"> Read the Docs</span>
+    v: v0.2.11
+    <span class="fa fa-caret-down"></span>
+  </span>
+  <div class="rst-other-versions">
+    <dl>
+      <dt>Versions</dt>
+      <dd>
+        <a href="/v0.2.19/">latest</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.19/">v0.2.19</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.18/">v0.2.18</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.17/">v0.2.17</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.16/">v0.2.16</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.15/">v0.2.15</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.14/">v0.2.14</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.13/">v0.2.13</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.12/">v0.2.12</a>
+      </dd>
+      <dd class="rtd-current-item">
+        <a href="/v0.2.11/">v0.2.11</a>
+      </dd>
+    </dl>
+  </div>
+</div><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,406 @@
+
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kubernetes Deployment Guide &mdash; llama-stack 0.2.16 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/my_theme.css?v=f1163765" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../_static/dark_mode_css/general.css?v=c0a7eb24" />
+      <link rel="stylesheet" type="text/css" href="../_static/dark_mode_css/dark.css?v=70edf1c7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=e2418eca"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=09bf800d"></script>
+      <script src="../_static/js/detect_theme.js?v=76226c80"></script>
+      <script src="../_static/js/keyboard_shortcuts.js"></script>
+      <script src="../_static/design-tabs.js?v=f930bc37"></script>
+      <script src="../_static/dark_mode_js/default_light.js?v=c2e647ce"></script>
+      <script src="../_static/dark_mode_js/theme_switcher.js?v=358d3910"></script>
+    <script src="../_static/js/theme.js"></script>
+    <script src="../_static/js/versions.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+ 
+
+<script src="../_static/version-loader.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            llama-stack
+          </a>
+              <div class="switch-menus">
+                <div class="version-switch"></div>
+                <div class="language-switch"></div>
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Llama Stack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">Core Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../providers/index.html">API Providers Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../distributions/index.html">Distributions Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced_apis/index.html">Advanced APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../building_applications/index.html">AI Application Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html">Deployment Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing/index.html">Contributing to Llama-Stack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../references/index.html">References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">llama-stack</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Kubernetes Deployment Guide</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/deploying/kubernetes_deployment.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="kubernetes-deployment-guide">
+<h1>Kubernetes Deployment Guide<a class="headerlink" href="#kubernetes-deployment-guide" title="Link to this heading"></a></h1>
+<p>Instead of starting the Llama Stack and vLLM servers locally. We can deploy them in a Kubernetes cluster.</p>
+<section id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading"></a></h2>
+<p>In this guide, we’ll use a local <a class="reference external" href="https://kind.sigs.k8s.io/">Kind</a> cluster and a vLLM inference service in the same cluster for demonstration purposes.</p>
+<p>Note: You can also deploy the Llama Stack server in an AWS EKS cluster. See <a class="reference internal" href="#deploying-llama-stack-server-in-aws-eks"><span class="xref myst">Deploying Llama Stack Server in AWS EKS</span></a> for more details.</p>
+<p>First, create a local Kubernetes cluster via Kind:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kind</span> <span class="n">create</span> <span class="n">cluster</span> <span class="o">--</span><span class="n">image</span> <span class="n">kindest</span><span class="o">/</span><span class="n">node</span><span class="p">:</span><span class="n">v1</span><span class="mf">.32.0</span> <span class="o">--</span><span class="n">name</span> <span class="n">llama</span><span class="o">-</span><span class="n">stack</span><span class="o">-</span><span class="n">test</span>
+</pre></div>
+</div>
+<p>First set your hugging face token as an environment variable.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>export HF_TOKEN=$(echo -n &quot;your-hf-token&quot; | base64)
+</pre></div>
+</div>
+<p>Now create a Kubernetes PVC and Secret for downloading and storing Hugging Face model:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>cat &lt;&lt;EOF |kubectl apply -f -
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: vllm-models
+spec:
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 50Gi
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: hf-token-secret
+type: Opaque
+data:
+  token: $HF_TOKEN
+EOF
+</pre></div>
+</div>
+<p>Next, start the vLLM server as a Kubernetes Deployment and Service:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cat</span> <span class="o">&lt;&lt;</span><span class="n">EOF</span> <span class="o">|</span><span class="n">kubectl</span> <span class="n">apply</span> <span class="o">-</span><span class="n">f</span> <span class="o">-</span>
+<span class="n">apiVersion</span><span class="p">:</span> <span class="n">apps</span><span class="o">/</span><span class="n">v1</span>
+<span class="n">kind</span><span class="p">:</span> <span class="n">Deployment</span>
+<span class="n">metadata</span><span class="p">:</span>
+  <span class="n">name</span><span class="p">:</span> <span class="n">vllm</span><span class="o">-</span><span class="n">server</span>
+<span class="n">spec</span><span class="p">:</span>
+  <span class="n">replicas</span><span class="p">:</span> <span class="mi">1</span>
+  <span class="n">selector</span><span class="p">:</span>
+    <span class="n">matchLabels</span><span class="p">:</span>
+      <span class="n">app</span><span class="o">.</span><span class="n">kubernetes</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">name</span><span class="p">:</span> <span class="n">vllm</span>
+  <span class="n">template</span><span class="p">:</span>
+    <span class="n">metadata</span><span class="p">:</span>
+      <span class="n">labels</span><span class="p">:</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">kubernetes</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">name</span><span class="p">:</span> <span class="n">vllm</span>
+    <span class="n">spec</span><span class="p">:</span>
+      <span class="n">containers</span><span class="p">:</span>
+      <span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">vllm</span>
+        <span class="n">image</span><span class="p">:</span> <span class="n">vllm</span><span class="o">/</span><span class="n">vllm</span><span class="o">-</span><span class="n">openai</span><span class="p">:</span><span class="n">latest</span>
+        <span class="n">command</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;/bin/sh&quot;</span><span class="p">,</span> <span class="s2">&quot;-c&quot;</span><span class="p">]</span>
+        <span class="n">args</span><span class="p">:</span> <span class="p">[</span>
+          <span class="s2">&quot;vllm serve meta-llama/Llama-3.2-1B-Instruct&quot;</span>
+        <span class="p">]</span>
+        <span class="n">env</span><span class="p">:</span>
+        <span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">HUGGING_FACE_HUB_TOKEN</span>
+          <span class="n">valueFrom</span><span class="p">:</span>
+            <span class="n">secretKeyRef</span><span class="p">:</span>
+              <span class="n">name</span><span class="p">:</span> <span class="n">hf</span><span class="o">-</span><span class="n">token</span><span class="o">-</span><span class="n">secret</span>
+              <span class="n">key</span><span class="p">:</span> <span class="n">token</span>
+        <span class="n">ports</span><span class="p">:</span>
+          <span class="o">-</span> <span class="n">containerPort</span><span class="p">:</span> <span class="mi">8000</span>
+        <span class="n">volumeMounts</span><span class="p">:</span>
+          <span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">llama</span><span class="o">-</span><span class="n">storage</span>
+            <span class="n">mountPath</span><span class="p">:</span> <span class="o">/</span><span class="n">root</span><span class="o">/.</span><span class="n">cache</span><span class="o">/</span><span class="n">huggingface</span>
+      <span class="n">volumes</span><span class="p">:</span>
+      <span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">llama</span><span class="o">-</span><span class="n">storage</span>
+        <span class="n">persistentVolumeClaim</span><span class="p">:</span>
+          <span class="n">claimName</span><span class="p">:</span> <span class="n">vllm</span><span class="o">-</span><span class="n">models</span>
+<span class="o">---</span>
+<span class="n">apiVersion</span><span class="p">:</span> <span class="n">v1</span>
+<span class="n">kind</span><span class="p">:</span> <span class="n">Service</span>
+<span class="n">metadata</span><span class="p">:</span>
+  <span class="n">name</span><span class="p">:</span> <span class="n">vllm</span><span class="o">-</span><span class="n">server</span>
+<span class="n">spec</span><span class="p">:</span>
+  <span class="n">selector</span><span class="p">:</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">kubernetes</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">name</span><span class="p">:</span> <span class="n">vllm</span>
+  <span class="n">ports</span><span class="p">:</span>
+  <span class="o">-</span> <span class="n">protocol</span><span class="p">:</span> <span class="n">TCP</span>
+    <span class="n">port</span><span class="p">:</span> <span class="mi">8000</span>
+    <span class="n">targetPort</span><span class="p">:</span> <span class="mi">8000</span>
+  <span class="nb">type</span><span class="p">:</span> <span class="n">ClusterIP</span>
+<span class="n">EOF</span>
+</pre></div>
+</div>
+<p>We can verify that the vLLM server has started successfully via the logs (this might take a couple of minutes to download the model):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ kubectl logs -l app.kubernetes.io/name=vllm
+...
+INFO:     Started server process [1]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+</pre></div>
+</div>
+<p>Then we can modify the Llama Stack run configuration YAML with the following inference provider:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">providers</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">inference</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">provider_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">vllm</span>
+<span class="w">    </span><span class="nt">provider_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">remote::vllm</span>
+<span class="w">    </span><span class="nt">config</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://vllm-server.default.svc.cluster.local:8000/v1</span>
+<span class="w">      </span><span class="nt">max_tokens</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4096</span>
+<span class="w">      </span><span class="nt">api_token</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fake</span>
+</pre></div>
+</div>
+<p>Once we have defined the run configuration for Llama Stack, we can build an image with that configuration and the server source code:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>tmp_dir=$(mktemp -d) &amp;&amp; cat &gt;$tmp_dir/Containerfile.llama-stack-run-k8s &lt;&lt;EOF
+FROM distribution-myenv:dev
+
+RUN apt-get update &amp;&amp; apt-get install -y git
+RUN git clone https://github.com/meta-llama/llama-stack.git /app/llama-stack-source
+
+ADD ./vllm-llama-stack-run-k8s.yaml /app/config.yaml
+EOF
+podman build -f $tmp_dir/Containerfile.llama-stack-run-k8s -t llama-stack-run-k8s $tmp_dir
+</pre></div>
+</div>
+</section>
+<section id="deploying-llama-stack-server-in-kubernetes">
+<h2>Deploying Llama Stack Server in Kubernetes<a class="headerlink" href="#deploying-llama-stack-server-in-kubernetes" title="Link to this heading"></a></h2>
+<p>We can then start the Llama Stack server by deploying a Kubernetes Pod and Service:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cat</span> <span class="o">&lt;&lt;</span><span class="n">EOF</span> <span class="o">|</span><span class="n">kubectl</span> <span class="n">apply</span> <span class="o">-</span><span class="n">f</span> <span class="o">-</span>
+<span class="n">apiVersion</span><span class="p">:</span> <span class="n">v1</span>
+<span class="n">kind</span><span class="p">:</span> <span class="n">PersistentVolumeClaim</span>
+<span class="n">metadata</span><span class="p">:</span>
+  <span class="n">name</span><span class="p">:</span> <span class="n">llama</span><span class="o">-</span><span class="n">pvc</span>
+<span class="n">spec</span><span class="p">:</span>
+  <span class="n">accessModes</span><span class="p">:</span>
+    <span class="o">-</span> <span class="n">ReadWriteOnce</span>
+  <span class="n">resources</span><span class="p">:</span>
+    <span class="n">requests</span><span class="p">:</span>
+      <span class="n">storage</span><span class="p">:</span> <span class="mi">1</span><span class="n">Gi</span>
+<span class="o">---</span>
+<span class="n">apiVersion</span><span class="p">:</span> <span class="n">apps</span><span class="o">/</span><span class="n">v1</span>
+<span class="n">kind</span><span class="p">:</span> <span class="n">Deployment</span>
+<span class="n">metadata</span><span class="p">:</span>
+  <span class="n">name</span><span class="p">:</span> <span class="n">llama</span><span class="o">-</span><span class="n">stack</span><span class="o">-</span><span class="n">server</span>
+<span class="n">spec</span><span class="p">:</span>
+  <span class="n">replicas</span><span class="p">:</span> <span class="mi">1</span>
+  <span class="n">selector</span><span class="p">:</span>
+    <span class="n">matchLabels</span><span class="p">:</span>
+      <span class="n">app</span><span class="o">.</span><span class="n">kubernetes</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">name</span><span class="p">:</span> <span class="n">llama</span><span class="o">-</span><span class="n">stack</span>
+  <span class="n">template</span><span class="p">:</span>
+    <span class="n">metadata</span><span class="p">:</span>
+      <span class="n">labels</span><span class="p">:</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">kubernetes</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">name</span><span class="p">:</span> <span class="n">llama</span><span class="o">-</span><span class="n">stack</span>
+    <span class="n">spec</span><span class="p">:</span>
+      <span class="n">containers</span><span class="p">:</span>
+      <span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">llama</span><span class="o">-</span><span class="n">stack</span>
+        <span class="n">image</span><span class="p">:</span> <span class="n">localhost</span><span class="o">/</span><span class="n">llama</span><span class="o">-</span><span class="n">stack</span><span class="o">-</span><span class="n">run</span><span class="o">-</span><span class="n">k8s</span><span class="p">:</span><span class="n">latest</span>
+        <span class="n">imagePullPolicy</span><span class="p">:</span> <span class="n">IfNotPresent</span>
+        <span class="n">command</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;python&quot;</span><span class="p">,</span> <span class="s2">&quot;-m&quot;</span><span class="p">,</span> <span class="s2">&quot;llama_stack.distribution.server.server&quot;</span><span class="p">,</span> <span class="s2">&quot;--config&quot;</span><span class="p">,</span> <span class="s2">&quot;/app/config.yaml&quot;</span><span class="p">]</span>
+        <span class="n">ports</span><span class="p">:</span>
+          <span class="o">-</span> <span class="n">containerPort</span><span class="p">:</span> <span class="mi">5000</span>
+        <span class="n">volumeMounts</span><span class="p">:</span>
+          <span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">llama</span><span class="o">-</span><span class="n">storage</span>
+            <span class="n">mountPath</span><span class="p">:</span> <span class="o">/</span><span class="n">root</span><span class="o">/.</span><span class="n">llama</span>
+      <span class="n">volumes</span><span class="p">:</span>
+      <span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">llama</span><span class="o">-</span><span class="n">storage</span>
+        <span class="n">persistentVolumeClaim</span><span class="p">:</span>
+          <span class="n">claimName</span><span class="p">:</span> <span class="n">llama</span><span class="o">-</span><span class="n">pvc</span>
+<span class="o">---</span>
+<span class="n">apiVersion</span><span class="p">:</span> <span class="n">v1</span>
+<span class="n">kind</span><span class="p">:</span> <span class="n">Service</span>
+<span class="n">metadata</span><span class="p">:</span>
+  <span class="n">name</span><span class="p">:</span> <span class="n">llama</span><span class="o">-</span><span class="n">stack</span><span class="o">-</span><span class="n">service</span>
+<span class="n">spec</span><span class="p">:</span>
+  <span class="n">selector</span><span class="p">:</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">kubernetes</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">name</span><span class="p">:</span> <span class="n">llama</span><span class="o">-</span><span class="n">stack</span>
+  <span class="n">ports</span><span class="p">:</span>
+  <span class="o">-</span> <span class="n">protocol</span><span class="p">:</span> <span class="n">TCP</span>
+    <span class="n">port</span><span class="p">:</span> <span class="mi">5000</span>
+    <span class="n">targetPort</span><span class="p">:</span> <span class="mi">5000</span>
+  <span class="nb">type</span><span class="p">:</span> <span class="n">ClusterIP</span>
+<span class="n">EOF</span>
+</pre></div>
+</div>
+</section>
+<section id="verifying-the-deployment">
+<h2>Verifying the Deployment<a class="headerlink" href="#verifying-the-deployment" title="Link to this heading"></a></h2>
+<p>We can check that the LlamaStack server has started:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ kubectl logs -l app.kubernetes.io/name=llama-stack
+...
+INFO:     Started server process [1]
+INFO:     Waiting for application startup.
+INFO:     ASGI &#39;lifespan&#39; protocol appears unsupported.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://[&#39;::&#39;, &#39;0.0.0.0&#39;]:5000 (Press CTRL+C to quit)
+</pre></div>
+</div>
+<p>Finally, we forward the Kubernetes service to a local port and test some inference requests against it via the Llama Stack Client:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kubectl</span> <span class="n">port</span><span class="o">-</span><span class="n">forward</span> <span class="n">service</span><span class="o">/</span><span class="n">llama</span><span class="o">-</span><span class="n">stack</span><span class="o">-</span><span class="n">service</span> <span class="mi">5000</span><span class="p">:</span><span class="mi">5000</span>
+<span class="n">llama</span><span class="o">-</span><span class="n">stack</span><span class="o">-</span><span class="n">client</span> <span class="o">--</span><span class="n">endpoint</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">localhost</span><span class="p">:</span><span class="mi">5000</span> <span class="n">inference</span> <span class="n">chat</span><span class="o">-</span><span class="n">completion</span> <span class="o">--</span><span class="n">message</span> <span class="s2">&quot;hello, what model are you?&quot;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="deploying-llama-stack-server-in-aws-eks">
+<h1>Deploying Llama Stack Server in AWS EKS<a class="headerlink" href="#deploying-llama-stack-server-in-aws-eks" title="Link to this heading"></a></h1>
+<p>We’ve also provided a script to deploy the Llama Stack server in an AWS EKS cluster.</p>
+<p>Prerequisites:</p>
+<ul class="simple">
+<li><p>Set up an <a class="reference external" href="https://docs.aws.amazon.com/eks/latest/userguide/getting-started.html">EKS cluster</a>.</p></li>
+<li><p>Create a <a class="reference external" href="https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app">Github OAuth app</a> and get the client ID and client secret.</p>
+<ul>
+<li><p>Set the <code class="docutils literal notranslate"><span class="pre">Authorization</span> <span class="pre">callback</span> <span class="pre">URL</span></code> to <code class="docutils literal notranslate"><span class="pre">http://&lt;your-llama-stack-ui-url&gt;/api/auth/callback/</span></code></p></li>
+</ul>
+</li>
+</ul>
+<p>Run the following script to deploy the Llama Stack server:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">HF_TOKEN</span><span class="o">=&lt;</span><span class="n">your</span><span class="o">-</span><span class="n">huggingface</span><span class="o">-</span><span class="n">token</span><span class="o">&gt;</span>
+<span class="n">export</span> <span class="n">GITHUB_CLIENT_ID</span><span class="o">=&lt;</span><span class="n">your</span><span class="o">-</span><span class="n">github</span><span class="o">-</span><span class="n">client</span><span class="o">-</span><span class="nb">id</span><span class="o">&gt;</span>
+<span class="n">export</span> <span class="n">GITHUB_CLIENT_SECRET</span><span class="o">=&lt;</span><span class="n">your</span><span class="o">-</span><span class="n">github</span><span class="o">-</span><span class="n">client</span><span class="o">-</span><span class="n">secret</span><span class="o">&gt;</span>
+<span class="n">export</span> <span class="n">LLAMA_STACK_UI_URL</span><span class="o">=&lt;</span><span class="n">your</span><span class="o">-</span><span class="n">llama</span><span class="o">-</span><span class="n">stack</span><span class="o">-</span><span class="n">ui</span><span class="o">-</span><span class="n">url</span><span class="o">&gt;</span>
+
+<span class="n">cd</span> <span class="n">docs</span><span class="o">/</span><span class="n">source</span><span class="o">/</span><span class="n">distributions</span><span class="o">/</span><span class="n">eks</span>
+<span class="o">./</span><span class="n">apply</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<p>This script will:</p>
+<ul class="simple">
+<li><p>Set up a default storage class for AWS EKS</p></li>
+<li><p>Deploy the Llama Stack server in a Kubernetes Pod and Service</p></li>
+</ul>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Meta.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book"> Read the Docs</span>
+    v: v0.2.16
+    <span class="fa fa-caret-down"></span>
+  </span>
+  <div class="rst-other-versions">
+    <dl>
+      <dt>Versions</dt>
+      <dd>
+        <a href="/v0.2.19/">latest</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.19/">v0.2.19</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.18/">v0.2.18</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.17/">v0.2.17</a>
+      </dd>
+      <dd class="rtd-current-item">
+        <a href="/v0.2.16/">v0.2.16</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.15/">v0.2.15</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.14/">v0.2.14</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.13/">v0.2.13</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.12/">v0.2.12</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.11/">v0.2.11</a>
+      </dd>
+    </dl>
+  </div>
+</div><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,190 @@
+name: Build and Deploy Documentation
+
+on:
+  # Allow manual trigger
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to build (latest, v0.2.18, etc.'
+        required: false
+        default: 'latest'
+        type: string
+      action:
+        description: 'Action to perform'
+        required: false
+        default: 'build-and-deploy'
+        type: choice
+        options:
+          - build-only
+          - deploy-only
+          - build-and-deploy
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    if: ${{ github.event.inputs.action != 'deploy-only' }}
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout this repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Clone llama-stack repository with full history
+      run: |
+        git clone https://github.com/llamastack/llama-stack.git ${{ runner.temp }}/llama-stack
+        cd ${{ runner.temp }}/llama-stack
+        git fetch --all --tags
+
+        # Checkout the specified version or latest
+        VERSION="${{ github.event.inputs.version }}"
+        if [ -z "$VERSION" ] || [ "$VERSION" = "latest" ]; then
+          # Get the latest tag
+          VERSION=$(git for-each-ref --sort=-creatordate --format '%(refname:short)' refs/tags | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -1)
+          echo "Using latest tag: $VERSION"
+        fi
+        git checkout "$VERSION"
+
+    - name: Set up Python 3.12
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@v4
+
+    - name: Install Sphinx dependencies
+      run: |
+        uv venv --python 3.12
+        source .venv/bin/activate
+        uv pip install \
+          sphinx \
+          sphinx-rtd-theme \
+          myst-parser \
+          sphinx-copybutton \
+          sphinx-design \
+          sphinx-rtd-dark-mode \
+          sphinx-tabs \
+          sphinxcontrib-redoc \
+          sphinxcontrib-mermaid \
+          sphinxcontrib-video \
+          sphinx-reredirects \
+          sphinx-multiversion \
+          requests \
+          setuptools
+
+    - name: Patch llama-stack with our configuration
+      run: |
+        cd ${{ runner.temp }}/llama-stack/docs/source
+
+        # Replace conf.py with our git-based version
+        cp ${{ github.workspace }}/conf.py conf.py
+
+        # Copy our templates directory
+        cp -r ${{ github.workspace }}/templates _templates
+
+        # Copy static files from templates to parent _static (as configured in conf.py)
+        mkdir -p ../_static
+        cp -r ${{ github.workspace }}/templates/static/* ../_static/
+
+        # Copy versions.json to the right location for conf.py to find it
+        cp ${{ github.workspace }}/docs/versions.json ../../versions.json
+
+    - name: Build documentation for the specific version
+      run: |
+        source .venv/bin/activate
+        cd ${{ runner.temp }}/llama-stack
+
+        # Set version - use input if available, otherwise get latest tag
+        VERSION="${{ github.event.inputs.version }}"
+        if [ -z "$VERSION" ] || [ "$VERSION" = "latest" ]; then
+          # Get the actual version from git
+          ACTUAL_VERSION=$(git describe --tags --abbrev=0)
+          echo "Using latest tag: $ACTUAL_VERSION"
+          VERSION="$ACTUAL_VERSION"
+        fi
+
+        echo "Building version: $VERSION"
+
+        # Clear existing docs
+        rm -rf ${{ github.workspace }}/docs/$VERSION
+
+        # Build the specific version
+        sphinx-build -b html docs/source ${{ github.workspace }}/docs/$VERSION
+
+        # Add this version to versions.json and update latest symlink
+        python3 ${{ github.workspace }}/scripts/update_versions.py ${{ github.workspace }}/docs/versions.json "$VERSION" ${{ github.workspace }}/docs
+
+
+    - name: Commit and push changes
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git add .
+        # Only commit if there are changes
+        if ! git diff --staged --quiet; then
+          git commit -m "Update documentation from llama-stack [skip ci]"
+          git push
+        else
+          echo "No changes to commit"
+        fi
+
+    - name: Setup GitHub Pages
+      if: ${{ github.event.inputs.action == 'build-and-deploy' }}
+      uses: actions/configure-pages@v5
+
+    - name: Upload Pages artifact
+      if: ${{ github.event.inputs.action == 'build-and-deploy' }}
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: 'docs'
+
+  deploy-after-build:
+    if: ${{ github.event.inputs.action == 'build-and-deploy' }}
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4
+
+  deploy-only:
+    if: ${{ github.event.inputs.action == 'deploy-only' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Setup GitHub Pages
+      uses: actions/configure-pages@v5
+
+    - name: Upload Pages artifact
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: 'docs'
+
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4

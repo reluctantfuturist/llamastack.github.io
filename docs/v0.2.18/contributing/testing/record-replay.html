@@ -1,0 +1,432 @@
+
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Record-Replay System &mdash; llama-stack 0.2.18 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/my_theme.css?v=f1163765" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/dark_mode_css/general.css?v=c0a7eb24" />
+      <link rel="stylesheet" type="text/css" href="../../_static/dark_mode_css/dark.css?v=70edf1c7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=ae23a911"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=09bf800d"></script>
+      <script src="../../_static/js/detect_theme.js?v=76226c80"></script>
+      <script src="../../_static/js/keyboard_shortcuts.js?v=62563c3b"></script>
+      <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+      <script src="../../_static/dark_mode_js/default_light.js?v=c2e647ce"></script>
+      <script src="../../_static/dark_mode_js/theme_switcher.js?v=358d3910"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <script src="../../_static/js/versions.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="References" href="../../references/index.html" />
+    <link rel="prev" title="Adding a New Vector Database" href="../new_vector_database.html" />
+ 
+
+<script src="../../_static/version-loader.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            llama-stack
+          </a>
+              <div class="switch-menus">
+                <div class="version-switch"></div>
+                <div class="language-switch"></div>
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Llama Stack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../concepts/index.html">Core Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../providers/index.html">API Providers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../distributions/index.html">Distributions Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../advanced_apis/index.html">Advanced APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../building_applications/index.html">AI Application Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deploying/index.html">Deployment Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Contributing to Llama Stack</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../index.html#set-up-your-development-environment">Set up your development environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#discussions-issues-pull-requests">Discussions -&gt; Issues -&gt; Pull Requests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#repository-guidelines">Repository guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#common-tasks">Common Tasks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#adding-a-new-provider">Adding a New Provider</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#testing">Testing</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html#advanced-topics">Advanced Topics</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Record-Replay System</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#how-it-works">How It Works</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#recording-modes">Recording Modes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#streaming-support">Streaming Support</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#serialization">Serialization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#environment-integration">Environment Integration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#debugging-recordings">Debugging Recordings</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#design-decisions">Design Decisions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#benchmarking">Benchmarking</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../index.html#llama-stack-benchmark-suite-on-kubernetes">Llama Stack Benchmark Suite on Kubernetes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../references/index.html">References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">llama-stack</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Contributing to Llama Stack</a></li>
+      <li class="breadcrumb-item active">Record-Replay System</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/contributing/testing/record-replay.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="record-replay-system">
+<h1>Record-Replay System<a class="headerlink" href="#record-replay-system" title="Link to this heading"></a></h1>
+<p>Understanding how Llama Stack captures and replays API interactions for testing.</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>The record-replay system solves a fundamental challenge in AI testing: how do you test against expensive, non-deterministic APIs without breaking the bank or dealing with flaky tests?</p>
+<p>The solution: intercept API calls, store real responses, and replay them later. This gives you real API behavior without the cost or variability.</p>
+</section>
+<section id="how-it-works">
+<h2>How It Works<a class="headerlink" href="#how-it-works" title="Link to this heading"></a></h2>
+<section id="request-hashing">
+<h3>Request Hashing<a class="headerlink" href="#request-hashing" title="Link to this heading"></a></h3>
+<p>Every API request gets converted to a deterministic hash for lookup:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">normalize_request</span><span class="p">(</span><span class="n">method</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">headers</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">body</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="n">normalized</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="n">method</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span>
+        <span class="s2">&quot;endpoint&quot;</span><span class="p">:</span> <span class="n">urlparse</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">path</span><span class="p">,</span>  <span class="c1"># Just the path, not full URL</span>
+        <span class="s2">&quot;body&quot;</span><span class="p">:</span> <span class="n">body</span><span class="p">,</span>  <span class="c1"># Request parameters</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">normalized</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><strong>Key insight:</strong> The hashing is intentionally precise. Different whitespace, float precision, or parameter order produces different hashes. This prevents subtle bugs from false cache hits.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># These produce DIFFERENT hashes:</span>
+<span class="p">{</span><span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;Hello world&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;Hello   world</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="s2">&quot;temperature&quot;</span><span class="p">:</span> <span class="mf">0.7</span><span class="p">}</span>
+<span class="p">{</span><span class="s2">&quot;temperature&quot;</span><span class="p">:</span> <span class="mf">0.7000001</span><span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="client-interception">
+<h3>Client Interception<a class="headerlink" href="#client-interception" title="Link to this heading"></a></h3>
+<p>The system patches OpenAI and Ollama client methods to intercept calls before they leave your application. This happens transparently - your test code doesn’t change.</p>
+</section>
+<section id="storage-architecture">
+<h3>Storage Architecture<a class="headerlink" href="#storage-architecture" title="Link to this heading"></a></h3>
+<p>Recordings use a two-tier storage system optimized for both speed and debuggability:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>recordings/
+├── index.sqlite          # Fast lookup by request hash
+└── responses/
+    ├── abc123def456.json  # Individual response files
+    └── def789ghi012.json
+</pre></div>
+</div>
+<p><strong>SQLite index</strong> enables O(log n) hash lookups and metadata queries without loading response bodies.</p>
+<p><strong>JSON files</strong> store complete request/response pairs in human-readable format for debugging.</p>
+</section>
+</section>
+<section id="recording-modes">
+<h2>Recording Modes<a class="headerlink" href="#recording-modes" title="Link to this heading"></a></h2>
+<section id="live-mode">
+<h3>LIVE Mode<a class="headerlink" href="#live-mode" title="Link to this heading"></a></h3>
+<p>Direct API calls with no recording or replay:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">inference_recording</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="n">InferenceMode</span><span class="o">.</span><span class="n">LIVE</span><span class="p">):</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Use for initial development and debugging against real APIs.</p>
+</section>
+<section id="record-mode">
+<h3>RECORD Mode<a class="headerlink" href="#record-mode" title="Link to this heading"></a></h3>
+<p>Captures API interactions while passing through real responses:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">inference_recording</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="n">InferenceMode</span><span class="o">.</span><span class="n">RECORD</span><span class="p">,</span> <span class="n">storage_dir</span><span class="o">=</span><span class="s2">&quot;./recordings&quot;</span><span class="p">):</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+    <span class="c1"># Real API call made, response captured AND returned</span>
+</pre></div>
+</div>
+<p>The recording process:</p>
+<ol class="arabic simple">
+<li><p>Request intercepted and hashed</p></li>
+<li><p>Real API call executed</p></li>
+<li><p>Response captured and serialized</p></li>
+<li><p>Recording stored to disk</p></li>
+<li><p>Original response returned to caller</p></li>
+</ol>
+</section>
+<section id="replay-mode">
+<h3>REPLAY Mode<a class="headerlink" href="#replay-mode" title="Link to this heading"></a></h3>
+<p>Returns stored responses instead of making API calls:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">inference_recording</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="n">InferenceMode</span><span class="o">.</span><span class="n">REPLAY</span><span class="p">,</span> <span class="n">storage_dir</span><span class="o">=</span><span class="s2">&quot;./recordings&quot;</span><span class="p">):</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+    <span class="c1"># No API call made, cached response returned instantly</span>
+</pre></div>
+</div>
+<p>The replay process:</p>
+<ol class="arabic simple">
+<li><p>Request intercepted and hashed</p></li>
+<li><p>Hash looked up in SQLite index</p></li>
+<li><p>Response loaded from JSON file</p></li>
+<li><p>Response deserialized and returned</p></li>
+<li><p>Error if no recording found</p></li>
+</ol>
+</section>
+</section>
+<section id="streaming-support">
+<h2>Streaming Support<a class="headerlink" href="#streaming-support" title="Link to this heading"></a></h2>
+<p>Streaming APIs present a unique challenge: how do you capture an async generator?</p>
+<section id="the-problem">
+<h3>The Problem<a class="headerlink" href="#the-problem" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># How do you record this?</span>
+<span class="k">async</span> <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">stream</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="n">process</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="the-solution">
+<h3>The Solution<a class="headerlink" href="#the-solution" title="Link to this heading"></a></h3>
+<p>The system captures all chunks immediately before yielding any:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">handle_streaming_record</span><span class="p">(</span><span class="n">response</span><span class="p">):</span>
+    <span class="c1"># Capture complete stream first</span>
+    <span class="n">chunks</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">async</span> <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">response</span><span class="p">:</span>
+        <span class="n">chunks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+
+    <span class="c1"># Store complete recording</span>
+    <span class="n">storage</span><span class="o">.</span><span class="n">store_recording</span><span class="p">(</span>
+        <span class="n">request_hash</span><span class="p">,</span> <span class="n">request_data</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;body&quot;</span><span class="p">:</span> <span class="n">chunks</span><span class="p">,</span> <span class="s2">&quot;is_streaming&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Return generator that replays captured chunks</span>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">replay_stream</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">chunks</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">chunk</span>
+
+    <span class="k">return</span> <span class="n">replay_stream</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This ensures:</p>
+<ul class="simple">
+<li><p><strong>Complete capture</strong> - The entire stream is saved atomically</p></li>
+<li><p><strong>Interface preservation</strong> - The returned object behaves like the original API</p></li>
+<li><p><strong>Deterministic replay</strong> - Same chunks in the same order every time</p></li>
+</ul>
+</section>
+</section>
+<section id="serialization">
+<h2>Serialization<a class="headerlink" href="#serialization" title="Link to this heading"></a></h2>
+<p>API responses contain complex Pydantic objects that need careful serialization:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">_serialize_response</span><span class="p">(</span><span class="n">response</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="s2">&quot;model_dump&quot;</span><span class="p">):</span>
+        <span class="c1"># Preserve type information for proper deserialization</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;__type__&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__module__</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__qualname__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;__data__&quot;</span><span class="p">:</span> <span class="n">response</span><span class="o">.</span><span class="n">model_dump</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;json&quot;</span><span class="p">),</span>
+        <span class="p">}</span>
+    <span class="k">return</span> <span class="n">response</span>
+</pre></div>
+</div>
+<p>This preserves type safety - when replayed, you get the same Pydantic objects with all their validation and methods.</p>
+</section>
+<section id="environment-integration">
+<h2>Environment Integration<a class="headerlink" href="#environment-integration" title="Link to this heading"></a></h2>
+<section id="environment-variables">
+<h3>Environment Variables<a class="headerlink" href="#environment-variables" title="Link to this heading"></a></h3>
+<p>Control recording behavior globally:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">LLAMA_STACK_TEST_INFERENCE_MODE</span><span class="o">=</span>replay
+<span class="nb">export</span><span class="w"> </span><span class="nv">LLAMA_STACK_TEST_RECORDING_DIR</span><span class="o">=</span>/path/to/recordings
+pytest<span class="w"> </span>tests/integration/
+</pre></div>
+</div>
+</section>
+<section id="pytest-integration">
+<h3>Pytest Integration<a class="headerlink" href="#pytest-integration" title="Link to this heading"></a></h3>
+<p>The system integrates automatically based on environment variables, requiring no changes to test code.</p>
+</section>
+</section>
+<section id="debugging-recordings">
+<h2>Debugging Recordings<a class="headerlink" href="#debugging-recordings" title="Link to this heading"></a></h2>
+<section id="inspecting-storage">
+<h3>Inspecting Storage<a class="headerlink" href="#inspecting-storage" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># See what&#39;s recorded</span>
+sqlite3<span class="w"> </span>recordings/index.sqlite<span class="w"> </span><span class="s2">&quot;SELECT endpoint, model, timestamp FROM recordings LIMIT 10;&quot;</span>
+
+<span class="c1"># View specific response</span>
+cat<span class="w"> </span>recordings/responses/abc123def456.json<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;.response.body&#39;</span>
+
+<span class="c1"># Find recordings by endpoint</span>
+sqlite3<span class="w"> </span>recordings/index.sqlite<span class="w"> </span><span class="s2">&quot;SELECT * FROM recordings WHERE endpoint=&#39;/v1/chat/completions&#39;;&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="common-issues">
+<h3>Common Issues<a class="headerlink" href="#common-issues" title="Link to this heading"></a></h3>
+<p><strong>Hash mismatches:</strong> Request parameters changed slightly between record and replay</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compare request details</span>
+cat<span class="w"> </span>recordings/responses/abc123.json<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;.request&#39;</span>
+</pre></div>
+</div>
+<p><strong>Serialization errors:</strong> Response types changed between versions</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Re-record with updated types</span>
+rm<span class="w"> </span>recordings/responses/failing_hash.json
+<span class="nv">LLAMA_STACK_TEST_INFERENCE_MODE</span><span class="o">=</span>record<span class="w"> </span>pytest<span class="w"> </span>test_failing.py
+</pre></div>
+</div>
+<p><strong>Missing recordings:</strong> New test or changed parameters</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Record the missing interaction</span>
+<span class="nv">LLAMA_STACK_TEST_INFERENCE_MODE</span><span class="o">=</span>record<span class="w"> </span>pytest<span class="w"> </span>test_new.py
+</pre></div>
+</div>
+</section>
+</section>
+<section id="design-decisions">
+<h2>Design Decisions<a class="headerlink" href="#design-decisions" title="Link to this heading"></a></h2>
+<section id="why-not-mocks">
+<h3>Why Not Mocks?<a class="headerlink" href="#why-not-mocks" title="Link to this heading"></a></h3>
+<p>Traditional mocking breaks down with AI APIs because:</p>
+<ul class="simple">
+<li><p>Response structures are complex and evolve frequently</p></li>
+<li><p>Streaming behavior is hard to mock correctly</p></li>
+<li><p>Edge cases in real APIs get missed</p></li>
+<li><p>Mocks become brittle maintenance burdens</p></li>
+</ul>
+</section>
+<section id="why-precise-hashing">
+<h3>Why Precise Hashing?<a class="headerlink" href="#why-precise-hashing" title="Link to this heading"></a></h3>
+<p>Loose hashing (normalizing whitespace, rounding floats) seems convenient but hides bugs. If a test changes slightly, you want to know about it rather than accidentally getting the wrong cached response.</p>
+</section>
+<section id="why-json-sqlite">
+<h3>Why JSON + SQLite?<a class="headerlink" href="#why-json-sqlite" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>JSON</strong> - Human readable, diff-friendly, easy to inspect and modify</p></li>
+<li><p><strong>SQLite</strong> - Fast indexed lookups without loading response bodies</p></li>
+<li><p><strong>Hybrid</strong> - Best of both worlds for different use cases</p></li>
+</ul>
+<p>This system provides reliable, fast testing against real AI APIs while maintaining the ability to debug issues when they arise.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../new_vector_database.html" class="btn btn-neutral float-left" title="Adding a New Vector Database" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../references/index.html" class="btn btn-neutral float-right" title="References" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Meta.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book"> Read the Docs</span>
+    v: v0.2.18
+    <span class="fa fa-caret-down"></span>
+  </span>
+  <div class="rst-other-versions">
+    <dl>
+      <dt>Versions</dt>
+      <dd>
+        <a href="/v0.2.19/">latest</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.19/">v0.2.19</a>
+      </dd>
+      <dd class="rtd-current-item">
+        <a href="/v0.2.18/">v0.2.18</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.17/">v0.2.17</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.16/">v0.2.16</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.15/">v0.2.15</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.14/">v0.2.14</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.13/">v0.2.13</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.12/">v0.2.12</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.11/">v0.2.11</a>
+      </dd>
+    </dl>
+  </div>
+</div><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

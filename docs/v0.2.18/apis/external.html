@@ -1,0 +1,558 @@
+
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>External APIs &mdash; llama-stack 0.2.18 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/my_theme.css?v=f1163765" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../_static/dark_mode_css/general.css?v=c0a7eb24" />
+      <link rel="stylesheet" type="text/css" href="../_static/dark_mode_css/dark.css?v=70edf1c7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=ae23a911"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=09bf800d"></script>
+      <script src="../_static/js/detect_theme.js?v=76226c80"></script>
+      <script src="../_static/js/keyboard_shortcuts.js?v=62563c3b"></script>
+      <script src="../_static/design-tabs.js?v=f930bc37"></script>
+      <script src="../_static/dark_mode_js/default_light.js?v=c2e647ce"></script>
+      <script src="../_static/dark_mode_js/theme_switcher.js?v=358d3910"></script>
+    <script src="../_static/js/theme.js"></script>
+    <script src="../_static/js/versions.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+ 
+
+<script src="../_static/version-loader.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            llama-stack
+          </a>
+              <div class="switch-menus">
+                <div class="version-switch"></div>
+                <div class="language-switch"></div>
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Llama Stack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">Core Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../providers/index.html">API Providers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../distributions/index.html">Distributions Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced_apis/index.html">Advanced APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../building_applications/index.html">AI Application Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deploying/index.html">Deployment Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing/index.html">Contributing to Llama Stack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing/index.html#llama-stack-benchmark-suite-on-kubernetes">Llama Stack Benchmark Suite on Kubernetes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../references/index.html">References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">llama-stack</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">External APIs</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/apis/external.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="external-apis">
+<h1>External APIs<a class="headerlink" href="#external-apis" title="Link to this heading"></a></h1>
+<p>Llama Stack supports external APIs that live outside of the main codebase. This allows you to:</p>
+<ul class="simple">
+<li><p>Create and maintain your own APIs independently</p></li>
+<li><p>Share APIs with others without contributing to the main codebase</p></li>
+<li><p>Keep API-specific code separate from the core Llama Stack code</p></li>
+</ul>
+<section id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Link to this heading"></a></h2>
+<p>To enable external APIs, you need to configure the <code class="docutils literal notranslate"><span class="pre">external_apis_dir</span></code> in your Llama Stack configuration. This directory should contain your external API specifications:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">external_apis_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~/.llama/apis.d/</span>
+</pre></div>
+</div>
+</section>
+<section id="directory-structure">
+<h2>Directory Structure<a class="headerlink" href="#directory-structure" title="Link to this heading"></a></h2>
+<p>The external APIs directory should follow this structure:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">apis</span><span class="o">.</span><span class="n">d</span><span class="o">/</span>
+  <span class="n">custom_api1</span><span class="o">.</span><span class="n">yaml</span>
+  <span class="n">custom_api2</span><span class="o">.</span><span class="n">yaml</span>
+</pre></div>
+</div>
+<p>Each YAML file in these directories defines an API specification.</p>
+</section>
+<section id="api-specification">
+<h2>API Specification<a class="headerlink" href="#api-specification" title="Link to this heading"></a></h2>
+<p>Here’s an example of an external API specification for a weather API:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">module</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">weather</span>
+<span class="nt">api_dependencies</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">inference</span>
+<span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">WeatherAPI</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">weather</span>
+<span class="nt">pip_packages</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">llama-stack-api-weather</span>
+</pre></div>
+</div>
+<section id="api-specification-fields">
+<h3>API Specification Fields<a class="headerlink" href="#api-specification-fields" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">module</span></code>: Python module containing the API implementation</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">protocol</span></code>: Name of the protocol class for the API</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>: Name of the API</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pip_packages</span></code>: List of pip packages to install the API, typically a single package</p></li>
+</ul>
+</section>
+</section>
+<section id="required-implementation">
+<h2>Required Implementation<a class="headerlink" href="#required-implementation" title="Link to this heading"></a></h2>
+<p>External APIs must expose a <code class="docutils literal notranslate"><span class="pre">available_providers()</span></code> function in their module that returns a list of provider names:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># llama_stack_api_weather/api.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">llama_stack.providers.datatypes</span><span class="w"> </span><span class="kn">import</span> <span class="n">Api</span><span class="p">,</span> <span class="n">InlineProviderSpec</span><span class="p">,</span> <span class="n">ProviderSpec</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">available_providers</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">ProviderSpec</span><span class="p">]:</span>
+    <span class="k">return</span> <span class="p">[</span>
+        <span class="n">InlineProviderSpec</span><span class="p">(</span>
+            <span class="n">api</span><span class="o">=</span><span class="n">Api</span><span class="o">.</span><span class="n">weather</span><span class="p">,</span>
+            <span class="n">provider_type</span><span class="o">=</span><span class="s2">&quot;inline::darksky&quot;</span><span class="p">,</span>
+            <span class="n">pip_packages</span><span class="o">=</span><span class="p">[],</span>
+            <span class="n">module</span><span class="o">=</span><span class="s2">&quot;llama_stack_provider_darksky&quot;</span><span class="p">,</span>
+            <span class="n">config_class</span><span class="o">=</span><span class="s2">&quot;llama_stack_provider_darksky.DarkSkyWeatherImplConfig&quot;</span><span class="p">,</span>
+        <span class="p">),</span>
+    <span class="p">]</span>
+</pre></div>
+</div>
+<p>A Protocol class like so:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># llama_stack_api_weather/api.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Protocol</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">llama_stack.schema_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">webmethod</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">WeatherAPI</span><span class="p">(</span><span class="n">Protocol</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A protocol for the Weather API.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@webmethod</span><span class="p">(</span><span class="n">route</span><span class="o">=</span><span class="s2">&quot;/locations&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;GET&quot;</span><span class="p">)</span>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_available_locations</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the available locations.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="o">...</span>
+</pre></div>
+</div>
+</section>
+<section id="example-custom-api">
+<h2>Example: Custom API<a class="headerlink" href="#example-custom-api" title="Link to this heading"></a></h2>
+<p>Here’s a complete example of creating and using a custom API:</p>
+<ol class="arabic simple">
+<li><p>First, create the API package:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>-p<span class="w"> </span>llama-stack-api-weather
+<span class="nb">cd</span><span class="w"> </span>llama-stack-api-weather
+mkdir<span class="w"> </span>src/llama_stack_api_weather
+git<span class="w"> </span>init
+uv<span class="w"> </span>init
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Edit <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code>:</p></li>
+</ol>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[project]</span>
+<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;llama-stack-api-weather&quot;</span>
+<span class="n">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;0.1.0&quot;</span>
+<span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Weather API for Llama Stack&quot;</span>
+<span class="n">readme</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;README.md&quot;</span>
+<span class="n">requires-python</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&gt;=3.12&quot;</span>
+<span class="n">dependencies</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;llama-stack&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;pydantic&quot;</span><span class="p">]</span>
+
+<span class="k">[build-system]</span>
+<span class="n">requires</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;setuptools&quot;</span><span class="p">]</span>
+<span class="n">build-backend</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;setuptools.build_meta&quot;</span>
+
+<span class="k">[tool.setuptools.packages.find]</span>
+<span class="n">where</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;src&quot;</span><span class="p">]</span>
+<span class="n">include</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;llama_stack_api_weather&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;llama_stack_api_weather.*&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>Create the initial files:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>touch<span class="w"> </span>src/llama_stack_api_weather/__init__.py
+touch<span class="w"> </span>src/llama_stack_api_weather/api.py
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># llama-stack-api-weather/src/llama_stack_api_weather/__init__.py</span>
+<span class="sd">&quot;&quot;&quot;Weather API for Llama Stack.&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">.api</span><span class="w"> </span><span class="kn">import</span> <span class="n">WeatherAPI</span><span class="p">,</span> <span class="n">available_providers</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;WeatherAPI&quot;</span><span class="p">,</span> <span class="s2">&quot;available_providers&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p>Create the API implementation:</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># llama-stack-api-weather/src/llama_stack_api_weather/weather.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Protocol</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">llama_stack.providers.datatypes</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">AdapterSpec</span><span class="p">,</span>
+    <span class="n">Api</span><span class="p">,</span>
+    <span class="n">ProviderSpec</span><span class="p">,</span>
+    <span class="n">RemoteProviderSpec</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">llama_stack.schema_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">webmethod</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">available_providers</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">ProviderSpec</span><span class="p">]:</span>
+    <span class="k">return</span> <span class="p">[</span>
+        <span class="n">RemoteProviderSpec</span><span class="p">(</span>
+            <span class="n">api</span><span class="o">=</span><span class="n">Api</span><span class="o">.</span><span class="n">weather</span><span class="p">,</span>
+            <span class="n">provider_type</span><span class="o">=</span><span class="s2">&quot;remote::kaze&quot;</span><span class="p">,</span>
+            <span class="n">config_class</span><span class="o">=</span><span class="s2">&quot;llama_stack_provider_kaze.KazeProviderConfig&quot;</span><span class="p">,</span>
+            <span class="n">adapter</span><span class="o">=</span><span class="n">AdapterSpec</span><span class="p">(</span>
+                <span class="n">adapter_type</span><span class="o">=</span><span class="s2">&quot;kaze&quot;</span><span class="p">,</span>
+                <span class="n">module</span><span class="o">=</span><span class="s2">&quot;llama_stack_provider_kaze&quot;</span><span class="p">,</span>
+                <span class="n">pip_packages</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;llama_stack_provider_kaze&quot;</span><span class="p">],</span>
+                <span class="n">config_class</span><span class="o">=</span><span class="s2">&quot;llama_stack_provider_kaze.KazeProviderConfig&quot;</span><span class="p">,</span>
+            <span class="p">),</span>
+        <span class="p">),</span>
+    <span class="p">]</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">WeatherProvider</span><span class="p">(</span><span class="n">Protocol</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A protocol for the Weather API.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@webmethod</span><span class="p">(</span><span class="n">route</span><span class="o">=</span><span class="s2">&quot;/weather/locations&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;GET&quot;</span><span class="p">)</span>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_available_locations</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the available locations.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="o">...</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="5">
+<li><p>Create the API specification:</p></li>
+</ol>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># ~/.llama/apis.d/weather.yaml</span>
+<span class="nt">module</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">llama_stack_api_weather</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">weather</span>
+<span class="nt">pip_packages</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;llama-stack-api-weather&quot;</span><span class="p p-Indicator">]</span>
+<span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">WeatherProvider</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="6">
+<li><p>Install the API package:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
+</pre></div>
+</div>
+<ol class="arabic simple" start="7">
+<li><p>Configure Llama Stack to use external APIs:</p></li>
+</ol>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;2&quot;</span>
+<span class="nt">image_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;llama-stack-api-weather&quot;</span>
+<span class="nt">apis</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">weather</span>
+<span class="nt">providers</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
+<span class="nt">external_apis_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~/.llama/apis.d</span>
+</pre></div>
+</div>
+<p>The API will now be available at <code class="docutils literal notranslate"><span class="pre">/v1/weather/locations</span></code>.</p>
+</section>
+<section id="example-custom-provider-for-the-weather-api">
+<h2>Example: custom provider for the weather API<a class="headerlink" href="#example-custom-provider-for-the-weather-api" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>Create the provider package:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>-p<span class="w"> </span>llama-stack-provider-kaze
+<span class="nb">cd</span><span class="w"> </span>llama-stack-provider-kaze
+uv<span class="w"> </span>init
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Edit <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code>:</p></li>
+</ol>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[project]</span>
+<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;llama-stack-provider-kaze&quot;</span>
+<span class="n">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;0.1.0&quot;</span>
+<span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Kaze weather provider for Llama Stack&quot;</span>
+<span class="n">readme</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;README.md&quot;</span>
+<span class="n">requires-python</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&gt;=3.12&quot;</span>
+<span class="n">dependencies</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;llama-stack&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;pydantic&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;aiohttp&quot;</span><span class="p">]</span>
+
+<span class="k">[build-system]</span>
+<span class="n">requires</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;setuptools&quot;</span><span class="p">]</span>
+<span class="n">build-backend</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;setuptools.build_meta&quot;</span>
+
+<span class="k">[tool.setuptools.packages.find]</span>
+<span class="n">where</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;src&quot;</span><span class="p">]</span>
+<span class="n">include</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;llama_stack_provider_kaze&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;llama_stack_provider_kaze.*&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>Create the initial files:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>touch<span class="w"> </span>src/llama_stack_provider_kaze/__init__.py
+touch<span class="w"> </span>src/llama_stack_provider_kaze/kaze.py
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p>Create the provider implementation:</p></li>
+</ol>
+<p>Initialization function:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># llama-stack-provider-kaze/src/llama_stack_provider_kaze/__init__.py</span>
+<span class="sd">&quot;&quot;&quot;Kaze weather provider for Llama Stack.&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">KazeProviderConfig</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.kaze</span><span class="w"> </span><span class="kn">import</span> <span class="n">WeatherKazeAdapter</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;KazeProviderConfig&quot;</span><span class="p">,</span> <span class="s2">&quot;WeatherKazeAdapter&quot;</span><span class="p">]</span>
+
+
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_adapter_impl</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n">KazeProviderConfig</span><span class="p">,</span> <span class="n">_deps</span><span class="p">):</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">.kaze</span><span class="w"> </span><span class="kn">import</span> <span class="n">WeatherKazeAdapter</span>
+
+    <span class="n">impl</span> <span class="o">=</span> <span class="n">WeatherKazeAdapter</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">impl</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">impl</span>
+</pre></div>
+</div>
+<p>Configuration:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># llama-stack-provider-kaze/src/llama_stack_provider_kaze/config.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">Field</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">KazeProviderConfig</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Configuration for the Kaze weather provider.&quot;&quot;&quot;</span>
+
+    <span class="n">base_url</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="s2">&quot;https://api.kaze.io/v1&quot;</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Base URL for the Kaze weather API&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+<p>Main implementation:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># llama-stack-provider-kaze/src/llama_stack_provider_kaze/kaze.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">llama_stack_api_weather.api</span><span class="w"> </span><span class="kn">import</span> <span class="n">WeatherProvider</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">KazeProviderConfig</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">WeatherKazeAdapter</span><span class="p">(</span><span class="n">WeatherProvider</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Kaze weather provider implementation.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">config</span><span class="p">:</span> <span class="n">KazeProviderConfig</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>
+
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">pass</span>
+
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_available_locations</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get available weather locations.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;locations&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Paris&quot;</span><span class="p">,</span> <span class="s2">&quot;Tokyo&quot;</span><span class="p">]}</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="5">
+<li><p>Create the provider specification:</p></li>
+</ol>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># ~/.llama/providers.d/remote/weather/kaze.yaml</span>
+<span class="nt">adapter</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">adapter_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kaze</span>
+<span class="w">  </span><span class="nt">pip_packages</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;llama_stack_provider_kaze&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">  </span><span class="nt">config_class</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">llama_stack_provider_kaze.config.KazeProviderConfig</span>
+<span class="w">  </span><span class="nt">module</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">llama_stack_provider_kaze</span>
+<span class="nt">optional_api_dependencies</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="6">
+<li><p>Install the provider package:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
+</pre></div>
+</div>
+<ol class="arabic simple" start="7">
+<li><p>Configure Llama Stack to use the provider:</p></li>
+</ol>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># ~/.llama/run-byoa.yaml</span>
+<span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;2&quot;</span>
+<span class="nt">image_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;llama-stack-api-weather&quot;</span>
+<span class="nt">apis</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">weather</span>
+<span class="nt">providers</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">weather</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">provider_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kaze</span>
+<span class="w">    </span><span class="nt">provider_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">remote::kaze</span>
+<span class="w">    </span><span class="nt">config</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
+<span class="nt">external_apis_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~/.llama/apis.d</span>
+<span class="nt">external_providers_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~/.llama/providers.d</span>
+<span class="nt">server</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8321</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="8">
+<li><p>Run the server:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>llama_stack.core.server.server<span class="w"> </span>--yaml-config<span class="w"> </span>~/.llama/run-byoa.yaml
+</pre></div>
+</div>
+<ol class="arabic simple" start="9">
+<li><p>Test the API:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>-sSf<span class="w"> </span>http://127.0.0.1:8321/v1/weather/locations
+<span class="o">{</span><span class="s2">&quot;locations&quot;</span>:<span class="o">[</span><span class="s2">&quot;Paris&quot;</span>,<span class="s2">&quot;Tokyo&quot;</span><span class="o">]}</span>%
+</pre></div>
+</div>
+</section>
+<section id="best-practices">
+<h2>Best Practices<a class="headerlink" href="#best-practices" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p><strong>Package Naming</strong>: Use a clear and descriptive name for your API package.</p></li>
+<li><p><strong>Version Management</strong>: Keep your API package versioned and compatible with the Llama Stack version you’re using.</p></li>
+<li><p><strong>Dependencies</strong>: Only include the minimum required dependencies in your API package.</p></li>
+<li><p><strong>Documentation</strong>: Include clear documentation in your API package about:</p>
+<ul class="simple">
+<li><p>Installation requirements</p></li>
+<li><p>Configuration options</p></li>
+<li><p>API endpoints and usage</p></li>
+<li><p>Any limitations or known issues</p></li>
+</ul>
+</li>
+<li><p><strong>Testing</strong>: Include tests in your API package to ensure it works correctly with Llama Stack.</p></li>
+</ol>
+</section>
+<section id="troubleshooting">
+<h2>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Link to this heading"></a></h2>
+<p>If your external API isn’t being loaded:</p>
+<ol class="arabic simple">
+<li><p>Check that the <code class="docutils literal notranslate"><span class="pre">external_apis_dir</span></code> path is correct and accessible.</p></li>
+<li><p>Verify that the YAML files are properly formatted.</p></li>
+<li><p>Ensure all required Python packages are installed.</p></li>
+<li><p>Check the Llama Stack server logs for any error messages - turn on debug logging to get more information using <code class="docutils literal notranslate"><span class="pre">LLAMA_STACK_LOGGING=all=debug</span></code>.</p></li>
+<li><p>Verify that the API package is installed in your Python environment.</p></li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Meta.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book"> Read the Docs</span>
+    v: v0.2.18
+    <span class="fa fa-caret-down"></span>
+  </span>
+  <div class="rst-other-versions">
+    <dl>
+      <dt>Versions</dt>
+      <dd>
+        <a href="/v0.2.19/">latest</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.19/">v0.2.19</a>
+      </dd>
+      <dd class="rtd-current-item">
+        <a href="/v0.2.18/">v0.2.18</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.17/">v0.2.17</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.16/">v0.2.16</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.15/">v0.2.15</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.14/">v0.2.14</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.13/">v0.2.13</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.12/">v0.2.12</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.11/">v0.2.11</a>
+      </dd>
+    </dl>
+  </div>
+</div><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

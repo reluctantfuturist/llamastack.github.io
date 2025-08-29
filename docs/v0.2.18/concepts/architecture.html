@@ -1,0 +1,246 @@
+
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Llama Stack architecture &mdash; llama-stack 0.2.18 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/my_theme.css?v=f1163765" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../_static/dark_mode_css/general.css?v=c0a7eb24" />
+      <link rel="stylesheet" type="text/css" href="../_static/dark_mode_css/dark.css?v=70edf1c7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=ae23a911"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=09bf800d"></script>
+      <script src="../_static/js/detect_theme.js?v=76226c80"></script>
+      <script src="../_static/js/keyboard_shortcuts.js?v=62563c3b"></script>
+      <script src="../_static/design-tabs.js?v=f930bc37"></script>
+      <script src="../_static/dark_mode_js/default_light.js?v=c2e647ce"></script>
+      <script src="../_static/dark_mode_js/theme_switcher.js?v=358d3910"></script>
+    <script src="../_static/js/theme.js"></script>
+    <script src="../_static/js/versions.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+ 
+
+<script src="../_static/version-loader.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            llama-stack
+          </a>
+              <div class="switch-menus">
+                <div class="version-switch"></div>
+                <div class="language-switch"></div>
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Llama Stack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html">Core Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../providers/index.html">API Providers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../distributions/index.html">Distributions Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced_apis/index.html">Advanced APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../building_applications/index.html">AI Application Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deploying/index.html">Deployment Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing/index.html">Contributing to Llama Stack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing/index.html#llama-stack-benchmark-suite-on-kubernetes">Llama Stack Benchmark Suite on Kubernetes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../references/index.html">References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">llama-stack</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Llama Stack architecture</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/concepts/architecture.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="llama-stack-architecture">
+<h1>Llama Stack architecture<a class="headerlink" href="#llama-stack-architecture" title="Link to this heading"></a></h1>
+<p>Llama Stack allows you to build different layers of distributions for your AI workloads using various SDKs and API providers.</p>
+<a class="reference internal image-reference" href="../_images/llama-stack.png"><img alt="Llama Stack" src="../_images/llama-stack.png" style="width: 400px;" />
+</a>
+<section id="benefits-of-llama-stack">
+<h2>Benefits of Llama stack<a class="headerlink" href="#benefits-of-llama-stack" title="Link to this heading"></a></h2>
+<section id="current-challenges-in-custom-ai-applications">
+<h3>Current challenges in custom AI applications<a class="headerlink" href="#current-challenges-in-custom-ai-applications" title="Link to this heading"></a></h3>
+<p>Building production AI applications today requires solving multiple challenges:</p>
+<p><strong>Infrastructure Complexity</strong></p>
+<ul class="simple">
+<li><p>Running large language models efficiently requires specialized infrastructure.</p></li>
+<li><p>Different deployment scenarios (local development, cloud, edge) need different solutions.</p></li>
+<li><p>Moving from development to production often requires significant rework.</p></li>
+</ul>
+<p><strong>Essential Capabilities</strong></p>
+<ul class="simple">
+<li><p>Safety guardrails and content filtering are necessary in an enterprise setting.</p></li>
+<li><p>Just model inference is not enough - Knowledge retrieval and RAG capabilities are required.</p></li>
+<li><p>Nearly any application needs composable multi-step workflows.</p></li>
+<li><p>Without monitoring, observability and evaluation, you end up operating in the dark.</p></li>
+</ul>
+<p><strong>Lack of Flexibility and Choice</strong></p>
+<ul class="simple">
+<li><p>Directly integrating with multiple providers creates tight coupling.</p></li>
+<li><p>Different providers have different APIs and abstractions.</p></li>
+<li><p>Changing providers requires significant code changes.</p></li>
+</ul>
+</section>
+<section id="our-solution-a-universal-stack">
+<h3>Our Solution: A Universal Stack<a class="headerlink" href="#our-solution-a-universal-stack" title="Link to this heading"></a></h3>
+<p>Llama Stack addresses these challenges through a service-oriented, API-first approach:</p>
+<p><strong>Develop Anywhere, Deploy Everywhere</strong></p>
+<ul class="simple">
+<li><p>Start locally with CPU-only setups</p></li>
+<li><p>Move to GPU acceleration when needed</p></li>
+<li><p>Deploy to cloud or edge without code changes</p></li>
+<li><p>Same APIs and developer experience everywhere</p></li>
+</ul>
+<p><strong>Production-Ready Building Blocks</strong></p>
+<ul class="simple">
+<li><p>Pre-built safety guardrails and content filtering</p></li>
+<li><p>Built-in RAG and agent capabilities</p></li>
+<li><p>Comprehensive evaluation toolkit</p></li>
+<li><p>Full observability and monitoring</p></li>
+</ul>
+<p><strong>True Provider Independence</strong></p>
+<ul class="simple">
+<li><p>Swap providers without application changes</p></li>
+<li><p>Mix and match best-in-class implementations</p></li>
+<li><p>Federation and fallback support</p></li>
+<li><p>No vendor lock-in</p></li>
+</ul>
+<p><strong>Robust Ecosystem</strong></p>
+<ul class="simple">
+<li><p>Llama Stack is already integrated with distribution partners (cloud providers, hardware vendors, and AI-focused companies).</p></li>
+<li><p>Ecosystem offers tailored infrastructure, software, and services for deploying a variety of models.</p></li>
+</ul>
+</section>
+</section>
+<section id="our-philosophy">
+<h2>Our Philosophy<a class="headerlink" href="#our-philosophy" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Service-Oriented</strong>: REST APIs enforce clean interfaces and enable seamless transitions across different environments.</p></li>
+<li><p><strong>Composability</strong>: Every component is independent but works together seamlessly</p></li>
+<li><p><strong>Production Ready</strong>: Built for real-world applications, not just demos</p></li>
+<li><p><strong>Turnkey Solutions</strong>: Easy to deploy built in solutions for popular deployment scenarios</p></li>
+</ul>
+<p>With Llama Stack, you can focus on building your application while we handle the infrastructure complexity, essential capabilities, and provider integrations.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Meta.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book"> Read the Docs</span>
+    v: v0.2.18
+    <span class="fa fa-caret-down"></span>
+  </span>
+  <div class="rst-other-versions">
+    <dl>
+      <dt>Versions</dt>
+      <dd>
+        <a href="/v0.2.19/">latest</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.19/">v0.2.19</a>
+      </dd>
+      <dd class="rtd-current-item">
+        <a href="/v0.2.18/">v0.2.18</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.17/">v0.2.17</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.16/">v0.2.16</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.15/">v0.2.15</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.14/">v0.2.14</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.13/">v0.2.13</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.12/">v0.2.12</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.11/">v0.2.11</a>
+      </dd>
+    </dl>
+  </div>
+</div><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,64 @@
+{
+  "versions": [
+    {
+      "name": "latest",
+      "version": "latest",
+      "url": "/v0.2.19/",
+      "preferred": true
+    },
+    {
+      "name": "v0.2.19",
+      "version": "v0.2.19",
+      "url": "/v0.2.19/",
+      "preferred": false
+    },
+    {
+      "name": "v0.2.18",
+      "version": "v0.2.18",
+      "url": "/v0.2.18/",
+      "preferred": false
+    },
+    {
+      "name": "v0.2.17",
+      "version": "v0.2.17",
+      "url": "/v0.2.17/",
+      "preferred": false
+    },
+    {
+      "name": "v0.2.16",
+      "version": "v0.2.16",
+      "url": "/v0.2.16/",
+      "preferred": false
+    },
+    {
+      "name": "v0.2.15",
+      "version": "v0.2.15",
+      "url": "/v0.2.15/",
+      "preferred": false
+    },
+    {
+      "name": "v0.2.14",
+      "version": "v0.2.14",
+      "url": "/v0.2.14/",
+      "preferred": false
+    },
+    {
+      "name": "v0.2.13",
+      "version": "v0.2.13",
+      "url": "/v0.2.13/",
+      "preferred": false
+    },
+    {
+      "name": "v0.2.12",
+      "version": "v0.2.12",
+      "url": "/v0.2.12/",
+      "preferred": false
+    },
+    {
+      "name": "v0.2.11",
+      "version": "v0.2.11",
+      "url": "/v0.2.11/",
+      "preferred": false
+    }
+  ]
+}

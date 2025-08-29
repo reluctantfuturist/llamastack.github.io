@@ -1,0 +1,260 @@
+
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Available List of Distributions &mdash; llama-stack 0.2.12 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/my_theme.css?v=f1163765" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../_static/dark_mode_css/general.css?v=c0a7eb24" />
+      <link rel="stylesheet" type="text/css" href="../_static/dark_mode_css/dark.css?v=70edf1c7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=1e30946d"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=09bf800d"></script>
+      <script src="../_static/js/detect_theme.js?v=76226c80"></script>
+      <script src="../_static/js/keyboard_shortcuts.js"></script>
+      <script src="../_static/design-tabs.js?v=f930bc37"></script>
+      <script src="../_static/dark_mode_js/default_light.js?v=c2e647ce"></script>
+      <script src="../_static/dark_mode_js/theme_switcher.js?v=358d3910"></script>
+    <script src="../_static/js/theme.js"></script>
+    <script src="../_static/js/versions.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Remote-Hosted Distributions" href="remote_hosted_distro/index.html" />
+    <link rel="prev" title="Configuring a “Stack”" href="configuration.html" />
+ 
+
+<script src="../_static/version-loader.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            llama-stack
+          </a>
+              <div class="switch-menus">
+                <div class="version-switch"></div>
+                <div class="language-switch"></div>
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Llama Stack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/index.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/detailed_tutorial.html">Detailed Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../introduction/index.html">Why Llama Stack?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">Core Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openai/index.html">OpenAI API Compatibility</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../providers/index.html">Providers Overview</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Distributions Overview</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="importing_as_library.html">Using Llama Stack as a Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html">Configuring a “Stack”</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Available List of Distributions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#selection-of-a-distribution-template">Selection of a Distribution / Template</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#distribution-details">Distribution Details</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#on-device-distributions">On-Device Distributions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kubernetes_deployment.html">Kubernetes Deployment Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="building_distro.html">Build your own Distribution</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../building_applications/index.html">Building AI Applications (Examples)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../playground/index.html">Llama Stack Playground</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing/index.html">Contributing to Llama-Stack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../references/index.html">References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">llama-stack</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Distributions Overview</a></li>
+      <li class="breadcrumb-item active">Available List of Distributions</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/distributions/list_of_distributions.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="available-list-of-distributions">
+<h1>Available List of Distributions<a class="headerlink" href="#available-list-of-distributions" title="Link to this heading"></a></h1>
+<p>Here are a list of distributions you can use to start a Llama Stack server that are provided out of the box.</p>
+<section id="selection-of-a-distribution-template">
+<h2>Selection of a Distribution / Template<a class="headerlink" href="#selection-of-a-distribution-template" title="Link to this heading"></a></h2>
+<p>Which templates / distributions to choose depends on the hardware you have for running LLM inference.</p>
+<ul class="simple">
+<li><p><strong>Do you want a hosted Llama Stack endpoint?</strong> If so, we suggest leveraging our partners who host Llama Stack endpoints. Namely, <em>fireworks.ai</em> and <em>together.xyz</em>.</p>
+<ul>
+<li><p>Read more about it here - <a class="reference internal" href="remote_hosted_distro/index.html"><span class="doc std std-doc">Remote-Hosted Endpoints</span></a>.</p></li>
+</ul>
+</li>
+<li><p><strong>Do you have access to machines with GPUs?</strong> If you wish to run Llama Stack locally or on a cloud instance and host your own Llama Stack endpoint, we suggest:</p>
+<ul>
+<li><p><a class="reference external" href="https://hub.docker.com/r/llamastack/distribution-remote-vllm">distribution-remote-vllm</a> (<a class="reference internal" href="self_hosted_distro/remote-vllm.html"><span class="doc std std-doc">Guide</span></a>)</p></li>
+<li><p><a class="reference external" href="https://hub.docker.com/r/llamastack/distribution-meta-reference-gpu">distribution-meta-reference-gpu</a> (<a class="reference internal" href="self_hosted_distro/meta-reference-gpu.html"><span class="doc std std-doc">Guide</span></a>)</p></li>
+<li><p><a class="reference external" href="https://hub.docker.com/r/llamastack/distribution-tgi">distribution-tgi</a> (<a class="reference internal" href="self_hosted_distro/tgi.html"><span class="doc std std-doc">Guide</span></a>)</p></li>
+<li><p><a class="reference external" href="https://hub.docker.com/r/llamastack/distribution-nvidia">distribution-nvidia</a> (<a class="reference internal" href="self_hosted_distro/nvidia.html"><span class="doc std std-doc">Guide</span></a>)</p></li>
+</ul>
+</li>
+<li><p><strong>Are you running on a “regular” desktop or laptop ?</strong> We suggest using the ollama template for quick prototyping and get started without having to worry about needing GPUs.</p>
+<ul>
+<li><p><a class="reference external" href="https://hub.docker.com/r/llamastack/distribution-ollama">distribution-ollama</a> (<a class="reference internal" href="self_hosted_distro/ollama.html"><span class="doc std std-doc">Guide</span></a>)</p></li>
+</ul>
+</li>
+<li><p><strong>Do you have an API key for a remote inference provider like Fireworks, Together, etc.?</strong>  If so, we suggest:</p>
+<ul>
+<li><p><a class="reference external" href="https://hub.docker.com/r/llamastack/distribution-together">distribution-together</a> (<a class="reference internal" href="self_hosted_distro/together.html"><span class="doc std std-doc">Guide</span></a>)</p></li>
+<li><p><a class="reference external" href="https://hub.docker.com/r/llamastack/distribution-fireworks">distribution-fireworks</a> (<a class="reference internal" href="self_hosted_distro/fireworks.html"><span class="doc std std-doc">Guide</span></a>)</p></li>
+</ul>
+</li>
+<li><p><strong>Do you want to run Llama Stack inference on your iOS / Android device?</strong>  Lastly, we also provide templates for running Llama Stack inference on your iOS / Android device:</p>
+<ul>
+<li><p><a class="reference internal" href="ondevice_distro/ios_sdk.html"><span class="doc std std-doc">iOS SDK</span></a></p></li>
+<li><p><a class="reference internal" href="ondevice_distro/android_sdk.html"><span class="doc std std-doc">Android</span></a></p></li>
+</ul>
+</li>
+<li><p><strong>If none of the above fit your needs, you can also build your own <a class="reference internal" href="building_distro.html"><span class="std std-doc">custom distribution</span></a>.</strong></p></li>
+</ul>
+<section id="distribution-details">
+<h3>Distribution Details<a class="headerlink" href="#distribution-details" title="Link to this heading"></a></h3>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="remote_hosted_distro/index.html">Remote-Hosted Distributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="self_hosted_distro/remote-vllm.html">Remote vLLM Distribution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="self_hosted_distro/meta-reference-gpu.html">Meta Reference Distribution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="self_hosted_distro/tgi.html">TGI Distribution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="self_hosted_distro/nvidia.html">NVIDIA Distribution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="self_hosted_distro/ollama.html">Ollama Distribution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="self_hosted_distro/together.html">Together Distribution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="self_hosted_distro/fireworks.html">Fireworks Distribution</a></li>
+</ul>
+</div>
+</section>
+<section id="on-device-distributions">
+<h3>On-Device Distributions<a class="headerlink" href="#on-device-distributions" title="Link to this heading"></a></h3>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ondevice_distro/ios_sdk.html">iOS SDK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ondevice_distro/android_sdk.html">Llama Stack Client Kotlin API Library</a></li>
+</ul>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="configuration.html" class="btn btn-neutral float-left" title="Configuring a “Stack”" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="remote_hosted_distro/index.html" class="btn btn-neutral float-right" title="Remote-Hosted Distributions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Meta.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book"> Read the Docs</span>
+    v: v0.2.12
+    <span class="fa fa-caret-down"></span>
+  </span>
+  <div class="rst-other-versions">
+    <dl>
+      <dt>Versions</dt>
+      <dd>
+        <a href="/v0.2.19/">latest</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.19/">v0.2.19</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.18/">v0.2.18</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.17/">v0.2.17</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.16/">v0.2.16</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.15/">v0.2.15</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.14/">v0.2.14</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.13/">v0.2.13</a>
+      </dd>
+      <dd class="rtd-current-item">
+        <a href="/v0.2.12/">v0.2.12</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.11/">v0.2.11</a>
+      </dd>
+    </dl>
+  </div>
+</div><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

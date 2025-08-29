@@ -1,0 +1,329 @@
+
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Llama Stack Benchmark Suite on Kubernetes &mdash; llama-stack 0.2.19 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/my_theme.css?v=f1163765" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/dark_mode_css/general.css?v=c0a7eb24" />
+      <link rel="stylesheet" type="text/css" href="../../_static/dark_mode_css/dark.css?v=70edf1c7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=0a5b2d08"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=09bf800d"></script>
+      <script src="../../_static/js/detect_theme.js?v=76226c80"></script>
+      <script src="../../_static/js/keyboard_shortcuts.js?v=62563c3b"></script>
+      <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+      <script src="../../_static/dark_mode_js/default_light.js?v=c2e647ce"></script>
+      <script src="../../_static/dark_mode_js/theme_switcher.js?v=358d3910"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <script src="../../_static/js/versions.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+ 
+
+<script src="../../_static/version-loader.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            llama-stack
+          </a>
+              <div class="switch-menus">
+                <div class="version-switch"></div>
+                <div class="language-switch"></div>
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Llama Stack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../concepts/index.html">Core Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../providers/index.html">API Providers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Distributions Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../advanced_apis/index.html">Advanced APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../building_applications/index.html">AI Application Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deploying/index.html">Deployment Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing/index.html">Contributing to Llama Stack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing/index.html#llama-stack-benchmark-suite-on-kubernetes">Llama Stack Benchmark Suite on Kubernetes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../references/index.html">References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">llama-stack</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Llama Stack Benchmark Suite on Kubernetes</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/distributions/k8s-benchmark/README.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="llama-stack-benchmark-suite-on-kubernetes">
+<h1>Llama Stack Benchmark Suite on Kubernetes<a class="headerlink" href="#llama-stack-benchmark-suite-on-kubernetes" title="Link to this heading"></a></h1>
+<section id="motivation">
+<h2>Motivation<a class="headerlink" href="#motivation" title="Link to this heading"></a></h2>
+<p>Performance benchmarking is critical for understanding the overhead and characteristics of the Llama Stack abstraction layer compared to direct inference engines like vLLM.</p>
+<section id="why-this-benchmark-suite-exists">
+<h3>Why This Benchmark Suite Exists<a class="headerlink" href="#why-this-benchmark-suite-exists" title="Link to this heading"></a></h3>
+<p><strong>Performance Validation</strong>: The Llama Stack provides a unified API layer across multiple inference providers, but this abstraction introduces potential overhead. This benchmark suite quantifies the performance impact by comparing:</p>
+<ul class="simple">
+<li><p>Llama Stack inference (with vLLM backend)</p></li>
+<li><p>Direct vLLM inference calls</p></li>
+<li><p>Both under identical Kubernetes deployment conditions</p></li>
+</ul>
+<p><strong>Production Readiness Assessment</strong>: Real-world deployments require understanding performance characteristics under load. This suite simulates concurrent user scenarios with configurable parameters (duration, concurrency, request patterns) to validate production readiness.</p>
+<p><strong>Regression Detection (TODO)</strong>: As the Llama Stack evolves, this benchmark provides automated regression detection for performance changes. CI/CD pipelines can leverage these benchmarks to catch performance degradations before production deployments.</p>
+<p><strong>Resource Planning</strong>: By measuring throughput, latency percentiles, and resource utilization patterns, teams can make informed decisions about:</p>
+<ul class="simple">
+<li><p>Kubernetes resource allocation (CPU, memory, GPU)</p></li>
+<li><p>Auto-scaling configurations</p></li>
+<li><p>Cost optimization strategies</p></li>
+</ul>
+</section>
+<section id="key-metrics-captured">
+<h3>Key Metrics Captured<a class="headerlink" href="#key-metrics-captured" title="Link to this heading"></a></h3>
+<p>The benchmark suite measures critical performance indicators:</p>
+<ul class="simple">
+<li><p><strong>Throughput</strong>: Requests per second under sustained load</p></li>
+<li><p><strong>Latency Distribution</strong>: P50, P95, P99 response times</p></li>
+<li><p><strong>Time to First Token (TTFT)</strong>: Critical for streaming applications</p></li>
+<li><p><strong>Error Rates</strong>: Request failures and timeout analysis</p></li>
+</ul>
+<p>This data enables data-driven architectural decisions and performance optimization efforts.</p>
+</section>
+</section>
+<section id="setup">
+<h2>Setup<a class="headerlink" href="#setup" title="Link to this heading"></a></h2>
+<p><strong>1. Deploy base k8s infrastructure:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>../k8s
+./apply.sh
+</pre></div>
+</div>
+<p><strong>2. Deploy benchmark components:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>../k8s-benchmark
+./apply.sh
+</pre></div>
+</div>
+<p><strong>3. Verify deployment:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>kubectl<span class="w"> </span>get<span class="w"> </span>pods
+<span class="c1"># Should see: llama-stack-benchmark-server, vllm-server, etc.</span>
+</pre></div>
+</div>
+</section>
+<section id="quick-start">
+<h2>Quick Start<a class="headerlink" href="#quick-start" title="Link to this heading"></a></h2>
+<section id="basic-benchmarks">
+<h3>Basic Benchmarks<a class="headerlink" href="#basic-benchmarks" title="Link to this heading"></a></h3>
+<p><strong>Benchmark Llama Stack (default):</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>docs/source/distributions/k8s-benchmark/
+./run-benchmark.sh
+</pre></div>
+</div>
+<p><strong>Benchmark vLLM direct:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./run-benchmark.sh<span class="w"> </span>--target<span class="w"> </span>vllm
+</pre></div>
+</div>
+</section>
+<section id="custom-configuration">
+<h3>Custom Configuration<a class="headerlink" href="#custom-configuration" title="Link to this heading"></a></h3>
+<p><strong>Extended benchmark with high concurrency:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./run-benchmark.sh<span class="w"> </span>--target<span class="w"> </span>vllm<span class="w"> </span>--duration<span class="w"> </span><span class="m">120</span><span class="w"> </span>--concurrent<span class="w"> </span><span class="m">20</span>
+</pre></div>
+</div>
+<p><strong>Short test run:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./run-benchmark.sh<span class="w"> </span>--target<span class="w"> </span>stack<span class="w"> </span>--duration<span class="w"> </span><span class="m">30</span><span class="w"> </span>--concurrent<span class="w"> </span><span class="m">5</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="command-reference">
+<h2>Command Reference<a class="headerlink" href="#command-reference" title="Link to this heading"></a></h2>
+<section id="run-benchmark-sh-options">
+<h3>run-benchmark.sh Options<a class="headerlink" href="#run-benchmark-sh-options" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./run-benchmark.sh<span class="w"> </span><span class="o">[</span>options<span class="o">]</span>
+
+Options:
+<span class="w">  </span>-t,<span class="w"> </span>--target<span class="w"> </span>&lt;stack<span class="p">|</span>vllm&gt;<span class="w">     </span>Target<span class="w"> </span>to<span class="w"> </span>benchmark<span class="w"> </span><span class="o">(</span>default:<span class="w"> </span>stack<span class="o">)</span>
+<span class="w">  </span>-d,<span class="w"> </span>--duration<span class="w"> </span>&lt;seconds&gt;<span class="w">      </span>Duration<span class="w"> </span><span class="k">in</span><span class="w"> </span>seconds<span class="w"> </span><span class="o">(</span>default:<span class="w"> </span><span class="m">60</span><span class="o">)</span>
+<span class="w">  </span>-c,<span class="w"> </span>--concurrent<span class="w"> </span>&lt;users&gt;<span class="w">      </span>Number<span class="w"> </span>of<span class="w"> </span>concurrent<span class="w"> </span>users<span class="w"> </span><span class="o">(</span>default:<span class="w"> </span><span class="m">10</span><span class="o">)</span>
+<span class="w">  </span>-h,<span class="w"> </span>--help<span class="w">                    </span>Show<span class="w"> </span><span class="nb">help</span><span class="w"> </span>message
+
+Examples:
+<span class="w">  </span>./run-benchmark.sh<span class="w"> </span>--target<span class="w"> </span>vllm<span class="w">              </span><span class="c1"># Benchmark vLLM direct</span>
+<span class="w">  </span>./run-benchmark.sh<span class="w"> </span>--target<span class="w"> </span>stack<span class="w">             </span><span class="c1"># Benchmark Llama Stack</span>
+<span class="w">  </span>./run-benchmark.sh<span class="w"> </span>-t<span class="w"> </span>vllm<span class="w"> </span>-d<span class="w"> </span><span class="m">120</span><span class="w"> </span>-c<span class="w"> </span><span class="m">20</span><span class="w">       </span><span class="c1"># vLLM with 120s, 20 users</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="local-testing">
+<h2>Local Testing<a class="headerlink" href="#local-testing" title="Link to this heading"></a></h2>
+<section id="running-benchmark-locally">
+<h3>Running Benchmark Locally<a class="headerlink" href="#running-benchmark-locally" title="Link to this heading"></a></h3>
+<p>For local development without Kubernetes:</p>
+<p><strong>1. Start OpenAI mock server:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>openai-mock-server.py<span class="w"> </span>--port<span class="w"> </span><span class="m">8080</span>
+</pre></div>
+</div>
+<p><strong>2. Run benchmark against mock server:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>benchmark.py<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--base-url<span class="w"> </span>http://localhost:8080/v1<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--model<span class="w"> </span>mock-inference<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--duration<span class="w"> </span><span class="m">30</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--concurrent<span class="w"> </span><span class="m">5</span>
+</pre></div>
+</div>
+<p><strong>3. Test against local vLLM server:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># If you have vLLM running locally on port 8000</span>
+uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>benchmark.py<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--base-url<span class="w"> </span>http://localhost:8000/v1<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--model<span class="w"> </span>meta-llama/Llama-3.2-3B-Instruct<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--duration<span class="w"> </span><span class="m">30</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--concurrent<span class="w"> </span><span class="m">5</span>
+</pre></div>
+</div>
+<p><strong>4. Profile the running server:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./profile_running_server.sh
+</pre></div>
+</div>
+</section>
+<section id="openai-mock-server">
+<h3>OpenAI Mock Server<a class="headerlink" href="#openai-mock-server" title="Link to this heading"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">openai-mock-server.py</span></code> provides:</p>
+<ul class="simple">
+<li><p><strong>OpenAI-compatible API</strong> for testing without real models</p></li>
+<li><p><strong>Configurable streaming delay</strong> via <code class="docutils literal notranslate"><span class="pre">STREAM_DELAY_SECONDS</span></code> env var</p></li>
+<li><p><strong>Consistent responses</strong> for reproducible benchmarks</p></li>
+<li><p><strong>Lightweight testing</strong> without GPU requirements</p></li>
+</ul>
+<p><strong>Mock server usage:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>openai-mock-server.py<span class="w"> </span>--port<span class="w"> </span><span class="m">8080</span>
+</pre></div>
+</div>
+<p>The mock server is also deployed in k8s as <code class="docutils literal notranslate"><span class="pre">openai-mock-service:8080</span></code> and can be used by changing the Llama Stack configuration to use the <code class="docutils literal notranslate"><span class="pre">mock-vllm-inference</span></code> provider.</p>
+</section>
+</section>
+<section id="files-in-this-directory">
+<h2>Files in this Directory<a class="headerlink" href="#files-in-this-directory" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">benchmark.py</span></code> - Core benchmark script with async streaming support</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">run-benchmark.sh</span></code> - Main script with target selection and configuration</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">openai-mock-server.py</span></code> - Mock OpenAI API server for local testing</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">README.md</span></code> - This documentation file</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Meta.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book"> Read the Docs</span>
+    v: v0.2.19
+    <span class="fa fa-caret-down"></span>
+  </span>
+  <div class="rst-other-versions">
+    <dl>
+      <dt>Versions</dt>
+      <dd>
+        <a href="/v0.2.19/">latest</a>
+      </dd>
+      <dd class="rtd-current-item">
+        <a href="/v0.2.19/">v0.2.19</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.18/">v0.2.18</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.17/">v0.2.17</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.16/">v0.2.16</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.15/">v0.2.15</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.14/">v0.2.14</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.13/">v0.2.13</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.12/">v0.2.12</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.11/">v0.2.11</a>
+      </dd>
+    </dl>
+  </div>
+</div><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

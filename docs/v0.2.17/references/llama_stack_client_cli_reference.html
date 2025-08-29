@@ -1,0 +1,878 @@
+
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>llama (client-side) CLI Reference &mdash; llama-stack 0.2.17 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/my_theme.css?v=f1163765" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../_static/dark_mode_css/general.css?v=c0a7eb24" />
+      <link rel="stylesheet" type="text/css" href="../_static/dark_mode_css/dark.css?v=70edf1c7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=46390ad3"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=09bf800d"></script>
+      <script src="../_static/js/detect_theme.js?v=76226c80"></script>
+      <script src="../_static/js/keyboard_shortcuts.js"></script>
+      <script src="../_static/design-tabs.js?v=f930bc37"></script>
+      <script src="../_static/dark_mode_js/default_light.js?v=c2e647ce"></script>
+      <script src="../_static/dark_mode_js/theme_switcher.js?v=358d3910"></script>
+    <script src="../_static/js/theme.js"></script>
+    <script src="../_static/js/versions.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Downloading Models" href="llama_cli_reference/download_models.html" />
+    <link rel="prev" title="llama (server-side) CLI Reference" href="llama_cli_reference/index.html" />
+ 
+
+<script src="../_static/version-loader.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            llama-stack
+          </a>
+              <div class="switch-menus">
+                <div class="version-switch"></div>
+                <div class="language-switch"></div>
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Llama Stack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">Core Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../providers/index.html">API Providers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../distributions/index.html">Distributions Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced_apis/index.html">Advanced APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../building_applications/index.html">AI Application Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deploying/index.html">Deployment Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing/index.html">Contributing to Llama-Stack</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">References</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="api_reference/index.html">API Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_sdk_reference/index.html">Python SDK Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="llama_cli_reference/index.html">llama (server-side) CLI Reference</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">llama (client-side) CLI Reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#basic-commands">Basic Commands</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#llama-stack-client"><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#llama-stack-client-configure"><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">configure</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#llama-stack-client-inspect-version"><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">inspect</span> <span class="pre">version</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#llama-stack-client-providers-list"><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">providers</span> <span class="pre">list</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#llama-stack-client-providers-inspect"><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">providers</span> <span class="pre">inspect</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#inference">Inference</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#llama-stack-client-inference-chat-completion"><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">inference</span> <span class="pre">chat-completion</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#model-management">Model Management</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#llama-stack-client-models-list"><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">models</span> <span class="pre">list</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#llama-stack-client-models-get"><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">models</span> <span class="pre">get</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#llama-stack-client-models-register"><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">models</span> <span class="pre">register</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#llama-stack-client-models-unregister"><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">models</span> <span class="pre">unregister</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#vector-db-management">Vector DB Management</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#llama-stack-client-vector-dbs-list"><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">vector_dbs</span> <span class="pre">list</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#llama-stack-client-vector-dbs-register"><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">vector_dbs</span> <span class="pre">register</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#llama-stack-client-vector-dbs-unregister"><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">vector_dbs</span> <span class="pre">unregister</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#shield-management">Shield Management</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#llama-stack-client-shields-list"><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">shields</span> <span class="pre">list</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#llama-stack-client-shields-register"><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">shields</span> <span class="pre">register</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#eval-execution">Eval execution</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#llama-stack-client-eval-run-benchmark"><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">eval</span> <span class="pre">run-benchmark</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#llama-stack-client-eval-run-scoring"><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">eval</span> <span class="pre">run-scoring</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#eval-tasks">Eval Tasks</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#llama-stack-client-eval-tasks-list"><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">eval_tasks</span> <span class="pre">list</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#llama-stack-client-eval-tasks-register"><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">eval_tasks</span> <span class="pre">register</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#tool-group-management">Tool Group Management</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#llama-stack-client-toolgroups-list"><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">toolgroups</span> <span class="pre">list</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#llama-stack-client-toolgroups-get"><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">toolgroups</span> <span class="pre">get</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#llama-stack-client-toolgroups-register"><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">toolgroups</span> <span class="pre">register</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#llama-stack-client-toolgroups-unregister"><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">toolgroups</span> <span class="pre">unregister</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#datasets-management">Datasets Management</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#llama-stack-client-datasets-list"><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">datasets</span> <span class="pre">list</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#llama-stack-client-datasets-register"><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">datasets</span> <span class="pre">register</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#llama-stack-client-datasets-unregister"><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">datasets</span> <span class="pre">unregister</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#scoring-functions-management">Scoring Functions Management</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#llama-stack-client-scoring-functions-list"><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">scoring_functions</span> <span class="pre">list</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#llama-stack-client-scoring-functions-register"><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">scoring_functions</span> <span class="pre">register</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#post-training-management">Post Training Management</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#llama-stack-client-post-training-list"><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">post_training</span> <span class="pre">list</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#llama-stack-client-post-training-artifacts"><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">post_training</span> <span class="pre">artifacts</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#llama-stack-client-post-training-supervised-fine-tune"><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">post_training</span> <span class="pre">supervised_fine_tune</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#llama-stack-client-post-training-status"><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">post_training</span> <span class="pre">status</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#llama-stack-client-post-training-cancel"><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">post_training</span> <span class="pre">cancel</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="llama_cli_reference/download_models.html">Downloading Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="evals_reference/index.html">Evaluations</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">llama-stack</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">References</a></li>
+      <li class="breadcrumb-item active">llama (client-side) CLI Reference</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/references/llama_stack_client_cli_reference.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="llama-client-side-cli-reference">
+<h1>llama (client-side) CLI Reference<a class="headerlink" href="#llama-client-side-cli-reference" title="Link to this heading"></a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">llama-stack-client</span></code> CLI allows you to query information about the distribution.</p>
+<section id="basic-commands">
+<h2>Basic Commands<a class="headerlink" href="#basic-commands" title="Link to this heading"></a></h2>
+<section id="llama-stack-client">
+<h3><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span></code><a class="headerlink" href="#llama-stack-client" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>llama-stack-client
+Usage:<span class="w"> </span>llama-stack-client<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span>COMMAND<span class="w"> </span><span class="o">[</span>ARGS<span class="o">]</span>...
+
+<span class="w">  </span>Welcome<span class="w"> </span>to<span class="w"> </span>the<span class="w"> </span>llama-stack-client<span class="w"> </span>CLI<span class="w"> </span>-<span class="w"> </span>a<span class="w"> </span>command-line<span class="w"> </span>interface<span class="w"> </span><span class="k">for</span>
+<span class="w">  </span>interacting<span class="w"> </span>with<span class="w"> </span>Llama<span class="w"> </span>Stack
+
+Options:
+<span class="w">  </span>--version<span class="w">        </span>Show<span class="w"> </span>the<span class="w"> </span>version<span class="w"> </span>and<span class="w"> </span>exit.
+<span class="w">  </span>--endpoint<span class="w"> </span>TEXT<span class="w">  </span>Llama<span class="w"> </span>Stack<span class="w"> </span>distribution<span class="w"> </span>endpoint
+<span class="w">  </span>--api-key<span class="w"> </span>TEXT<span class="w">   </span>Llama<span class="w"> </span>Stack<span class="w"> </span>distribution<span class="w"> </span>API<span class="w"> </span>key
+<span class="w">  </span>--config<span class="w"> </span>TEXT<span class="w">    </span>Path<span class="w"> </span>to<span class="w"> </span>config<span class="w"> </span>file
+<span class="w">  </span>--help<span class="w">           </span>Show<span class="w"> </span>this<span class="w"> </span>message<span class="w"> </span>and<span class="w"> </span>exit.
+
+Commands:
+<span class="w">  </span>configure<span class="w">          </span>Configure<span class="w"> </span>Llama<span class="w"> </span>Stack<span class="w"> </span>Client<span class="w"> </span>CLI.
+<span class="w">  </span>datasets<span class="w">           </span>Manage<span class="w"> </span>datasets.
+<span class="w">  </span><span class="nb">eval</span><span class="w">               </span>Run<span class="w"> </span>evaluation<span class="w"> </span>tasks.
+<span class="w">  </span>eval_tasks<span class="w">         </span>Manage<span class="w"> </span>evaluation<span class="w"> </span>tasks.
+<span class="w">  </span>inference<span class="w">          </span>Inference<span class="w"> </span><span class="o">(</span>chat<span class="o">)</span>.
+<span class="w">  </span>inspect<span class="w">            </span>Inspect<span class="w"> </span>server<span class="w"> </span>configuration.
+<span class="w">  </span>models<span class="w">             </span>Manage<span class="w"> </span>GenAI<span class="w"> </span>models.
+<span class="w">  </span>post_training<span class="w">      </span>Post-training.
+<span class="w">  </span>providers<span class="w">          </span>Manage<span class="w"> </span>API<span class="w"> </span>providers.
+<span class="w">  </span>scoring_functions<span class="w">  </span>Manage<span class="w"> </span>scoring<span class="w"> </span>functions.
+<span class="w">  </span>shields<span class="w">            </span>Manage<span class="w"> </span>safety<span class="w"> </span>shield<span class="w"> </span>services.
+<span class="w">  </span>toolgroups<span class="w">         </span>Manage<span class="w"> </span>available<span class="w"> </span>tool<span class="w"> </span>groups.
+<span class="w">  </span>vector_dbs<span class="w">         </span>Manage<span class="w"> </span>vector<span class="w"> </span>databases.
+</pre></div>
+</div>
+</section>
+<section id="llama-stack-client-configure">
+<h3><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">configure</span></code><a class="headerlink" href="#llama-stack-client-configure" title="Link to this heading"></a></h3>
+<p>Configure Llama Stack Client CLI.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>llama-stack-client<span class="w"> </span>configure
+&gt;<span class="w"> </span>Enter<span class="w"> </span>the<span class="w"> </span>host<span class="w"> </span>name<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>Llama<span class="w"> </span>Stack<span class="w"> </span>distribution<span class="w"> </span>server:<span class="w"> </span>localhost
+&gt;<span class="w"> </span>Enter<span class="w"> </span>the<span class="w"> </span>port<span class="w"> </span>number<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>Llama<span class="w"> </span>Stack<span class="w"> </span>distribution<span class="w"> </span>server:<span class="w"> </span><span class="m">8321</span>
+Done!<span class="w"> </span>You<span class="w"> </span>can<span class="w"> </span>now<span class="w"> </span>use<span class="w"> </span>the<span class="w"> </span>Llama<span class="w"> </span>Stack<span class="w"> </span>Client<span class="w"> </span>CLI<span class="w"> </span>with<span class="w"> </span>endpoint<span class="w"> </span>http://localhost:8321
+</pre></div>
+</div>
+<p>Optional arguments:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--endpoint</span></code>: Llama Stack distribution endpoint</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--api-key</span></code>: Llama Stack distribution API key</p></li>
+</ul>
+</section>
+</section>
+<section id="llama-stack-client-inspect-version">
+<h2><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">inspect</span> <span class="pre">version</span></code><a class="headerlink" href="#llama-stack-client-inspect-version" title="Link to this heading"></a></h2>
+<p>Inspect server configuration.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>llama-stack-client<span class="w"> </span>inspect<span class="w"> </span>version
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>VersionInfo<span class="o">(</span><span class="nv">version</span><span class="o">=</span><span class="s1">&#39;0.2.14&#39;</span><span class="o">)</span>
+</pre></div>
+</div>
+<section id="llama-stack-client-providers-list">
+<h3><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">providers</span> <span class="pre">list</span></code><a class="headerlink" href="#llama-stack-client-providers-list" title="Link to this heading"></a></h3>
+<p>Show available providers on distribution endpoint</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>llama-stack-client<span class="w"> </span>providers<span class="w"> </span>list
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">+-----------+----------------+-----------------+</span>
+<span class="o">|</span> <span class="n">API</span>       <span class="o">|</span> <span class="n">Provider</span> <span class="n">ID</span>    <span class="o">|</span> <span class="n">Provider</span> <span class="n">Type</span>   <span class="o">|</span>
+<span class="o">+===========+================+=================+</span>
+<span class="o">|</span> <span class="n">scoring</span>   <span class="o">|</span> <span class="n">meta0</span>          <span class="o">|</span> <span class="n">meta</span><span class="o">-</span><span class="n">reference</span>  <span class="o">|</span>
+<span class="o">+-----------+----------------+-----------------+</span>
+<span class="o">|</span> <span class="n">datasetio</span> <span class="o">|</span> <span class="n">meta0</span>          <span class="o">|</span> <span class="n">meta</span><span class="o">-</span><span class="n">reference</span>  <span class="o">|</span>
+<span class="o">+-----------+----------------+-----------------+</span>
+<span class="o">|</span> <span class="n">inference</span> <span class="o">|</span> <span class="n">tgi0</span>           <span class="o">|</span> <span class="n">remote</span><span class="p">::</span><span class="n">tgi</span>     <span class="o">|</span>
+<span class="o">+-----------+----------------+-----------------+</span>
+<span class="o">|</span> <span class="n">memory</span>    <span class="o">|</span> <span class="n">meta</span><span class="o">-</span><span class="n">reference</span> <span class="o">|</span> <span class="n">meta</span><span class="o">-</span><span class="n">reference</span>  <span class="o">|</span>
+<span class="o">+-----------+----------------+-----------------+</span>
+<span class="o">|</span> <span class="n">agents</span>    <span class="o">|</span> <span class="n">meta</span><span class="o">-</span><span class="n">reference</span> <span class="o">|</span> <span class="n">meta</span><span class="o">-</span><span class="n">reference</span>  <span class="o">|</span>
+<span class="o">+-----------+----------------+-----------------+</span>
+<span class="o">|</span> <span class="n">telemetry</span> <span class="o">|</span> <span class="n">meta</span><span class="o">-</span><span class="n">reference</span> <span class="o">|</span> <span class="n">meta</span><span class="o">-</span><span class="n">reference</span>  <span class="o">|</span>
+<span class="o">+-----------+----------------+-----------------+</span>
+<span class="o">|</span> <span class="n">safety</span>    <span class="o">|</span> <span class="n">meta</span><span class="o">-</span><span class="n">reference</span> <span class="o">|</span> <span class="n">meta</span><span class="o">-</span><span class="n">reference</span>  <span class="o">|</span>
+<span class="o">+-----------+----------------+-----------------+</span>
+</pre></div>
+</div>
+</section>
+<section id="llama-stack-client-providers-inspect">
+<h3><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">providers</span> <span class="pre">inspect</span></code><a class="headerlink" href="#llama-stack-client-providers-inspect" title="Link to this heading"></a></h3>
+<p>Show specific provider configuration on distribution endpoint</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>llama-stack-client<span class="w"> </span>providers<span class="w"> </span>inspect<span class="w"> </span>&lt;provider_id&gt;
+</pre></div>
+</div>
+</section>
+</section>
+<section id="inference">
+<h2>Inference<a class="headerlink" href="#inference" title="Link to this heading"></a></h2>
+<p>Inference (chat).</p>
+<section id="llama-stack-client-inference-chat-completion">
+<h3><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">inference</span> <span class="pre">chat-completion</span></code><a class="headerlink" href="#llama-stack-client-inference-chat-completion" title="Link to this heading"></a></h3>
+<p>Show available inference chat completion endpoints on distribution endpoint</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>llama-stack-client<span class="w"> </span>inference<span class="w"> </span>chat-completion<span class="w"> </span>--message<span class="w"> </span>&lt;message&gt;<span class="w"> </span><span class="o">[</span>--stream<span class="o">]</span><span class="w"> </span><span class="o">[</span>--session<span class="o">]</span><span class="w"> </span><span class="o">[</span>--model-id<span class="o">]</span>
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>OpenAIChatCompletion<span class="o">(</span>
+<span class="w">    </span><span class="nv">id</span><span class="o">=</span><span class="s1">&#39;chatcmpl-aacd11f3-8899-4ec5-ac5b-e655132f6891&#39;</span>,
+<span class="w">    </span><span class="nv">choices</span><span class="o">=[</span>
+<span class="w">        </span>OpenAIChatCompletionChoice<span class="o">(</span>
+<span class="w">            </span><span class="nv">finish_reason</span><span class="o">=</span><span class="s1">&#39;stop&#39;</span>,
+<span class="w">            </span><span class="nv">index</span><span class="o">=</span><span class="m">0</span>,
+<span class="w">            </span><span class="nv">message</span><span class="o">=</span>OpenAIChatCompletionChoiceMessageOpenAIAssistantMessageParam<span class="o">(</span>
+<span class="w">                </span><span class="nv">role</span><span class="o">=</span><span class="s1">&#39;assistant&#39;</span>,
+<span class="w">                </span><span class="nv">content</span><span class="o">=</span><span class="s1">&#39;The captain of the whaleship Pequod in Nathaniel Hawthorne\&#39;</span>s<span class="w"> </span>novel<span class="w"> </span><span class="s2">&quot;Moby-Dick&quot;</span><span class="w"> </span>is<span class="w"> </span>Captain
+Ahab.<span class="w"> </span>He<span class="se">\&#39;</span>s<span class="w"> </span>a<span class="w"> </span>vengeful<span class="w"> </span>and<span class="w"> </span>obsessive<span class="w"> </span>old<span class="w"> </span>sailor<span class="w"> </span>who<span class="se">\&#39;</span>s<span class="w"> </span>determined<span class="w"> </span>to<span class="w"> </span>hunt<span class="w"> </span>down<span class="w"> </span>and<span class="w"> </span><span class="nb">kill</span><span class="w"> </span>the<span class="w"> </span>white<span class="w"> </span>sperm<span class="w"> </span>whale
+Moby-Dick,<span class="w"> </span>whom<span class="w"> </span>he<span class="se">\&#39;</span>s<span class="w"> </span>lost<span class="w"> </span>his<span class="w"> </span>leg<span class="w"> </span>to<span class="w"> </span><span class="k">in</span><span class="w"> </span>a<span class="w"> </span>previous<span class="w"> </span>encounter.<span class="s1">&#39;,</span>
+<span class="s1">                name=None,</span>
+<span class="s1">                tool_calls=None,</span>
+<span class="s1">                refusal=None,</span>
+<span class="s1">                annotations=None,</span>
+<span class="s1">                audio=None,</span>
+<span class="s1">                function_call=None</span>
+<span class="s1">            ),</span>
+<span class="s1">            logprobs=None</span>
+<span class="s1">        )</span>
+<span class="s1">    ],</span>
+<span class="s1">    created=1752578797,</span>
+<span class="s1">    model=&#39;</span>llama3.2:3b-instruct-fp16<span class="s1">&#39;,</span>
+<span class="s1">    object=&#39;</span>chat.completion<span class="s1">&#39;,</span>
+<span class="s1">    service_tier=None,</span>
+<span class="s1">    system_fingerprint=&#39;</span>fp_ollama<span class="s1">&#39;,</span>
+<span class="s1">    usage={</span>
+<span class="s1">        &#39;</span>completion_tokens<span class="s1">&#39;: 67,</span>
+<span class="s1">        &#39;</span>prompt_tokens<span class="s1">&#39;: 33,</span>
+<span class="s1">        &#39;</span>total_tokens<span class="s1">&#39;: 100,</span>
+<span class="s1">        &#39;</span>completion_tokens_details<span class="s1">&#39;: None,</span>
+<span class="s1">        &#39;</span>prompt_tokens_details<span class="err">&#39;</span>:<span class="w"> </span>None
+<span class="w">    </span><span class="o">}</span>
+<span class="o">)</span>
+</pre></div>
+</div>
+<p>Required arguments:
+<strong>Note:</strong> At least one of these parameters is required for chat completion</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--message</span></code>: Message</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--session</span></code>: Start a Chat Session</p></li>
+</ul>
+<p>Optional arguments:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--stream</span></code>: Stream</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--model-id</span></code>: Model ID</p></li>
+</ul>
+</section>
+</section>
+<section id="model-management">
+<h2>Model Management<a class="headerlink" href="#model-management" title="Link to this heading"></a></h2>
+<p>Manage GenAI models.</p>
+<section id="llama-stack-client-models-list">
+<h3><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">models</span> <span class="pre">list</span></code><a class="headerlink" href="#llama-stack-client-models-list" title="Link to this heading"></a></h3>
+<p>Show available llama models at distribution endpoint</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>llama-stack-client<span class="w"> </span>models<span class="w"> </span>list
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Available Models
+
+┏━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━━━┓
+┃ model_type   ┃ identifier                           ┃ provider_resource_id         ┃ metadata  ┃ provider_id ┃
+┡━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━┩
+│ llm          │ meta-llama/Llama-3.2-3B-Instruct     │ llama3.2:3b-instruct-fp16    │           │ ollama      │
+└──────────────┴──────────────────────────────────────┴──────────────────────────────┴───────────┴─────────────┘
+
+Total models: 1
+</pre></div>
+</div>
+</section>
+<section id="llama-stack-client-models-get">
+<h3><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">models</span> <span class="pre">get</span></code><a class="headerlink" href="#llama-stack-client-models-get" title="Link to this heading"></a></h3>
+<p>Show details of a specific model at the distribution endpoint</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>llama-stack-client<span class="w"> </span>models<span class="w"> </span>get<span class="w"> </span>Llama3.1-8B-Instruct
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">+----------------------+----------------------+----------------------------------------------------------+---------------+</span>
+<span class="o">|</span> <span class="n">identifier</span>           <span class="o">|</span> <span class="n">llama_model</span>          <span class="o">|</span> <span class="n">metadata</span>                                                 <span class="o">|</span> <span class="n">provider_id</span>   <span class="o">|</span>
+<span class="o">+======================+======================+==========================================================+===============+</span>
+<span class="o">|</span> <span class="n">Llama3</span><span class="mf">.1</span><span class="o">-</span><span class="mi">8</span><span class="n">B</span><span class="o">-</span><span class="n">Instruct</span> <span class="o">|</span> <span class="n">Llama3</span><span class="mf">.1</span><span class="o">-</span><span class="mi">8</span><span class="n">B</span><span class="o">-</span><span class="n">Instruct</span> <span class="o">|</span> <span class="p">{</span><span class="s1">&#39;huggingface_repo&#39;</span><span class="p">:</span> <span class="s1">&#39;meta-llama/Llama-3.1-8B-Instruct&#39;</span><span class="p">}</span> <span class="o">|</span> <span class="n">tgi0</span>          <span class="o">|</span>
+<span class="o">+----------------------+----------------------+----------------------------------------------------------+---------------+</span>
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>llama-stack-client<span class="w"> </span>models<span class="w"> </span>get<span class="w"> </span>Random-Model
+
+Model<span class="w"> </span>RandomModel<span class="w"> </span>is<span class="w"> </span>not<span class="w"> </span>found<span class="w"> </span>at<span class="w"> </span>distribution<span class="w"> </span>endpoint<span class="w"> </span>host:port.<span class="w"> </span>Please<span class="w"> </span>ensure<span class="w"> </span>endpoint<span class="w"> </span>is<span class="w"> </span>serving<span class="w"> </span>specified<span class="w"> </span>model.
+</pre></div>
+</div>
+</section>
+<section id="llama-stack-client-models-register">
+<h3><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">models</span> <span class="pre">register</span></code><a class="headerlink" href="#llama-stack-client-models-register" title="Link to this heading"></a></h3>
+<p>Register a new model at distribution endpoint</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>llama-stack-client<span class="w"> </span>models<span class="w"> </span>register<span class="w"> </span>&lt;model_id&gt;<span class="w"> </span><span class="o">[</span>--provider-id<span class="w"> </span>&lt;provider_id&gt;<span class="o">]</span><span class="w"> </span><span class="o">[</span>--provider-model-id<span class="w"> </span>&lt;provider_model_id&gt;<span class="o">]</span><span class="w"> </span><span class="o">[</span>--metadata<span class="w"> </span>&lt;metadata&gt;<span class="o">]</span><span class="w"> </span><span class="o">[</span>--model-type<span class="w"> </span>&lt;model_type&gt;<span class="o">]</span>
+</pre></div>
+</div>
+<p>Required arguments:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">MODEL_ID</span></code>: Model ID</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--provider-id</span></code>: Provider ID for the model</p></li>
+</ul>
+<p>Optional arguments:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--provider-model-id</span></code>: Provider’s model ID</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--metadata</span></code>: JSON metadata for the model</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--model-type</span></code>: Model type: <code class="docutils literal notranslate"><span class="pre">llm</span></code>, <code class="docutils literal notranslate"><span class="pre">embedding</span></code></p></li>
+</ul>
+</section>
+<section id="llama-stack-client-models-unregister">
+<h3><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">models</span> <span class="pre">unregister</span></code><a class="headerlink" href="#llama-stack-client-models-unregister" title="Link to this heading"></a></h3>
+<p>Unregister a model from distribution endpoint</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>llama-stack-client<span class="w"> </span>models<span class="w"> </span>unregister<span class="w"> </span>&lt;model_id&gt;
+</pre></div>
+</div>
+</section>
+</section>
+<section id="vector-db-management">
+<h2>Vector DB Management<a class="headerlink" href="#vector-db-management" title="Link to this heading"></a></h2>
+<p>Manage vector databases.</p>
+<section id="llama-stack-client-vector-dbs-list">
+<h3><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">vector_dbs</span> <span class="pre">list</span></code><a class="headerlink" href="#llama-stack-client-vector-dbs-list" title="Link to this heading"></a></h3>
+<p>Show available vector dbs on distribution endpoint</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>llama-stack-client<span class="w"> </span>vector_dbs<span class="w"> </span>list
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>┏━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ identifier               ┃ provider_id ┃ provider_resource_id     ┃ vector_db_type ┃ params                            ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ my_demo_vector_db        │ faiss       │ my_demo_vector_db        │                │ embedding_dimension: 384          │
+│                          │             │                          │                │ embedding_model: all-MiniLM-L6-v2 │
+│                          │             │                          │                │ type: vector_db                   │
+│                          │             │                          │                │                                   │
+└──────────────────────────┴─────────────┴──────────────────────────┴────────────────┴───────────────────────────────────┘
+</pre></div>
+</div>
+</section>
+<section id="llama-stack-client-vector-dbs-register">
+<h3><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">vector_dbs</span> <span class="pre">register</span></code><a class="headerlink" href="#llama-stack-client-vector-dbs-register" title="Link to this heading"></a></h3>
+<p>Create a new vector db</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>llama-stack-client<span class="w"> </span>vector_dbs<span class="w"> </span>register<span class="w"> </span>&lt;vector-db-id&gt;<span class="w"> </span><span class="o">[</span>--provider-id<span class="w"> </span>&lt;provider-id&gt;<span class="o">]</span><span class="w"> </span><span class="o">[</span>--provider-vector-db-id<span class="w"> </span>&lt;provider-vector-db-id&gt;<span class="o">]</span><span class="w"> </span><span class="o">[</span>--embedding-model<span class="w"> </span>&lt;embedding-model&gt;<span class="o">]</span><span class="w"> </span><span class="o">[</span>--embedding-dimension<span class="w"> </span>&lt;embedding-dimension&gt;<span class="o">]</span>
+</pre></div>
+</div>
+<p>Required arguments:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">VECTOR_DB_ID</span></code>: Vector DB ID</p></li>
+</ul>
+<p>Optional arguments:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--provider-id</span></code>: Provider ID for the vector db</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--provider-vector-db-id</span></code>: Provider’s vector db ID</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--embedding-model</span></code>: Embedding model to use. Default: <code class="docutils literal notranslate"><span class="pre">all-MiniLM-L6-v2</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--embedding-dimension</span></code>: Dimension of embeddings. Default: 384</p></li>
+</ul>
+</section>
+<section id="llama-stack-client-vector-dbs-unregister">
+<h3><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">vector_dbs</span> <span class="pre">unregister</span></code><a class="headerlink" href="#llama-stack-client-vector-dbs-unregister" title="Link to this heading"></a></h3>
+<p>Delete a vector db</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>llama-stack-client<span class="w"> </span>vector_dbs<span class="w"> </span>unregister<span class="w"> </span>&lt;vector-db-id&gt;
+</pre></div>
+</div>
+<p>Required arguments:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">VECTOR_DB_ID</span></code>: Vector DB ID</p></li>
+</ul>
+</section>
+</section>
+<section id="shield-management">
+<h2>Shield Management<a class="headerlink" href="#shield-management" title="Link to this heading"></a></h2>
+<p>Manage safety shield services.</p>
+<section id="llama-stack-client-shields-list">
+<h3><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">shields</span> <span class="pre">list</span></code><a class="headerlink" href="#llama-stack-client-shields-list" title="Link to this heading"></a></h3>
+<p>Show available safety shields on distribution endpoint</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>llama-stack-client<span class="w"> </span>shields<span class="w"> </span>list
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ identifier                       ┃ provider_alias                                                        ┃ params                ┃ provider_id                        ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ ollama                           │ ollama/llama-guard3:1b                                                │                       │ llama-guard                        │
+└──────────────────────────────────┴───────────────────────────────────────────────────────────────────────┴───────────────────────┴────────────────────────────────────┘
+</pre></div>
+</div>
+</section>
+<section id="llama-stack-client-shields-register">
+<h3><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">shields</span> <span class="pre">register</span></code><a class="headerlink" href="#llama-stack-client-shields-register" title="Link to this heading"></a></h3>
+<p>Register a new safety shield</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>llama-stack-client<span class="w"> </span>shields<span class="w"> </span>register<span class="w"> </span>--shield-id<span class="w"> </span>&lt;shield-id&gt;<span class="w"> </span><span class="o">[</span>--provider-id<span class="w"> </span>&lt;provider-id&gt;<span class="o">]</span><span class="w"> </span><span class="o">[</span>--provider-shield-id<span class="w"> </span>&lt;provider-shield-id&gt;<span class="o">]</span><span class="w"> </span><span class="o">[</span>--params<span class="w"> </span>&lt;params&gt;<span class="o">]</span>
+</pre></div>
+</div>
+<p>Required arguments:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--shield-id</span></code>: ID of the shield</p></li>
+</ul>
+<p>Optional arguments:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--provider-id</span></code>: Provider ID for the shield</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--provider-shield-id</span></code>: Provider’s shield ID</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--params</span></code>: JSON configuration parameters for the shield</p></li>
+</ul>
+</section>
+</section>
+<section id="eval-execution">
+<h2>Eval execution<a class="headerlink" href="#eval-execution" title="Link to this heading"></a></h2>
+<p>Run evaluation tasks.</p>
+<section id="llama-stack-client-eval-run-benchmark">
+<h3><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">eval</span> <span class="pre">run-benchmark</span></code><a class="headerlink" href="#llama-stack-client-eval-run-benchmark" title="Link to this heading"></a></h3>
+<p>Run a evaluation benchmark task</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>llama-stack-client<span class="w"> </span><span class="nb">eval</span><span class="w"> </span>run-benchmark<span class="w"> </span>&lt;eval-task-id1&gt;<span class="w"> </span><span class="o">[</span>&lt;eval-task-id2&gt;<span class="w"> </span>...<span class="o">]</span><span class="w"> </span>--eval-task-config<span class="w"> </span>&lt;config-file&gt;<span class="w"> </span>--output-dir<span class="w"> </span>&lt;output-dir&gt;<span class="w"> </span>--model-id<span class="w"> </span>&lt;model-id&gt;<span class="w"> </span><span class="o">[</span>--num-examples<span class="w"> </span>&lt;num&gt;<span class="o">]</span><span class="w"> </span><span class="o">[</span>--visualize<span class="o">]</span><span class="w"> </span><span class="o">[</span>--repeat-penalty<span class="w"> </span>&lt;repeat-penalty&gt;<span class="o">]</span><span class="w"> </span><span class="o">[</span>--top-p<span class="w"> </span>&lt;top-p&gt;<span class="o">]</span><span class="w"> </span><span class="o">[</span>--max-tokens<span class="w"> </span>&lt;max-tokens&gt;<span class="o">]</span>
+</pre></div>
+</div>
+<p>Required arguments:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--eval-task-config</span></code>: Path to the eval task config file in JSON format</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--output-dir</span></code>: Path to the directory where evaluation results will be saved</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--model-id</span></code>: model id to run the benchmark eval on</p></li>
+</ul>
+<p>Optional arguments:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--num-examples</span></code>: Number of examples to evaluate (useful for debugging)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--visualize</span></code>: If set, visualizes evaluation results after completion</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--repeat-penalty</span></code>: repeat-penalty in the sampling params to run generation</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--top-p</span></code>: top-p in the sampling params to run generation</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--max-tokens</span></code>: max-tokens in the sampling params to run generation</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--temperature</span></code>: temperature in the sampling params to run generation</p></li>
+</ul>
+<p>Example benchmark_config.json:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;benchmark&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;eval_candidate&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;model&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;model&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Llama3.1-405B-Instruct&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;sampling_params&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;strategy&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;greedy&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="llama-stack-client-eval-run-scoring">
+<h3><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">eval</span> <span class="pre">run-scoring</span></code><a class="headerlink" href="#llama-stack-client-eval-run-scoring" title="Link to this heading"></a></h3>
+<p>Run scoring from application datasets</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>llama-stack-client<span class="w"> </span><span class="nb">eval</span><span class="w"> </span>run-scoring<span class="w"> </span>&lt;eval-task-id&gt;<span class="w"> </span>--output-dir<span class="w"> </span>&lt;output-dir&gt;<span class="w"> </span><span class="o">[</span>--num-examples<span class="w"> </span>&lt;num&gt;<span class="o">]</span><span class="w"> </span><span class="o">[</span>--visualize<span class="o">]</span>
+</pre></div>
+</div>
+<p>Required arguments:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--output-dir</span></code>: Path to the directory where scoring results will be saved</p></li>
+</ul>
+<p>Optional arguments:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--num-examples</span></code>: Number of examples to evaluate (useful for debugging)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--visualize</span></code>: If set, visualizes scoring results after completion</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--scoring-params-config</span></code>: Path to the scoring params config file in JSON format</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--dataset-id</span></code>: Pre-registered dataset_id to score (from llama-stack-client datasets list)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--dataset-path</span></code>: Path to the dataset file to score</p></li>
+</ul>
+</section>
+</section>
+<section id="eval-tasks">
+<h2>Eval Tasks<a class="headerlink" href="#eval-tasks" title="Link to this heading"></a></h2>
+<p>Manage evaluation tasks.</p>
+<section id="llama-stack-client-eval-tasks-list">
+<h3><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">eval_tasks</span> <span class="pre">list</span></code><a class="headerlink" href="#llama-stack-client-eval-tasks-list" title="Link to this heading"></a></h3>
+<p>Show available eval tasks on distribution endpoint</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>llama-stack-client<span class="w"> </span>eval_tasks<span class="w"> </span>list
+</pre></div>
+</div>
+</section>
+<section id="llama-stack-client-eval-tasks-register">
+<h3><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">eval_tasks</span> <span class="pre">register</span></code><a class="headerlink" href="#llama-stack-client-eval-tasks-register" title="Link to this heading"></a></h3>
+<p>Register a new eval task</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>llama-stack-client<span class="w"> </span>eval_tasks<span class="w"> </span>register<span class="w"> </span>--eval-task-id<span class="w"> </span>&lt;eval-task-id&gt;<span class="w"> </span>--dataset-id<span class="w"> </span>&lt;dataset-id&gt;<span class="w"> </span>--scoring-functions<span class="w"> </span>&lt;scoring-functions&gt;<span class="w"> </span><span class="o">[</span>--provider-id<span class="w"> </span>&lt;provider-id&gt;<span class="o">]</span><span class="w"> </span><span class="o">[</span>--provider-eval-task-id<span class="w"> </span>&lt;provider-eval-task-id&gt;<span class="o">]</span><span class="w"> </span><span class="o">[</span>--metadata<span class="w"> </span>&lt;metadata&gt;<span class="o">]</span>
+</pre></div>
+</div>
+<p>Required arguments:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--eval-task-id</span></code>: ID of the eval task</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--dataset-id</span></code>: ID of the dataset to evaluate</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--scoring-functions</span></code>: Scoring functions to use for evaluation</p></li>
+</ul>
+<p>Optional arguments:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--provider-id</span></code>: Provider ID for the eval task</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--provider-eval-task-id</span></code>: Provider’s eval task ID</p></li>
+</ul>
+</section>
+</section>
+<section id="tool-group-management">
+<h2>Tool Group Management<a class="headerlink" href="#tool-group-management" title="Link to this heading"></a></h2>
+<p>Manage available tool groups.</p>
+<section id="llama-stack-client-toolgroups-list">
+<h3><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">toolgroups</span> <span class="pre">list</span></code><a class="headerlink" href="#llama-stack-client-toolgroups-list" title="Link to this heading"></a></h3>
+<p>Show available llama toolgroups at distribution endpoint</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>llama-stack-client<span class="w"> </span>toolgroups<span class="w"> </span>list
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">+---------------------------+------------------+------+---------------+</span>
+<span class="o">|</span> <span class="n">identifier</span>                <span class="o">|</span> <span class="n">provider_id</span>      <span class="o">|</span> <span class="n">args</span> <span class="o">|</span> <span class="n">mcp_endpoint</span>  <span class="o">|</span>
+<span class="o">+===========================+==================+======+===============+</span>
+<span class="o">|</span> <span class="n">builtin</span><span class="p">::</span><span class="n">rag</span>              <span class="o">|</span> <span class="n">rag</span><span class="o">-</span><span class="n">runtime</span>      <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="kc">None</span>          <span class="o">|</span>
+<span class="o">+---------------------------+------------------+------+---------------+</span>
+<span class="o">|</span> <span class="n">builtin</span><span class="p">::</span><span class="n">websearch</span>        <span class="o">|</span> <span class="n">tavily</span><span class="o">-</span><span class="n">search</span>    <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="kc">None</span>          <span class="o">|</span>
+<span class="o">+---------------------------+------------------+------+---------------+</span>
+</pre></div>
+</div>
+</section>
+<section id="llama-stack-client-toolgroups-get">
+<h3><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">toolgroups</span> <span class="pre">get</span></code><a class="headerlink" href="#llama-stack-client-toolgroups-get" title="Link to this heading"></a></h3>
+<p>Get available llama toolgroups by id</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>llama-stack-client<span class="w"> </span>toolgroups<span class="w"> </span>get<span class="w"> </span>&lt;toolgroup_id&gt;
+</pre></div>
+</div>
+<p>Shows detailed information about a specific toolgroup. If the toolgroup is not found, displays an error message.</p>
+<p>Required arguments:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">TOOLGROUP_ID</span></code>: ID of the tool group</p></li>
+</ul>
+</section>
+<section id="llama-stack-client-toolgroups-register">
+<h3><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">toolgroups</span> <span class="pre">register</span></code><a class="headerlink" href="#llama-stack-client-toolgroups-register" title="Link to this heading"></a></h3>
+<p>Register a new toolgroup at distribution endpoint</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>llama-stack-client<span class="w"> </span>toolgroups<span class="w"> </span>register<span class="w"> </span>&lt;toolgroup_id&gt;<span class="w"> </span><span class="o">[</span>--provider-id<span class="w"> </span>&lt;provider-id&gt;<span class="o">]</span><span class="w"> </span><span class="o">[</span>--provider-toolgroup-id<span class="w"> </span>&lt;provider-toolgroup-id&gt;<span class="o">]</span><span class="w"> </span><span class="o">[</span>--mcp-config<span class="w"> </span>&lt;mcp-config&gt;<span class="o">]</span><span class="w"> </span><span class="o">[</span>--args<span class="w"> </span>&lt;args&gt;<span class="o">]</span>
+</pre></div>
+</div>
+<p>Required arguments:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">TOOLGROUP_ID</span></code>: ID of the tool group</p></li>
+</ul>
+<p>Optional arguments:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--provider-id</span></code>: Provider ID for the toolgroup</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--provider-toolgroup-id</span></code>: Provider’s toolgroup ID</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--mcp-config</span></code>: JSON configuration for the MCP endpoint</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--args</span></code>: JSON arguments for the toolgroup</p></li>
+</ul>
+</section>
+<section id="llama-stack-client-toolgroups-unregister">
+<h3><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">toolgroups</span> <span class="pre">unregister</span></code><a class="headerlink" href="#llama-stack-client-toolgroups-unregister" title="Link to this heading"></a></h3>
+<p>Unregister a toolgroup from distribution endpoint</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>llama-stack-client<span class="w"> </span>toolgroups<span class="w"> </span>unregister<span class="w"> </span>&lt;toolgroup_id&gt;
+</pre></div>
+</div>
+<p>Required arguments:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">TOOLGROUP_ID</span></code>: ID of the tool group</p></li>
+</ul>
+</section>
+</section>
+<section id="datasets-management">
+<h2>Datasets Management<a class="headerlink" href="#datasets-management" title="Link to this heading"></a></h2>
+<p>Manage datasets.</p>
+<section id="llama-stack-client-datasets-list">
+<h3><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">datasets</span> <span class="pre">list</span></code><a class="headerlink" href="#llama-stack-client-datasets-list" title="Link to this heading"></a></h3>
+<p>Show available datasets on distribution endpoint</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>llama-stack-client<span class="w"> </span>datasets<span class="w"> </span>list
+</pre></div>
+</div>
+</section>
+<section id="llama-stack-client-datasets-register">
+<h3><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">datasets</span> <span class="pre">register</span></code><a class="headerlink" href="#llama-stack-client-datasets-register" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>llama-stack-client<span class="w"> </span>datasets<span class="w"> </span>register<span class="w"> </span>--dataset_id<span class="w"> </span>&lt;dataset_id&gt;<span class="w"> </span>--purpose<span class="w"> </span>&lt;purpose&gt;<span class="w"> </span><span class="o">[</span>--url<span class="w"> </span>&lt;url<span class="o">]</span><span class="w"> </span><span class="o">[</span>--dataset-path<span class="w"> </span>&lt;dataset-path&gt;<span class="o">]</span><span class="w"> </span><span class="o">[</span>--dataset-id<span class="w"> </span>&lt;dataset-id&gt;<span class="o">]</span><span class="w"> </span><span class="o">[</span>--metadata<span class="w"> </span>&lt;metadata&gt;<span class="o">]</span>
+</pre></div>
+</div>
+<p>Required arguments:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--dataset_id</span></code>: Id of the dataset</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--purpose</span></code>: Purpose of the dataset</p></li>
+</ul>
+<p>Optional arguments:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--metadata</span></code>: Metadata of the dataset</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--url</span></code>: URL of the dataset</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--dataset-path</span></code>: Local file path to the dataset. If specified, upload dataset via URL</p></li>
+</ul>
+</section>
+<section id="llama-stack-client-datasets-unregister">
+<h3><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">datasets</span> <span class="pre">unregister</span></code><a class="headerlink" href="#llama-stack-client-datasets-unregister" title="Link to this heading"></a></h3>
+<p>Remove a dataset</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>llama-stack-client<span class="w"> </span>datasets<span class="w"> </span>unregister<span class="w"> </span>&lt;dataset-id&gt;
+</pre></div>
+</div>
+<p>Required arguments:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">DATASET_ID</span></code>: Id of the dataset</p></li>
+</ul>
+</section>
+</section>
+<section id="scoring-functions-management">
+<h2>Scoring Functions Management<a class="headerlink" href="#scoring-functions-management" title="Link to this heading"></a></h2>
+<p>Manage scoring functions.</p>
+<section id="llama-stack-client-scoring-functions-list">
+<h3><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">scoring_functions</span> <span class="pre">list</span></code><a class="headerlink" href="#llama-stack-client-scoring-functions-list" title="Link to this heading"></a></h3>
+<p>Show available scoring functions on distribution endpoint</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>llama-stack-client<span class="w"> </span>scoring_functions<span class="w"> </span>list
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━┓
+┃ identifier                                 ┃ provider_id  ┃ description                                                   ┃ type             ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━┩
+│ basic::bfcl                                │ basic        │ BFCL complex scoring                                          │ scoring_function │
+│ basic::docvqa                              │ basic        │ DocVQA Visual Question &amp; Answer scoring function              │ scoring_function │
+│ basic::equality                            │ basic        │ Returns 1.0 if the input is equal to the target, 0.0          │ scoring_function │
+│                                            │              │ otherwise.                                                    │                  │
+└────────────────────────────────────────────┴──────────────┴───────────────────────────────────────────────────────────────┴──────────────────┘
+</pre></div>
+</div>
+</section>
+<section id="llama-stack-client-scoring-functions-register">
+<h3><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">scoring_functions</span> <span class="pre">register</span></code><a class="headerlink" href="#llama-stack-client-scoring-functions-register" title="Link to this heading"></a></h3>
+<p>Register a new scoring function</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>llama-stack-client<span class="w"> </span>scoring_functions<span class="w"> </span>register<span class="w"> </span>--scoring-fn-id<span class="w"> </span>&lt;scoring-fn-id&gt;<span class="w"> </span>--description<span class="w"> </span>&lt;description&gt;<span class="w"> </span>--return-type<span class="w"> </span>&lt;<span class="k">return</span>-type&gt;<span class="w"> </span><span class="o">[</span>--provider-id<span class="w"> </span>&lt;provider-id&gt;<span class="o">]</span><span class="w"> </span><span class="o">[</span>--provider-scoring-fn-id<span class="w"> </span>&lt;provider-scoring-fn-id&gt;<span class="o">]</span><span class="w"> </span><span class="o">[</span>--params<span class="w"> </span>&lt;params&gt;<span class="o">]</span>
+</pre></div>
+</div>
+<p>Required arguments:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--scoring-fn-id</span></code>: Id of the scoring function</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--description</span></code>: Description of the scoring function</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--return-type</span></code>: Return type of the scoring function</p></li>
+</ul>
+<p>Optional arguments:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--provider-id</span></code>: Provider ID for the scoring function</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--provider-scoring-fn-id</span></code>: Provider’s scoring function ID</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--params</span></code>: Parameters for the scoring function in JSON format</p></li>
+</ul>
+</section>
+</section>
+<section id="post-training-management">
+<h2>Post Training Management<a class="headerlink" href="#post-training-management" title="Link to this heading"></a></h2>
+<p>Post-training.</p>
+<section id="llama-stack-client-post-training-list">
+<h3><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">post_training</span> <span class="pre">list</span></code><a class="headerlink" href="#llama-stack-client-post-training-list" title="Link to this heading"></a></h3>
+<p>Show the list of available post training jobs</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>llama-stack-client<span class="w"> </span>post_training<span class="w"> </span>list
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span><span class="s2">&quot;job-1&quot;</span>,<span class="w"> </span><span class="s2">&quot;job-2&quot;</span>,<span class="w"> </span><span class="s2">&quot;job-3&quot;</span><span class="o">]</span>
+</pre></div>
+</div>
+</section>
+<section id="llama-stack-client-post-training-artifacts">
+<h3><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">post_training</span> <span class="pre">artifacts</span></code><a class="headerlink" href="#llama-stack-client-post-training-artifacts" title="Link to this heading"></a></h3>
+<p>Get the training artifacts of a specific post training job</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>llama-stack-client<span class="w"> </span>post_training<span class="w"> </span>artifacts<span class="w"> </span>--job-uuid<span class="w"> </span>&lt;job-uuid&gt;
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>JobArtifactsResponse<span class="o">(</span><span class="nv">checkpoints</span><span class="o">=[]</span>,<span class="w"> </span><span class="nv">job_uuid</span><span class="o">=</span><span class="s1">&#39;job-1&#39;</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>Required arguments:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--job-uuid</span></code>: Job UUID</p></li>
+</ul>
+</section>
+<section id="llama-stack-client-post-training-supervised-fine-tune">
+<h3><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">post_training</span> <span class="pre">supervised_fine_tune</span></code><a class="headerlink" href="#llama-stack-client-post-training-supervised-fine-tune" title="Link to this heading"></a></h3>
+<p>Kick off a supervised fine tune job</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>llama-stack-client<span class="w"> </span>post_training<span class="w"> </span>supervised_fine_tune<span class="w"> </span>--job-uuid<span class="w"> </span>&lt;job-uuid&gt;<span class="w"> </span>--model<span class="w"> </span>&lt;model&gt;<span class="w"> </span>--algorithm-config<span class="w"> </span>&lt;algorithm-config&gt;<span class="w"> </span>--training-config<span class="w"> </span>&lt;training-config&gt;<span class="w"> </span><span class="o">[</span>--checkpoint-dir<span class="w"> </span>&lt;checkpoint-dir&gt;<span class="o">]</span>
+</pre></div>
+</div>
+<p>Required arguments:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--job-uuid</span></code>: Job UUID</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--model</span></code>: Model ID</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--algorithm-config</span></code>: Algorithm Config</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--training-config</span></code>: Training Config</p></li>
+</ul>
+<p>Optional arguments:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--checkpoint-dir</span></code>: Checkpoint Config</p></li>
+</ul>
+</section>
+<section id="llama-stack-client-post-training-status">
+<h3><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">post_training</span> <span class="pre">status</span></code><a class="headerlink" href="#llama-stack-client-post-training-status" title="Link to this heading"></a></h3>
+<p>Show the status of a specific post training job</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>llama-stack-client<span class="w"> </span>post_training<span class="w"> </span>status<span class="w"> </span>--job-uuid<span class="w"> </span>&lt;job-uuid&gt;
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>JobStatusResponse<span class="o">(</span>
+<span class="w">    </span><span class="nv">checkpoints</span><span class="o">=[]</span>,
+<span class="w">    </span><span class="nv">job_uuid</span><span class="o">=</span><span class="s1">&#39;job-1&#39;</span>,
+<span class="w">    </span><span class="nv">status</span><span class="o">=</span><span class="s1">&#39;completed&#39;</span>,
+<span class="w">    </span><span class="nv">completed_at</span><span class="o">=</span><span class="s2">&quot;&quot;</span>,
+<span class="w">    </span><span class="nv">resources_allocated</span><span class="o">=</span><span class="s2">&quot;&quot;</span>,
+<span class="w">    </span><span class="nv">scheduled_at</span><span class="o">=</span><span class="s2">&quot;&quot;</span>,
+<span class="w">    </span><span class="nv">started_at</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+<span class="o">)</span>
+</pre></div>
+</div>
+<p>Required arguments:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--job-uuid</span></code>: Job UUID</p></li>
+</ul>
+</section>
+<section id="llama-stack-client-post-training-cancel">
+<h3><code class="docutils literal notranslate"><span class="pre">llama-stack-client</span> <span class="pre">post_training</span> <span class="pre">cancel</span></code><a class="headerlink" href="#llama-stack-client-post-training-cancel" title="Link to this heading"></a></h3>
+<p>Cancel the training job</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>llama-stack-client<span class="w"> </span>post_training<span class="w"> </span>cancel<span class="w"> </span>--job-uuid<span class="w"> </span>&lt;job-uuid&gt;
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># This functionality is not yet implemented for llama-stack-client</span>
+╭────────────────────────────────────────────────────────────╮
+│<span class="w"> </span>Failed<span class="w"> </span>to<span class="w"> </span>post_training<span class="w"> </span>cancel_training_job<span class="w">                </span>│
+│<span class="w">                                                            </span>│
+│<span class="w"> </span>Error<span class="w"> </span>Type:<span class="w"> </span>InternalServerError<span class="w">                            </span>│
+│<span class="w"> </span>Details:<span class="w"> </span>Error<span class="w"> </span>code:<span class="w"> </span><span class="m">501</span><span class="w"> </span>-<span class="w"> </span><span class="o">{</span><span class="s1">&#39;detail&#39;</span>:<span class="w"> </span><span class="s1">&#39;Not implemented: &#39;</span><span class="o">}</span><span class="w"> </span>│
+╰────────────────────────────────────────────────────────────╯
+</pre></div>
+</div>
+<p>Required arguments:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--job-uuid</span></code>: Job UUID</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="llama_cli_reference/index.html" class="btn btn-neutral float-left" title="llama (server-side) CLI Reference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="llama_cli_reference/download_models.html" class="btn btn-neutral float-right" title="Downloading Models" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Meta.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book"> Read the Docs</span>
+    v: v0.2.17
+    <span class="fa fa-caret-down"></span>
+  </span>
+  <div class="rst-other-versions">
+    <dl>
+      <dt>Versions</dt>
+      <dd>
+        <a href="/v0.2.19/">latest</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.19/">v0.2.19</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.18/">v0.2.18</a>
+      </dd>
+      <dd class="rtd-current-item">
+        <a href="/v0.2.17/">v0.2.17</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.16/">v0.2.16</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.15/">v0.2.15</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.14/">v0.2.14</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.13/">v0.2.13</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.12/">v0.2.12</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.11/">v0.2.11</a>
+      </dd>
+    </dl>
+  </div>
+</div><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

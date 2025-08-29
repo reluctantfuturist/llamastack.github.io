@@ -1,0 +1,334 @@
+
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Core Concepts &mdash; llama-stack 0.2.18 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/my_theme.css?v=f1163765" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../_static/dark_mode_css/general.css?v=c0a7eb24" />
+      <link rel="stylesheet" type="text/css" href="../_static/dark_mode_css/dark.css?v=70edf1c7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=ae23a911"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=09bf800d"></script>
+      <script src="../_static/js/detect_theme.js?v=76226c80"></script>
+      <script src="../_static/js/keyboard_shortcuts.js?v=62563c3b"></script>
+      <script src="../_static/design-tabs.js?v=f930bc37"></script>
+      <script src="../_static/dark_mode_js/default_light.js?v=c2e647ce"></script>
+      <script src="../_static/dark_mode_js/theme_switcher.js?v=358d3910"></script>
+    <script src="../_static/js/theme.js"></script>
+    <script src="../_static/js/versions.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="API Providers" href="../providers/index.html" />
+    <link rel="prev" title="Getting Started" href="../getting_started/index.html" />
+ 
+
+<script src="../_static/version-loader.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            llama-stack
+          </a>
+              <div class="switch-menus">
+                <div class="version-switch"></div>
+                <div class="language-switch"></div>
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Llama Stack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/index.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Core Concepts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#llama-stack-architecture">Llama Stack architecture</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#benefits-of-llama-stack">Benefits of Llama stack</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#current-challenges-in-custom-ai-applications">Current challenges in custom AI applications</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#our-solution-a-universal-stack">Our Solution: A Universal Stack</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#our-philosophy">Our Philosophy</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#apis">APIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#api-providers">API Providers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#distributions">Distributions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#resources">Resources</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../providers/index.html">API Providers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../distributions/index.html">Distributions Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced_apis/index.html">Advanced APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../building_applications/index.html">AI Application Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deploying/index.html">Deployment Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing/index.html">Contributing to Llama Stack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing/index.html#llama-stack-benchmark-suite-on-kubernetes">Llama Stack Benchmark Suite on Kubernetes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../references/index.html">References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">llama-stack</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Core Concepts</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/concepts/index.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="core-concepts">
+<h1>Core Concepts<a class="headerlink" href="#core-concepts" title="Link to this heading"></a></h1>
+<p>Given Llama Stack’s service-oriented philosophy, a few concepts and workflows arise which may not feel completely natural in the LLM landscape, especially if you are coming with a background in other frameworks.</p>
+<section id="llama-stack-architecture">
+<h2>Llama Stack architecture<a class="headerlink" href="#llama-stack-architecture" title="Link to this heading"></a></h2>
+<p>Llama Stack allows you to build different layers of distributions for your AI workloads using various SDKs and API providers.</p>
+<a class="reference internal image-reference" href="../_images/llama-stack.png"><img alt="Llama Stack" src="../_images/llama-stack.png" style="width: 400px;" />
+</a>
+<section id="benefits-of-llama-stack">
+<h3>Benefits of Llama stack<a class="headerlink" href="#benefits-of-llama-stack" title="Link to this heading"></a></h3>
+<section id="current-challenges-in-custom-ai-applications">
+<h4>Current challenges in custom AI applications<a class="headerlink" href="#current-challenges-in-custom-ai-applications" title="Link to this heading"></a></h4>
+<p>Building production AI applications today requires solving multiple challenges:</p>
+<p><strong>Infrastructure Complexity</strong></p>
+<ul class="simple">
+<li><p>Running large language models efficiently requires specialized infrastructure.</p></li>
+<li><p>Different deployment scenarios (local development, cloud, edge) need different solutions.</p></li>
+<li><p>Moving from development to production often requires significant rework.</p></li>
+</ul>
+<p><strong>Essential Capabilities</strong></p>
+<ul class="simple">
+<li><p>Safety guardrails and content filtering are necessary in an enterprise setting.</p></li>
+<li><p>Just model inference is not enough - Knowledge retrieval and RAG capabilities are required.</p></li>
+<li><p>Nearly any application needs composable multi-step workflows.</p></li>
+<li><p>Without monitoring, observability and evaluation, you end up operating in the dark.</p></li>
+</ul>
+<p><strong>Lack of Flexibility and Choice</strong></p>
+<ul class="simple">
+<li><p>Directly integrating with multiple providers creates tight coupling.</p></li>
+<li><p>Different providers have different APIs and abstractions.</p></li>
+<li><p>Changing providers requires significant code changes.</p></li>
+</ul>
+</section>
+<section id="our-solution-a-universal-stack">
+<h4>Our Solution: A Universal Stack<a class="headerlink" href="#our-solution-a-universal-stack" title="Link to this heading"></a></h4>
+<p>Llama Stack addresses these challenges through a service-oriented, API-first approach:</p>
+<p><strong>Develop Anywhere, Deploy Everywhere</strong></p>
+<ul class="simple">
+<li><p>Start locally with CPU-only setups</p></li>
+<li><p>Move to GPU acceleration when needed</p></li>
+<li><p>Deploy to cloud or edge without code changes</p></li>
+<li><p>Same APIs and developer experience everywhere</p></li>
+</ul>
+<p><strong>Production-Ready Building Blocks</strong></p>
+<ul class="simple">
+<li><p>Pre-built safety guardrails and content filtering</p></li>
+<li><p>Built-in RAG and agent capabilities</p></li>
+<li><p>Comprehensive evaluation toolkit</p></li>
+<li><p>Full observability and monitoring</p></li>
+</ul>
+<p><strong>True Provider Independence</strong></p>
+<ul class="simple">
+<li><p>Swap providers without application changes</p></li>
+<li><p>Mix and match best-in-class implementations</p></li>
+<li><p>Federation and fallback support</p></li>
+<li><p>No vendor lock-in</p></li>
+</ul>
+<p><strong>Robust Ecosystem</strong></p>
+<ul class="simple">
+<li><p>Llama Stack is already integrated with distribution partners (cloud providers, hardware vendors, and AI-focused companies).</p></li>
+<li><p>Ecosystem offers tailored infrastructure, software, and services for deploying a variety of models.</p></li>
+</ul>
+</section>
+</section>
+<section id="our-philosophy">
+<h3>Our Philosophy<a class="headerlink" href="#our-philosophy" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Service-Oriented</strong>: REST APIs enforce clean interfaces and enable seamless transitions across different environments.</p></li>
+<li><p><strong>Composability</strong>: Every component is independent but works together seamlessly</p></li>
+<li><p><strong>Production Ready</strong>: Built for real-world applications, not just demos</p></li>
+<li><p><strong>Turnkey Solutions</strong>: Easy to deploy built in solutions for popular deployment scenarios</p></li>
+</ul>
+<p>With Llama Stack, you can focus on building your application while we handle the infrastructure complexity, essential capabilities, and provider integrations.</p>
+</section>
+</section>
+<section id="apis">
+<h2>APIs<a class="headerlink" href="#apis" title="Link to this heading"></a></h2>
+<p>A Llama Stack API is described as a collection of REST endpoints. We currently support the following APIs:</p>
+<ul class="simple">
+<li><p><strong>Inference</strong>: run inference with a LLM</p></li>
+<li><p><strong>Safety</strong>: apply safety policies to the output at a Systems (not only model) level</p></li>
+<li><p><strong>Agents</strong>: run multi-step agentic workflows with LLMs with tool usage, memory (RAG), etc.</p></li>
+<li><p><strong>DatasetIO</strong>: interface with datasets and data loaders</p></li>
+<li><p><strong>Scoring</strong>: evaluate outputs of the system</p></li>
+<li><p><strong>Eval</strong>: generate outputs (via Inference or Agents) and perform scoring</p></li>
+<li><p><strong>VectorIO</strong>: perform operations on vector stores, such as adding documents, searching, and deleting documents</p></li>
+<li><p><strong>Telemetry</strong>: collect telemetry data from the system</p></li>
+<li><p><strong>Post Training</strong>: fine-tune a model</p></li>
+<li><p><strong>Tool Runtime</strong>: interact with various tools and protocols</p></li>
+<li><p><strong>Responses</strong>: generate responses from an LLM using this OpenAI compatible API.</p></li>
+</ul>
+<p>We are working on adding a few more APIs to complete the application lifecycle. These will include:</p>
+<ul class="simple">
+<li><p><strong>Batch Inference</strong>: run inference on a dataset of inputs</p></li>
+<li><p><strong>Batch Agents</strong>: run agents on a dataset of inputs</p></li>
+<li><p><strong>Synthetic Data Generation</strong>: generate synthetic data for model development</p></li>
+<li><p><strong>Batches</strong>: OpenAI-compatible batch management for inference</p></li>
+</ul>
+</section>
+<section id="api-providers">
+<h2>API Providers<a class="headerlink" href="#api-providers" title="Link to this heading"></a></h2>
+<p>The goal of Llama Stack is to build an ecosystem where users can easily swap out different implementations for the same API. Examples for these include:</p>
+<ul class="simple">
+<li><p>LLM inference providers (e.g., Fireworks, Together, AWS Bedrock, Groq, Cerebras, SambaNova, vLLM, etc.),</p></li>
+<li><p>Vector databases (e.g., ChromaDB, Weaviate, Qdrant, Milvus, FAISS, PGVector, etc.),</p></li>
+<li><p>Safety providers (e.g., Meta’s Llama Guard, AWS Bedrock Guardrails, etc.)</p></li>
+</ul>
+<p>Providers come in two flavors:</p>
+<ul class="simple">
+<li><p><strong>Remote</strong>: the provider runs as a separate service external to the Llama Stack codebase. Llama Stack contains a small amount of adapter code.</p></li>
+<li><p><strong>Inline</strong>: the provider is fully specified and implemented within the Llama Stack codebase. It may be a simple wrapper around an existing library, or a full fledged implementation within Llama Stack.</p></li>
+</ul>
+<p>Most importantly, Llama Stack always strives to provide at least one fully inline provider for each API so you can iterate on a fully featured environment locally.</p>
+</section>
+<section id="distributions">
+<h2>Distributions<a class="headerlink" href="#distributions" title="Link to this heading"></a></h2>
+<p>While there is a lot of flexibility to mix-and-match providers, often users will work with a specific set of providers (hardware support, contractual obligations, etc.) We therefore need to provide a <em>convenient shorthand</em> for such collections. We call this shorthand a <strong>Llama Stack Distribution</strong> or a <strong>Distro</strong>. One can think of it as specific pre-packaged versions of the Llama Stack. Here are some examples:</p>
+<p><strong>Remotely Hosted Distro</strong>: These are the simplest to consume from a user perspective. You can simply obtain the API key for these providers, point to a URL and have <em>all</em> Llama Stack APIs working out of the box. Currently, <a class="reference external" href="https://fireworks.ai/">Fireworks</a> and <a class="reference external" href="https://together.xyz/">Together</a> provide such easy-to-consume Llama Stack distributions.</p>
+<p><strong>Locally Hosted Distro</strong>: You may want to run Llama Stack on your own hardware. Typically though, you still need to use Inference via an external service. You can use providers like HuggingFace TGI, Fireworks, Together, etc. for this purpose. Or you may have access to GPUs and can run a <a class="reference external" href="https://github.com/vllm-project/vllm">vLLM</a> or <a class="reference external" href="https://build.nvidia.com/nim?filters=nimType%3Anim_type_run_anywhere&amp;amp;q=llama">NVIDIA NIM</a> instance. If you “just” have a regular desktop machine, you can use <a class="reference external" href="https://ollama.com/">Ollama</a> for inference. To provide convenient quick access to these options, we provide a number of such pre-configured locally-hosted Distros.</p>
+<p><strong>On-device Distro</strong>: To run Llama Stack directly on an edge device (mobile phone or a tablet), we provide Distros for <a class="reference external" href="https://llama-stack.readthedocs.io/en/latest/distributions/ondevice_distro/ios_sdk.html">iOS</a> and <a class="reference external" href="https://llama-stack.readthedocs.io/en/latest/distributions/ondevice_distro/android_sdk.html">Android</a></p>
+</section>
+<section id="resources">
+<h2>Resources<a class="headerlink" href="#resources" title="Link to this heading"></a></h2>
+<p>Some of these APIs are associated with a set of <strong>Resources</strong>. Here is the mapping of APIs to resources:</p>
+<ul class="simple">
+<li><p><strong>Inference</strong>, <strong>Eval</strong> and <strong>Post Training</strong> are associated with <code class="docutils literal notranslate"><span class="pre">Model</span></code> resources.</p></li>
+<li><p><strong>Safety</strong> is associated with <code class="docutils literal notranslate"><span class="pre">Shield</span></code> resources.</p></li>
+<li><p><strong>Tool Runtime</strong> is associated with <code class="docutils literal notranslate"><span class="pre">ToolGroup</span></code> resources.</p></li>
+<li><p><strong>DatasetIO</strong> is associated with <code class="docutils literal notranslate"><span class="pre">Dataset</span></code> resources.</p></li>
+<li><p><strong>VectorIO</strong> is associated with <code class="docutils literal notranslate"><span class="pre">VectorDB</span></code> resources.</p></li>
+<li><p><strong>Scoring</strong> is associated with <code class="docutils literal notranslate"><span class="pre">ScoringFunction</span></code> resources.</p></li>
+<li><p><strong>Eval</strong> is associated with <code class="docutils literal notranslate"><span class="pre">Model</span></code> and <code class="docutils literal notranslate"><span class="pre">Benchmark</span></code> resources.</p></li>
+</ul>
+<p>Furthermore, we allow these resources to be <strong>federated</strong> across multiple providers. For example, you may have some Llama models served by Fireworks while others are served by AWS Bedrock. Regardless, they will all work seamlessly with the same uniform Inference API provided by Llama Stack.</p>
+<div class="tip admonition">
+<p class="admonition-title">Registering Resources</p>
+<p>Given this architecture, it is necessary for the Stack to know which provider to use for a given resource. This means you need to explicitly <em>register</em> resources (including models) before you can use them with the associated APIs.</p>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../getting_started/index.html" class="btn btn-neutral float-left" title="Getting Started" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../providers/index.html" class="btn btn-neutral float-right" title="API Providers" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Meta.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book"> Read the Docs</span>
+    v: v0.2.18
+    <span class="fa fa-caret-down"></span>
+  </span>
+  <div class="rst-other-versions">
+    <dl>
+      <dt>Versions</dt>
+      <dd>
+        <a href="/v0.2.19/">latest</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.19/">v0.2.19</a>
+      </dd>
+      <dd class="rtd-current-item">
+        <a href="/v0.2.18/">v0.2.18</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.17/">v0.2.17</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.16/">v0.2.16</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.15/">v0.2.15</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.14/">v0.2.14</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.13/">v0.2.13</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.12/">v0.2.12</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.11/">v0.2.11</a>
+      </dd>
+    </dl>
+  </div>
+</div><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

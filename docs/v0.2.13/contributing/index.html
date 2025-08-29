@@ -1,0 +1,381 @@
+
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contributing to Llama-Stack &mdash; llama-stack 0.2.13 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/my_theme.css?v=f1163765" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../_static/dark_mode_css/general.css?v=c0a7eb24" />
+      <link rel="stylesheet" type="text/css" href="../_static/dark_mode_css/dark.css?v=70edf1c7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=ba481074"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=09bf800d"></script>
+      <script src="../_static/js/detect_theme.js?v=76226c80"></script>
+      <script src="../_static/js/keyboard_shortcuts.js"></script>
+      <script src="../_static/design-tabs.js?v=f930bc37"></script>
+      <script src="../_static/dark_mode_js/default_light.js?v=c2e647ce"></script>
+      <script src="../_static/dark_mode_js/theme_switcher.js?v=358d3910"></script>
+    <script src="../_static/js/theme.js"></script>
+    <script src="../_static/js/versions.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Adding a New API Provider" href="new_api_provider.html" />
+    <link rel="prev" title="Llama Stack Playground" href="../playground/index.html" />
+ 
+
+<script src="../_static/version-loader.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            llama-stack
+          </a>
+              <div class="switch-menus">
+                <div class="version-switch"></div>
+                <div class="language-switch"></div>
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Llama Stack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/index.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/detailed_tutorial.html">Detailed Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../introduction/index.html">Why Llama Stack?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">Core Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openai/index.html">OpenAI API Compatibility</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../providers/index.html">Providers Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../distributions/index.html">Distributions Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../building_applications/index.html">Building AI Applications (Examples)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../playground/index.html">Llama Stack Playground</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Contributing to Llama-Stack</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#discussions-issues-pull-requests">Discussions -&gt; Issues -&gt; Pull Requests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#contributor-license-agreement-cla">Contributor License Agreement (“CLA”)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#issues">Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#set-up-your-development-environment">Set up your development environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pre-commit-hooks">Pre-commit Hooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#running-tests">Running tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#adding-a-new-dependency-to-the-project">Adding a new dependency to the project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#coding-style">Coding Style</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#common-tasks">Common Tasks</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#using-llama-stack-build">Using <code class="docutils literal notranslate"><span class="pre">llama</span> <span class="pre">stack</span> <span class="pre">build</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#updating-provider-configurations">Updating Provider Configurations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#building-the-documentation">Building the Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#update-api-documentation">Update API Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#license">License</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="new_api_provider.html">Adding a New API Provider</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../references/index.html">References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">llama-stack</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Contributing to Llama-Stack</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/contributing/index.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="contributing-to-llama-stack">
+<h1>Contributing to Llama-Stack<a class="headerlink" href="#contributing-to-llama-stack" title="Link to this heading"></a></h1>
+<p>We want to make contributing to this project as easy and transparent as
+possible.</p>
+<section id="discussions-issues-pull-requests">
+<h2>Discussions -&gt; Issues -&gt; Pull Requests<a class="headerlink" href="#discussions-issues-pull-requests" title="Link to this heading"></a></h2>
+<p>We actively welcome your pull requests. However, please read the following. This is heavily inspired by <a class="reference external" href="https://github.com/ghostty-org/ghostty/blob/main/CONTRIBUTING.md">Ghostty</a>.</p>
+<p>If in doubt, please open a <a class="reference external" href="https://github.com/meta-llama/llama-stack/discussions">discussion</a>; we can always convert that to an issue later.</p>
+<p><strong>I’d like to contribute!</strong></p>
+<p>All issues are actionable (please report if they are not.) Pick one and start working on it. Thank you.
+If you need help or guidance, comment on the issue. Issues that are extra friendly to new contributors are tagged with “contributor friendly”.</p>
+<p><strong>I have a bug!</strong></p>
+<ol class="arabic simple">
+<li><p>Search the issue tracker and discussions for similar issues.</p></li>
+<li><p>If you don’t have steps to reproduce, open a discussion.</p></li>
+<li><p>If you have steps to reproduce, open an issue.</p></li>
+</ol>
+<p><strong>I have an idea for a feature!</strong></p>
+<ol class="arabic simple">
+<li><p>Open a discussion.</p></li>
+</ol>
+<p><strong>I’ve implemented a feature!</strong></p>
+<ol class="arabic simple">
+<li><p>If there is an issue for the feature, open a pull request.</p></li>
+<li><p>If there is no issue, open a discussion and link to your branch.</p></li>
+</ol>
+<p><strong>I have a question!</strong></p>
+<ol class="arabic simple">
+<li><p>Open a discussion or use <a class="reference external" href="https://discord.gg/llama-stack">Discord</a>.</p></li>
+</ol>
+<p><strong>Opening a Pull Request</strong></p>
+<ol class="arabic simple">
+<li><p>Fork the repo and create your branch from <code class="docutils literal notranslate"><span class="pre">main</span></code>.</p></li>
+<li><p>If you’ve changed APIs, update the documentation.</p></li>
+<li><p>Ensure the test suite passes.</p></li>
+<li><p>Make sure your code lints using <code class="docutils literal notranslate"><span class="pre">pre-commit</span></code>.</p></li>
+<li><p>If you haven’t already, complete the Contributor License Agreement (“CLA”).</p></li>
+<li><p>Ensure your pull request follows the <a class="reference external" href="https://www.conventionalcommits.org/en/v1.0.0/">conventional commits format</a>.</p></li>
+</ol>
+</section>
+<section id="contributor-license-agreement-cla">
+<h2>Contributor License Agreement (“CLA”)<a class="headerlink" href="#contributor-license-agreement-cla" title="Link to this heading"></a></h2>
+<p>In order to accept your pull request, we need you to submit a CLA. You only need
+to do this once to work on any of Meta’s open source projects.</p>
+<p>Complete your CLA here: <a class="reference external" href="https://code.facebook.com/cla">https://code.facebook.com/cla</a></p>
+</section>
+<section id="issues">
+<h2>Issues<a class="headerlink" href="#issues" title="Link to this heading"></a></h2>
+<p>We use GitHub issues to track public bugs. Please ensure your description is
+clear and has sufficient instructions to be able to reproduce the issue.</p>
+<p>Meta has a <a class="reference external" href="http://facebook.com/whitehat/info">bounty program</a> for the safe
+disclosure of security bugs. In those cases, please go through the process
+outlined on that page and do not file a public issue.</p>
+</section>
+<section id="set-up-your-development-environment">
+<h2>Set up your development environment<a class="headerlink" href="#set-up-your-development-environment" title="Link to this heading"></a></h2>
+<p>We use <a class="reference external" href="https://github.com/astral-sh/uv">uv</a> to manage python dependencies and virtual environments.
+You can install <code class="docutils literal notranslate"><span class="pre">uv</span></code> by following this <a class="reference external" href="https://docs.astral.sh/uv/getting-started/installation/">guide</a>.</p>
+<p>You can install the dependencies by running:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>llama-stack
+uv<span class="w"> </span>sync<span class="w"> </span>--extra<span class="w"> </span>dev
+uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
+<span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+</pre></div>
+</div>
+<blockquote>
+<div><p>[!NOTE]
+You can use a specific version of Python with <code class="docutils literal notranslate"><span class="pre">uv</span></code> by adding the <code class="docutils literal notranslate"><span class="pre">--python</span> <span class="pre">&lt;version&gt;</span></code> flag (e.g. <code class="docutils literal notranslate"><span class="pre">--python</span> <span class="pre">3.12</span></code>)
+Otherwise, <code class="docutils literal notranslate"><span class="pre">uv</span></code> will automatically select a Python version according to the <code class="docutils literal notranslate"><span class="pre">requires-python</span></code> section of the <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code>.
+For more info, see the <a class="reference external" href="https://docs.astral.sh/uv/concepts/python-versions/">uv docs around Python versions</a>.</p>
+</div></blockquote>
+<p>Note that you can create a dotenv file <code class="docutils literal notranslate"><span class="pre">.env</span></code> that includes necessary environment variables:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">LLAMA_STACK_BASE_URL</span><span class="o">=</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">localhost</span><span class="p">:</span><span class="mi">8321</span>
+<span class="n">LLAMA_STACK_CLIENT_LOG</span><span class="o">=</span><span class="n">debug</span>
+<span class="n">LLAMA_STACK_PORT</span><span class="o">=</span><span class="mi">8321</span>
+<span class="n">LLAMA_STACK_CONFIG</span><span class="o">=&lt;</span><span class="n">provider</span><span class="o">-</span><span class="n">name</span><span class="o">&gt;</span>
+<span class="n">TAVILY_SEARCH_API_KEY</span><span class="o">=</span>
+<span class="n">BRAVE_SEARCH_API_KEY</span><span class="o">=</span>
+</pre></div>
+</div>
+<p>And then use this dotenv file when running client SDK tests via the following:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>uv<span class="w"> </span>run<span class="w"> </span>--env-file<span class="w"> </span>.env<span class="w"> </span>--<span class="w"> </span>pytest<span class="w"> </span>-v<span class="w"> </span>tests/integration/inference/test_text_inference.py<span class="w"> </span>--text-model<span class="o">=</span>meta-llama/Llama-3.1-8B-Instruct
+</pre></div>
+</div>
+</section>
+<section id="pre-commit-hooks">
+<h2>Pre-commit Hooks<a class="headerlink" href="#pre-commit-hooks" title="Link to this heading"></a></h2>
+<p>We use <a class="reference external" href="https://pre-commit.com/">pre-commit</a> to run linting and formatting checks on your code. You can install the pre-commit hooks by running:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>uv<span class="w"> </span>run<span class="w"> </span>pre-commit<span class="w"> </span>install
+</pre></div>
+</div>
+<p>After that, pre-commit hooks will run automatically before each commit.</p>
+<p>Alternatively, if you don’t want to install the pre-commit hooks, you can run the checks manually by running:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>uv<span class="w"> </span>run<span class="w"> </span>pre-commit<span class="w"> </span>run<span class="w"> </span>--all-files
+</pre></div>
+</div>
+<blockquote>
+<div><p>[!CAUTION]
+Before pushing your changes, make sure that the pre-commit hooks have passed successfully.</p>
+</div></blockquote>
+</section>
+<section id="running-tests">
+<h2>Running tests<a class="headerlink" href="#running-tests" title="Link to this heading"></a></h2>
+<p>You can find the Llama Stack testing documentation here <a class="reference internal" href="#tests/README.md"><span class="xref myst">here</span></a>.</p>
+</section>
+<section id="adding-a-new-dependency-to-the-project">
+<h2>Adding a new dependency to the project<a class="headerlink" href="#adding-a-new-dependency-to-the-project" title="Link to this heading"></a></h2>
+<p>To add a new dependency to the project, you can use the <code class="docutils literal notranslate"><span class="pre">uv</span></code> command. For example, to add <code class="docutils literal notranslate"><span class="pre">foo</span></code> to the project, you can run:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>uv<span class="w"> </span>add<span class="w"> </span>foo
+uv<span class="w"> </span>sync
+</pre></div>
+</div>
+</section>
+<section id="coding-style">
+<h2>Coding Style<a class="headerlink" href="#coding-style" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Comments should provide meaningful insights into the code. Avoid filler comments that simply
+describe the next step, as they create unnecessary clutter, same goes for docstrings.</p></li>
+<li><p>Prefer comments to clarify surprising behavior and/or relationships between parts of the code
+rather than explain what the next line of code does.</p></li>
+<li><p>Catching exceptions, prefer using a specific exception type rather than a broad catch-all like
+<code class="docutils literal notranslate"><span class="pre">Exception</span></code>.</p></li>
+<li><p>Error messages should be prefixed with “Failed to …”</p></li>
+<li><p>4 spaces for indentation rather than tab</p></li>
+<li><p>When using <code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">noqa</span></code> to suppress a style or linter warning, include a comment explaining the
+justification for bypassing the check.</p></li>
+<li><p>When using <code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">type:</span> <span class="pre">ignore</span></code> to suppress a mypy warning, include a comment explaining the
+justification for bypassing the check.</p></li>
+<li><p>Don’t use unicode characters in the codebase. ASCII-only is preferred for compatibility or
+readability reasons.</p></li>
+</ul>
+</section>
+<section id="common-tasks">
+<h2>Common Tasks<a class="headerlink" href="#common-tasks" title="Link to this heading"></a></h2>
+<p>Some tips about common tasks you work on while contributing to Llama Stack:</p>
+<section id="using-llama-stack-build">
+<h3>Using <code class="docutils literal notranslate"><span class="pre">llama</span> <span class="pre">stack</span> <span class="pre">build</span></code><a class="headerlink" href="#using-llama-stack-build" title="Link to this heading"></a></h3>
+<p>Building a stack image (conda / docker) will use the production version of the <code class="docutils literal notranslate"><span class="pre">llama-stack</span></code> and <code class="docutils literal notranslate"><span class="pre">llama-stack-client</span></code> packages. If you are developing with a llama-stack repository checked out and need your code to be reflected in the stack image, set <code class="docutils literal notranslate"><span class="pre">LLAMA_STACK_DIR</span></code> and <code class="docutils literal notranslate"><span class="pre">LLAMA_STACK_CLIENT_DIR</span></code> to the appropriate checked out directories when running any of the <code class="docutils literal notranslate"><span class="pre">llama</span></code> CLI commands.</p>
+<p>Example:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>work/
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/meta-llama/llama-stack.git
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/meta-llama/llama-stack-client-python.git
+<span class="nb">cd</span><span class="w"> </span>llama-stack
+<span class="nv">LLAMA_STACK_DIR</span><span class="o">=</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="w"> </span><span class="nv">LLAMA_STACK_CLIENT_DIR</span><span class="o">=</span>../llama-stack-client-python<span class="w"> </span>llama<span class="w"> </span>stack<span class="w"> </span>build<span class="w"> </span>--template<span class="w"> </span>&lt;...&gt;
+</pre></div>
+</div>
+</section>
+<section id="updating-provider-configurations">
+<h3>Updating Provider Configurations<a class="headerlink" href="#updating-provider-configurations" title="Link to this heading"></a></h3>
+<p>If you have made changes to a provider’s configuration in any form (introducing a new config key, or changing models, etc.), you should run <code class="docutils literal notranslate"><span class="pre">./scripts/distro_codegen.py</span></code> to re-generate various YAML files as well as the documentation. You should not change <code class="docutils literal notranslate"><span class="pre">docs/source/.../distributions/</span></code> files manually as they are auto-generated.</p>
+</section>
+<section id="building-the-documentation">
+<h3>Building the Documentation<a class="headerlink" href="#building-the-documentation" title="Link to this heading"></a></h3>
+<p>If you are making changes to the documentation at <a class="reference external" href="https://llama-stack.readthedocs.io/en/latest/">https://llama-stack.readthedocs.io/en/latest/</a>, you can use the following command to build the documentation and preview your changes. You will need <a class="reference external" href="https://www.sphinx-doc.org/en/master/">Sphinx</a> and the readthedocs theme.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># This rebuilds the documentation pages.</span>
+uv<span class="w"> </span>run<span class="w"> </span>--group<span class="w"> </span>docs<span class="w"> </span>make<span class="w"> </span>-C<span class="w"> </span>docs/<span class="w"> </span>html
+
+<span class="c1"># This will start a local server (usually at http://127.0.0.1:8000) that automatically rebuilds and refreshes when you make changes to the documentation.</span>
+uv<span class="w"> </span>run<span class="w"> </span>--group<span class="w"> </span>docs<span class="w"> </span>sphinx-autobuild<span class="w"> </span>docs/source<span class="w"> </span>docs/build/html<span class="w"> </span>--write-all
+</pre></div>
+</div>
+</section>
+<section id="update-api-documentation">
+<h3>Update API Documentation<a class="headerlink" href="#update-api-documentation" title="Link to this heading"></a></h3>
+<p>If you modify or add new API endpoints, update the API documentation accordingly. You can do this by running the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>uv<span class="w"> </span>run<span class="w"> </span>./docs/openapi_generator/run_openapi_generator.sh
+</pre></div>
+</div>
+<p>The generated API documentation will be available in <code class="docutils literal notranslate"><span class="pre">docs/_static/</span></code>. Make sure to review the changes before committing.</p>
+</section>
+</section>
+<section id="license">
+<h2>License<a class="headerlink" href="#license" title="Link to this heading"></a></h2>
+<p>By contributing to Llama, you agree that your contributions will be licensed
+under the LICENSE file in the root directory of this source tree.</p>
+<p>See the <a class="reference internal" href="new_api_provider.html"><span class="std std-doc">Adding a New API Provider</span></a> which describes how to add new API providers to the Stack.</p>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../playground/index.html" class="btn btn-neutral float-left" title="Llama Stack Playground" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="new_api_provider.html" class="btn btn-neutral float-right" title="Adding a New API Provider" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Meta.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book"> Read the Docs</span>
+    v: v0.2.13
+    <span class="fa fa-caret-down"></span>
+  </span>
+  <div class="rst-other-versions">
+    <dl>
+      <dt>Versions</dt>
+      <dd>
+        <a href="/v0.2.19/">latest</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.19/">v0.2.19</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.18/">v0.2.18</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.17/">v0.2.17</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.16/">v0.2.16</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.15/">v0.2.15</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.14/">v0.2.14</a>
+      </dd>
+      <dd class="rtd-current-item">
+        <a href="/v0.2.13/">v0.2.13</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.12/">v0.2.12</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.11/">v0.2.11</a>
+      </dd>
+    </dl>
+  </div>
+</div><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
