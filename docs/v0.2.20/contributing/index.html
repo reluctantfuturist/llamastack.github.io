@@ -1,0 +1,755 @@
+
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contributing to Llama Stack &mdash; llama-stack 0.2.20 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/my_theme.css?v=f1163765" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../_static/dark_mode_css/general.css?v=c0a7eb24" />
+      <link rel="stylesheet" type="text/css" href="../_static/dark_mode_css/dark.css?v=70edf1c7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=20e0ead2"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=09bf800d"></script>
+      <script src="../_static/js/detect_theme.js?v=76226c80"></script>
+      <script src="../_static/js/keyboard_shortcuts.js?v=62563c3b"></script>
+      <script src="../_static/design-tabs.js?v=f930bc37"></script>
+      <script src="../_static/dark_mode_js/default_light.js?v=c2e647ce"></script>
+      <script src="../_static/dark_mode_js/theme_switcher.js?v=358d3910"></script>
+    <script src="../_static/js/theme.js"></script>
+    <script src="../_static/js/versions.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Adding a New API Provider" href="new_api_provider.html" />
+    <link rel="prev" title="Deployment Examples" href="../deploying/index.html" />
+ 
+
+<script src="../_static/version-loader.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            llama-stack
+          </a>
+              <div class="switch-menus">
+                <div class="version-switch"></div>
+                <div class="language-switch"></div>
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Llama Stack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">Core Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../providers/index.html">API Providers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../distributions/index.html">Distributions Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced_apis/index.html">Advanced APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../building_applications/index.html">AI Application Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deploying/index.html">Deployment Examples</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Contributing to Llama Stack</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#set-up-your-development-environment">Set up your development environment</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pre-commit-hooks">Pre-commit Hooks</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#discussions-issues-pull-requests">Discussions -&gt; Issues -&gt; Pull Requests</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#issues">Issues</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#contributor-license-agreement-cla">Contributor License Agreement (“CLA”)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#repository-guidelines">Repository guidelines</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#coding-style">Coding Style</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#license">License</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#common-tasks">Common Tasks</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#using-llama-stack-build">Using <code class="docutils literal notranslate"><span class="pre">llama</span> <span class="pre">stack</span> <span class="pre">build</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#updating-distribution-configurations">Updating distribution configurations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#updating-the-provider-documentation">Updating the provider documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#building-the-documentation">Building the Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#update-api-documentation">Update API Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#adding-a-new-provider">Adding a New Provider</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="new_api_provider.html">Adding a New API Provider</a></li>
+<li class="toctree-l3"><a class="reference internal" href="new_vector_database.html">Adding a New Vector Database</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#testing">Testing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#record-replay-for-integration-tests">Record-replay for integration tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#testing-quick-start">Testing Quick Start</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#re-recording-tests">Re-recording tests</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#local-re-recording-manual-setup-required">Local Re-recording (Manual Setup Required)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#remote-re-recording-recommended">Remote Re-recording (Recommended)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#next-steps">Next Steps</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#advanced-topics">Advanced Topics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="testing/record-replay.html">Record-Replay System</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#benchmarking">Benchmarking</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#llama-stack-benchmark-suite-on-kubernetes">Llama Stack Benchmark Suite on Kubernetes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#motivation">Motivation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#why-this-benchmark-suite-exists">Why This Benchmark Suite Exists</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#key-metrics-captured">Key Metrics Captured</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#setup">Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#quick-start">Quick Start</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#basic-benchmarks">Basic Benchmarks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#custom-configuration">Custom Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#command-reference">Command Reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#run-benchmark-sh-options">run-benchmark.sh Options</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#local-testing">Local Testing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#running-benchmark-locally">Running Benchmark Locally</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openai-mock-server">OpenAI Mock Server</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#files-in-this-directory">Files in this Directory</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../references/index.html">References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">llama-stack</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Contributing to Llama Stack</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/contributing/index.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="contributing-to-llama-stack">
+<h1>Contributing to Llama Stack<a class="headerlink" href="#contributing-to-llama-stack" title="Link to this heading"></a></h1>
+<p>We want to make contributing to this project as easy and transparent as
+possible.</p>
+<section id="set-up-your-development-environment">
+<h2>Set up your development environment<a class="headerlink" href="#set-up-your-development-environment" title="Link to this heading"></a></h2>
+<p>We use <a class="reference external" href="https://github.com/astral-sh/uv">uv</a> to manage python dependencies and virtual environments.
+You can install <code class="docutils literal notranslate"><span class="pre">uv</span></code> by following this <a class="reference external" href="https://docs.astral.sh/uv/getting-started/installation/">guide</a>.</p>
+<p>You can install the dependencies by running:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>llama-stack
+uv<span class="w"> </span>sync<span class="w"> </span>--group<span class="w"> </span>dev
+uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
+<span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can use a specific version of Python with <code class="docutils literal notranslate"><span class="pre">uv</span></code> by adding the <code class="docutils literal notranslate"><span class="pre">--python</span> <span class="pre">&lt;version&gt;</span></code> flag (e.g. <code class="docutils literal notranslate"><span class="pre">--python</span> <span class="pre">3.12</span></code>).
+Otherwise, <code class="docutils literal notranslate"><span class="pre">uv</span></code> will automatically select a Python version according to the <code class="docutils literal notranslate"><span class="pre">requires-python</span></code> section of the <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code>.
+For more info, see the <a class="reference external" href="https://docs.astral.sh/uv/concepts/python-versions/">uv docs around Python versions</a>.</p>
+</div>
+<p>Note that you can create a dotenv file <code class="docutils literal notranslate"><span class="pre">.env</span></code> that includes necessary environment variables:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">LLAMA_STACK_BASE_URL</span><span class="o">=</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">localhost</span><span class="p">:</span><span class="mi">8321</span>
+<span class="n">LLAMA_STACK_CLIENT_LOG</span><span class="o">=</span><span class="n">debug</span>
+<span class="n">LLAMA_STACK_PORT</span><span class="o">=</span><span class="mi">8321</span>
+<span class="n">LLAMA_STACK_CONFIG</span><span class="o">=&lt;</span><span class="n">provider</span><span class="o">-</span><span class="n">name</span><span class="o">&gt;</span>
+<span class="n">TAVILY_SEARCH_API_KEY</span><span class="o">=</span>
+<span class="n">BRAVE_SEARCH_API_KEY</span><span class="o">=</span>
+</pre></div>
+</div>
+<p>And then use this dotenv file when running client SDK tests via the following:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>uv<span class="w"> </span>run<span class="w"> </span>--env-file<span class="w"> </span>.env<span class="w"> </span>--<span class="w"> </span>pytest<span class="w"> </span>-v<span class="w"> </span>tests/integration/inference/test_text_inference.py<span class="w"> </span>--text-model<span class="o">=</span>meta-llama/Llama-3.1-8B-Instruct
+</pre></div>
+</div>
+<section id="pre-commit-hooks">
+<h3>Pre-commit Hooks<a class="headerlink" href="#pre-commit-hooks" title="Link to this heading"></a></h3>
+<p>We use <a class="reference external" href="https://pre-commit.com/">pre-commit</a> to run linting and formatting checks on your code. You can install the pre-commit hooks by running:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>uv<span class="w"> </span>run<span class="w"> </span>pre-commit<span class="w"> </span>install
+</pre></div>
+</div>
+<p>After that, pre-commit hooks will run automatically before each commit.</p>
+<p>Alternatively, if you don’t want to install the pre-commit hooks, you can run the checks manually by running:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>uv<span class="w"> </span>run<span class="w"> </span>pre-commit<span class="w"> </span>run<span class="w"> </span>--all-files
+</pre></div>
+</div>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>Before pushing your changes, make sure that the pre-commit hooks have passed successfully.</p>
+</div>
+</section>
+</section>
+<section id="discussions-issues-pull-requests">
+<h2>Discussions -&gt; Issues -&gt; Pull Requests<a class="headerlink" href="#discussions-issues-pull-requests" title="Link to this heading"></a></h2>
+<p>We actively welcome your pull requests. However, please read the following. This is heavily inspired by <a class="reference external" href="https://github.com/ghostty-org/ghostty/blob/main/CONTRIBUTING.md">Ghostty</a>.</p>
+<p>If in doubt, please open a <a class="reference external" href="https://github.com/meta-llama/llama-stack/discussions">discussion</a>; we can always convert that to an issue later.</p>
+<section id="issues">
+<h3>Issues<a class="headerlink" href="#issues" title="Link to this heading"></a></h3>
+<p>We use GitHub issues to track public bugs. Please ensure your description is
+clear and has sufficient instructions to be able to reproduce the issue.</p>
+<p>Meta has a <a class="reference external" href="http://facebook.com/whitehat/info">bounty program</a> for the safe
+disclosure of security bugs. In those cases, please go through the process
+outlined on that page and do not file a public issue.</p>
+</section>
+<section id="contributor-license-agreement-cla">
+<h3>Contributor License Agreement (“CLA”)<a class="headerlink" href="#contributor-license-agreement-cla" title="Link to this heading"></a></h3>
+<p>In order to accept your pull request, we need you to submit a CLA. You only need
+to do this once to work on any of Meta’s open source projects.</p>
+<p>Complete your CLA here: <a class="reference external" href="https://code.facebook.com/cla">https://code.facebook.com/cla</a></p>
+<p><strong>I’d like to contribute!</strong></p>
+<p>If you are new to the project, start by looking at the issues tagged with “good first issue”. If you’re interested
+leave a comment on the issue and a triager will assign it to you.</p>
+<p>Please avoid picking up too many issues at once. This helps you stay focused and ensures that others in the community also have opportunities to contribute.</p>
+<ul class="simple">
+<li><p>Try to work on only 1–2 issues at a time, especially if you’re still getting familiar with the codebase.</p></li>
+<li><p>Before taking an issue, check if it’s already assigned or being actively discussed.</p></li>
+<li><p>If you’re blocked or can’t continue with an issue, feel free to unassign yourself or leave a comment so others can step in.</p></li>
+</ul>
+<p><strong>I have a bug!</strong></p>
+<ol class="arabic simple">
+<li><p>Search the issue tracker and discussions for similar issues.</p></li>
+<li><p>If you don’t have steps to reproduce, open a discussion.</p></li>
+<li><p>If you have steps to reproduce, open an issue.</p></li>
+</ol>
+<p><strong>I have an idea for a feature!</strong></p>
+<ol class="arabic simple">
+<li><p>Open a discussion.</p></li>
+</ol>
+<p><strong>I’ve implemented a feature!</strong></p>
+<ol class="arabic simple">
+<li><p>If there is an issue for the feature, open a pull request.</p></li>
+<li><p>If there is no issue, open a discussion and link to your branch.</p></li>
+</ol>
+<p><strong>I have a question!</strong></p>
+<ol class="arabic simple">
+<li><p>Open a discussion or use <a class="reference external" href="https://discord.gg/llama-stack">Discord</a>.</p></li>
+</ol>
+<p><strong>Opening a Pull Request</strong></p>
+<ol class="arabic simple">
+<li><p>Fork the repo and create your branch from <code class="docutils literal notranslate"><span class="pre">main</span></code>.</p></li>
+<li><p>If you’ve changed APIs, update the documentation.</p></li>
+<li><p>Ensure the test suite passes.</p></li>
+<li><p>Make sure your code lints using <code class="docutils literal notranslate"><span class="pre">pre-commit</span></code>.</p></li>
+<li><p>If you haven’t already, complete the Contributor License Agreement (“CLA”).</p></li>
+<li><p>Ensure your pull request follows the <a class="reference external" href="https://www.conventionalcommits.org/en/v1.0.0/">conventional commits format</a>.</p></li>
+<li><p>Ensure your pull request follows the <a class="reference internal" href="#coding-style"><span class="xref myst">coding style</span></a>.</p></li>
+</ol>
+<p>Please keep pull requests (PRs) small and focused. If you have a large set of changes, consider splitting them into logically grouped, smaller PRs to facilitate review and testing.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>As a general guideline:</p>
+<ul class="simple">
+<li><p>Experienced contributors should try to keep no more than 5 open PRs at a time.</p></li>
+<li><p>New contributors are encouraged to have only one open PR at a time until they’re familiar with the codebase and process.</p></li>
+</ul>
+</div>
+</section>
+</section>
+<section id="repository-guidelines">
+<h2>Repository guidelines<a class="headerlink" href="#repository-guidelines" title="Link to this heading"></a></h2>
+<section id="coding-style">
+<h3>Coding Style<a class="headerlink" href="#coding-style" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Comments should provide meaningful insights into the code. Avoid filler comments that simply
+describe the next step, as they create unnecessary clutter, same goes for docstrings.</p></li>
+<li><p>Prefer comments to clarify surprising behavior and/or relationships between parts of the code
+rather than explain what the next line of code does.</p></li>
+<li><p>Catching exceptions, prefer using a specific exception type rather than a broad catch-all like
+<code class="docutils literal notranslate"><span class="pre">Exception</span></code>.</p></li>
+<li><p>Error messages should be prefixed with “Failed to …”</p></li>
+<li><p>4 spaces for indentation rather than tab</p></li>
+<li><p>When using <code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">noqa</span></code> to suppress a style or linter warning, include a comment explaining the
+justification for bypassing the check.</p></li>
+<li><p>When using <code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">type:</span> <span class="pre">ignore</span></code> to suppress a mypy warning, include a comment explaining the
+justification for bypassing the check.</p></li>
+<li><p>Don’t use unicode characters in the codebase. ASCII-only is preferred for compatibility or
+readability reasons.</p></li>
+<li><p>Providers configuration class should be Pydantic Field class. It should have a <code class="docutils literal notranslate"><span class="pre">description</span></code> field
+that describes the configuration. These descriptions will be used to generate the provider
+documentation.</p></li>
+<li><p>When possible, use keyword arguments only when calling functions.</p></li>
+<li><p>Llama Stack utilizes <a class="reference internal" href="#llama_stack/apis/common/errors.py"><span class="xref myst">custom Exception classes</span></a> for certain Resources that should be used where applicable.</p></li>
+</ul>
+</section>
+<section id="license">
+<h3>License<a class="headerlink" href="#license" title="Link to this heading"></a></h3>
+<p>By contributing to Llama, you agree that your contributions will be licensed
+under the LICENSE file in the root directory of this source tree.</p>
+</section>
+</section>
+<section id="common-tasks">
+<h2>Common Tasks<a class="headerlink" href="#common-tasks" title="Link to this heading"></a></h2>
+<p>Some tips about common tasks you work on while contributing to Llama Stack:</p>
+<section id="using-llama-stack-build">
+<h3>Using <code class="docutils literal notranslate"><span class="pre">llama</span> <span class="pre">stack</span> <span class="pre">build</span></code><a class="headerlink" href="#using-llama-stack-build" title="Link to this heading"></a></h3>
+<p>Building a stack image will use the production version of the <code class="docutils literal notranslate"><span class="pre">llama-stack</span></code> and <code class="docutils literal notranslate"><span class="pre">llama-stack-client</span></code> packages. If you are developing with a llama-stack repository checked out and need your code to be reflected in the stack image, set <code class="docutils literal notranslate"><span class="pre">LLAMA_STACK_DIR</span></code> and <code class="docutils literal notranslate"><span class="pre">LLAMA_STACK_CLIENT_DIR</span></code> to the appropriate checked out directories when running any of the <code class="docutils literal notranslate"><span class="pre">llama</span></code> CLI commands.</p>
+<p>Example:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>work/
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/meta-llama/llama-stack.git
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/meta-llama/llama-stack-client-python.git
+<span class="nb">cd</span><span class="w"> </span>llama-stack
+<span class="nv">LLAMA_STACK_DIR</span><span class="o">=</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="w"> </span><span class="nv">LLAMA_STACK_CLIENT_DIR</span><span class="o">=</span>../llama-stack-client-python<span class="w"> </span>llama<span class="w"> </span>stack<span class="w"> </span>build<span class="w"> </span>--distro<span class="w"> </span>&lt;...&gt;
+</pre></div>
+</div>
+</section>
+<section id="updating-distribution-configurations">
+<h3>Updating distribution configurations<a class="headerlink" href="#updating-distribution-configurations" title="Link to this heading"></a></h3>
+<p>If you have made changes to a provider’s configuration in any form (introducing a new config key, or
+changing models, etc.), you should run <code class="docutils literal notranslate"><span class="pre">./scripts/distro_codegen.py</span></code> to re-generate various YAML
+files as well as the documentation. You should not change <code class="docutils literal notranslate"><span class="pre">docs/source/.../distributions/</span></code> files
+manually as they are auto-generated.</p>
+</section>
+<section id="updating-the-provider-documentation">
+<h3>Updating the provider documentation<a class="headerlink" href="#updating-the-provider-documentation" title="Link to this heading"></a></h3>
+<p>If you have made changes to a provider’s configuration, you should run <code class="docutils literal notranslate"><span class="pre">./scripts/provider_codegen.py</span></code>
+to re-generate the documentation. You should not change <code class="docutils literal notranslate"><span class="pre">docs/source/.../providers/</span></code> files manually
+as they are auto-generated.
+Note that the provider “description” field will be used to generate the provider documentation.</p>
+</section>
+<section id="building-the-documentation">
+<h3>Building the Documentation<a class="headerlink" href="#building-the-documentation" title="Link to this heading"></a></h3>
+<p>If you are making changes to the documentation at <a class="reference external" href="https://llama-stack.readthedocs.io/en/latest/">https://llama-stack.readthedocs.io/en/latest/</a>, you can use the following command to build the documentation and preview your changes. You will need <a class="reference external" href="https://www.sphinx-doc.org/en/master/">Sphinx</a> and the readthedocs theme.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># This rebuilds the documentation pages.</span>
+uv<span class="w"> </span>run<span class="w"> </span>--group<span class="w"> </span>docs<span class="w"> </span>make<span class="w"> </span>-C<span class="w"> </span>docs/<span class="w"> </span>html
+
+<span class="c1"># This will start a local server (usually at http://127.0.0.1:8000) that automatically rebuilds and refreshes when you make changes to the documentation.</span>
+uv<span class="w"> </span>run<span class="w"> </span>--group<span class="w"> </span>docs<span class="w"> </span>sphinx-autobuild<span class="w"> </span>docs/source<span class="w"> </span>docs/build/html<span class="w"> </span>--write-all
+</pre></div>
+</div>
+</section>
+<section id="update-api-documentation">
+<h3>Update API Documentation<a class="headerlink" href="#update-api-documentation" title="Link to this heading"></a></h3>
+<p>If you modify or add new API endpoints, update the API documentation accordingly. You can do this by running the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>uv<span class="w"> </span>run<span class="w"> </span>./docs/openapi_generator/run_openapi_generator.sh
+</pre></div>
+</div>
+<p>The generated API documentation will be available in <code class="docutils literal notranslate"><span class="pre">docs/_static/</span></code>. Make sure to review the changes before committing.</p>
+</section>
+</section>
+<section id="adding-a-new-provider">
+<h2>Adding a New Provider<a class="headerlink" href="#adding-a-new-provider" title="Link to this heading"></a></h2>
+<p>See:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="new_api_provider.html"><span class="std std-doc">Adding a New API Provider Page</span></a> which describes how to add new API providers to the Stack.</p></li>
+<li><p><a class="reference internal" href="new_vector_database.html"><span class="std std-doc">Vector Database Page</span></a> which describes how to add a new vector databases with Llama Stack.</p></li>
+<li><p><a class="reference internal" href="../providers/external/index.html"><span class="std std-doc">External Provider Page</span></a> which describes how to add external providers to the Stack.</p></li>
+</ul>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+<section id="testing">
+<h2>Testing<a class="headerlink" href="#testing" title="Link to this heading"></a></h2>
+<p>There are two obvious types of tests:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Location</p></th>
+<th class="head"><p>Purpose</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Unit</strong></p></td>
+<td><p><a class="reference internal" href="#unit/README.md"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">tests/unit/</span></code></span></a></p></td>
+<td><p>Fast, isolated component testing</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Integration</strong></p></td>
+<td><p><a class="reference internal" href="#integration/README.md"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">tests/integration/</span></code></span></a></p></td>
+<td><p>End-to-end workflows with record-replay</p></td>
+</tr>
+</tbody>
+</table>
+<p>Both have their place. For unit tests, it is important to create minimal mocks and instead rely more on “fakes”. Mocks are too brittle. In either case, tests must be very fast and reliable.</p>
+<section id="record-replay-for-integration-tests">
+<h3>Record-replay for integration tests<a class="headerlink" href="#record-replay-for-integration-tests" title="Link to this heading"></a></h3>
+<p>Testing AI applications end-to-end creates some challenges:</p>
+<ul class="simple">
+<li><p><strong>API costs</strong> accumulate quickly during development and CI</p></li>
+<li><p><strong>Non-deterministic responses</strong> make tests unreliable</p></li>
+<li><p><strong>Multiple providers</strong> require testing the same logic across different APIs</p></li>
+</ul>
+<p>Our solution: <strong>Record real API responses once, replay them for fast, deterministic tests.</strong> This is better than mocking because AI APIs have complex response structures and streaming behavior. Mocks can miss edge cases that real APIs exhibit. A single test can exercise underlying APIs in multiple complex ways making it really hard to mock.</p>
+<p>This gives you:</p>
+<ul class="simple">
+<li><p>Cost control - No repeated API calls during development</p></li>
+<li><p>Speed - Instant test execution with cached responses</p></li>
+<li><p>Reliability - Consistent results regardless of external service state</p></li>
+<li><p>Provider coverage - Same tests work across OpenAI, Anthropic, local models, etc.</p></li>
+</ul>
+</section>
+<section id="testing-quick-start">
+<h3>Testing Quick Start<a class="headerlink" href="#testing-quick-start" title="Link to this heading"></a></h3>
+<p>You can run the unit tests with:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>uv<span class="w"> </span>run<span class="w"> </span>--group<span class="w"> </span>unit<span class="w"> </span>pytest<span class="w"> </span>-sv<span class="w"> </span>tests/unit/
+</pre></div>
+</div>
+<p>For running integration tests, you must provide a few things:</p>
+<ul class="simple">
+<li><p>A stack config. This is a pointer to a stack. You have a few ways to point to a stack:</p>
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">server:&lt;config&gt;</span></code></strong> - automatically start a server with the given config (e.g., <code class="docutils literal notranslate"><span class="pre">server:starter</span></code>). This provides one-step testing by auto-starting the server if the port is available, or reusing an existing server if already running.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">server:&lt;config&gt;:&lt;port&gt;</span></code></strong> - same as above but with a custom port (e.g., <code class="docutils literal notranslate"><span class="pre">server:starter:8322</span></code>)</p></li>
+<li><p>a URL which points to a Llama Stack distribution server</p></li>
+<li><p>a distribution name (e.g., <code class="docutils literal notranslate"><span class="pre">starter</span></code>) or a path to a <code class="docutils literal notranslate"><span class="pre">run.yaml</span></code> file</p></li>
+<li><p>a comma-separated list of api=provider pairs, e.g. <code class="docutils literal notranslate"><span class="pre">inference=fireworks,safety=llama-guard,agents=meta-reference</span></code>. This is most useful for testing a single API surface.</p></li>
+</ul>
+</li>
+<li><p>Whether you are using replay or live mode for inference. This is specified with the LLAMA_STACK_TEST_INFERENCE_MODE environment variable. The default mode currently is “live” – that is certainly surprising, but we will fix this soon.</p></li>
+<li><p>Any API keys you need to use should be set in the environment, or can be passed in with the –env option.</p></li>
+</ul>
+<p>You can run the integration tests in replay mode with:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run all tests with existing recordings</span>
+<span class="nv">LLAMA_STACK_TEST_INFERENCE_MODE</span><span class="o">=</span>replay<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="nv">LLAMA_STACK_TEST_RECORDING_DIR</span><span class="o">=</span>tests/integration/recordings<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>uv<span class="w"> </span>run<span class="w"> </span>--group<span class="w"> </span><span class="nb">test</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>pytest<span class="w"> </span>-sv<span class="w"> </span>tests/integration/<span class="w"> </span>--stack-config<span class="o">=</span>starter
+</pre></div>
+</div>
+<p>If you don’t specify LLAMA_STACK_TEST_INFERENCE_MODE, by default it will be in “live” mode – that is, it will make real API calls.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Test against live APIs</span>
+<span class="nv">FIREWORKS_API_KEY</span><span class="o">=</span>your_key<span class="w"> </span>pytest<span class="w"> </span>-sv<span class="w"> </span>tests/integration/inference<span class="w"> </span>--stack-config<span class="o">=</span>starter
+</pre></div>
+</div>
+</section>
+<section id="re-recording-tests">
+<h3>Re-recording tests<a class="headerlink" href="#re-recording-tests" title="Link to this heading"></a></h3>
+<section id="local-re-recording-manual-setup-required">
+<h4>Local Re-recording (Manual Setup Required)<a class="headerlink" href="#local-re-recording-manual-setup-required" title="Link to this heading"></a></h4>
+<p>If you want to re-record tests locally, you can do so with:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">LLAMA_STACK_TEST_INFERENCE_MODE</span><span class="o">=</span>record<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="nv">LLAMA_STACK_TEST_RECORDING_DIR</span><span class="o">=</span>tests/integration/recordings<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>uv<span class="w"> </span>run<span class="w"> </span>--group<span class="w"> </span><span class="nb">test</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>pytest<span class="w"> </span>-sv<span class="w"> </span>tests/integration/<span class="w"> </span>--stack-config<span class="o">=</span>starter<span class="w"> </span>-k<span class="w"> </span><span class="s2">&quot;&lt;appropriate test name&gt;&quot;</span>
+</pre></div>
+</div>
+<p>This will record new API responses and overwrite the existing recordings.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>You must be careful when re-recording. CI workflows assume a specific setup for running the replay-mode tests. You must re-record the tests in the same way as the CI workflows. This means</p>
+<ul class="simple">
+<li><p>you need Ollama running and serving some specific models.</p></li>
+<li><p>you are using the <code class="docutils literal notranslate"><span class="pre">starter</span></code> distribution.</p></li>
+</ul>
+</div>
+</section>
+<section id="remote-re-recording-recommended">
+<h4>Remote Re-recording (Recommended)<a class="headerlink" href="#remote-re-recording-recommended" title="Link to this heading"></a></h4>
+<p><strong>For easier re-recording without local setup</strong>, use the automated recording workflow:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Record tests for specific test subdirectories</span>
+./scripts/github/schedule-record-workflow.sh<span class="w"> </span>--test-subdirs<span class="w"> </span><span class="s2">&quot;agents,inference&quot;</span>
+
+<span class="c1"># Record with vision tests enabled</span>
+./scripts/github/schedule-record-workflow.sh<span class="w"> </span>--test-subdirs<span class="w"> </span><span class="s2">&quot;inference&quot;</span><span class="w"> </span>--run-vision-tests
+
+<span class="c1"># Record with specific provider</span>
+./scripts/github/schedule-record-workflow.sh<span class="w"> </span>--test-subdirs<span class="w"> </span><span class="s2">&quot;agents&quot;</span><span class="w"> </span>--test-provider<span class="w"> </span>vllm
+</pre></div>
+</div>
+<p>This script:</p>
+<ul class="simple">
+<li><p>🚀 <strong>Runs in GitHub Actions</strong> - no local Ollama setup required</p></li>
+<li><p>🔍 <strong>Auto-detects your branch</strong> and associated PR</p></li>
+<li><p>🍴 <strong>Works from forks</strong> - handles repository context automatically</p></li>
+<li><p>✅ <strong>Commits recordings back</strong> to your branch</p></li>
+</ul>
+<p><strong>Prerequisites:</strong></p>
+<ul class="simple">
+<li><p>GitHub CLI: <code class="docutils literal notranslate"><span class="pre">brew</span> <span class="pre">install</span> <span class="pre">gh</span> <span class="pre">&amp;&amp;</span> <span class="pre">gh</span> <span class="pre">auth</span> <span class="pre">login</span></code></p></li>
+<li><p>jq: <code class="docutils literal notranslate"><span class="pre">brew</span> <span class="pre">install</span> <span class="pre">jq</span></code></p></li>
+<li><p>Your branch pushed to a remote</p></li>
+</ul>
+<p><strong>Supported providers:</strong> <code class="docutils literal notranslate"><span class="pre">vllm</span></code>, <code class="docutils literal notranslate"><span class="pre">ollama</span></code></p>
+</section>
+</section>
+<section id="next-steps">
+<h3>Next Steps<a class="headerlink" href="#next-steps" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="#integration/README.md"><span class="xref myst">Integration Testing Guide</span></a> - Detailed usage and configuration</p></li>
+<li><p><a class="reference internal" href="#unit/README.md"><span class="xref myst">Unit Testing Guide</span></a> - Fast component testing</p></li>
+</ul>
+</section>
+</section>
+<section id="advanced-topics">
+<h2>Advanced Topics<a class="headerlink" href="#advanced-topics" title="Link to this heading"></a></h2>
+<p>For developers who need deeper understanding of the testing system internals:</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="testing/record-replay.html">Record-Replay System</a></li>
+</ul>
+</div>
+<section id="benchmarking">
+<h3>Benchmarking<a class="headerlink" href="#benchmarking" title="Link to this heading"></a></h3>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="llama-stack-benchmark-suite-on-kubernetes">
+<h1>Llama Stack Benchmark Suite on Kubernetes<a class="headerlink" href="#llama-stack-benchmark-suite-on-kubernetes" title="Link to this heading"></a></h1>
+<section id="motivation">
+<h2>Motivation<a class="headerlink" href="#motivation" title="Link to this heading"></a></h2>
+<p>Performance benchmarking is critical for understanding the overhead and characteristics of the Llama Stack abstraction layer compared to direct inference engines like vLLM.</p>
+<section id="why-this-benchmark-suite-exists">
+<h3>Why This Benchmark Suite Exists<a class="headerlink" href="#why-this-benchmark-suite-exists" title="Link to this heading"></a></h3>
+<p><strong>Performance Validation</strong>: The Llama Stack provides a unified API layer across multiple inference providers, but this abstraction introduces potential overhead. This benchmark suite quantifies the performance impact by comparing:</p>
+<ul class="simple">
+<li><p>Llama Stack inference (with vLLM backend)</p></li>
+<li><p>Direct vLLM inference calls</p></li>
+<li><p>Both under identical Kubernetes deployment conditions</p></li>
+</ul>
+<p><strong>Production Readiness Assessment</strong>: Real-world deployments require understanding performance characteristics under load. This suite simulates concurrent user scenarios with configurable parameters (duration, concurrency, request patterns) to validate production readiness.</p>
+<p><strong>Regression Detection (TODO)</strong>: As the Llama Stack evolves, this benchmark provides automated regression detection for performance changes. CI/CD pipelines can leverage these benchmarks to catch performance degradations before production deployments.</p>
+<p><strong>Resource Planning</strong>: By measuring throughput, latency percentiles, and resource utilization patterns, teams can make informed decisions about:</p>
+<ul class="simple">
+<li><p>Kubernetes resource allocation (CPU, memory, GPU)</p></li>
+<li><p>Auto-scaling configurations</p></li>
+<li><p>Cost optimization strategies</p></li>
+</ul>
+</section>
+<section id="key-metrics-captured">
+<h3>Key Metrics Captured<a class="headerlink" href="#key-metrics-captured" title="Link to this heading"></a></h3>
+<p>The benchmark suite measures critical performance indicators:</p>
+<ul class="simple">
+<li><p><strong>Throughput</strong>: Requests per second under sustained load</p></li>
+<li><p><strong>Latency Distribution</strong>: P50, P95, P99 response times</p></li>
+<li><p><strong>Time to First Token (TTFT)</strong>: Critical for streaming applications</p></li>
+<li><p><strong>Error Rates</strong>: Request failures and timeout analysis</p></li>
+</ul>
+<p>This data enables data-driven architectural decisions and performance optimization efforts.</p>
+</section>
+</section>
+<section id="setup">
+<h2>Setup<a class="headerlink" href="#setup" title="Link to this heading"></a></h2>
+<p><strong>1. Deploy base k8s infrastructure:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>../k8s
+./apply.sh
+</pre></div>
+</div>
+<p><strong>2. Deploy benchmark components:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>../k8s-benchmark
+./apply.sh
+</pre></div>
+</div>
+<p><strong>3. Verify deployment:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>kubectl<span class="w"> </span>get<span class="w"> </span>pods
+<span class="c1"># Should see: llama-stack-benchmark-server, vllm-server, etc.</span>
+</pre></div>
+</div>
+</section>
+<section id="quick-start">
+<h2>Quick Start<a class="headerlink" href="#quick-start" title="Link to this heading"></a></h2>
+<section id="basic-benchmarks">
+<h3>Basic Benchmarks<a class="headerlink" href="#basic-benchmarks" title="Link to this heading"></a></h3>
+<p><strong>Benchmark Llama Stack (default):</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>docs/source/distributions/k8s-benchmark/
+./run-benchmark.sh
+</pre></div>
+</div>
+<p><strong>Benchmark vLLM direct:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./run-benchmark.sh<span class="w"> </span>--target<span class="w"> </span>vllm
+</pre></div>
+</div>
+</section>
+<section id="custom-configuration">
+<h3>Custom Configuration<a class="headerlink" href="#custom-configuration" title="Link to this heading"></a></h3>
+<p><strong>Extended benchmark with high concurrency:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./run-benchmark.sh<span class="w"> </span>--target<span class="w"> </span>vllm<span class="w"> </span>--duration<span class="w"> </span><span class="m">120</span><span class="w"> </span>--concurrent<span class="w"> </span><span class="m">20</span>
+</pre></div>
+</div>
+<p><strong>Short test run:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./run-benchmark.sh<span class="w"> </span>--target<span class="w"> </span>stack<span class="w"> </span>--duration<span class="w"> </span><span class="m">30</span><span class="w"> </span>--concurrent<span class="w"> </span><span class="m">5</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="command-reference">
+<h2>Command Reference<a class="headerlink" href="#command-reference" title="Link to this heading"></a></h2>
+<section id="run-benchmark-sh-options">
+<h3>run-benchmark.sh Options<a class="headerlink" href="#run-benchmark-sh-options" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./run-benchmark.sh<span class="w"> </span><span class="o">[</span>options<span class="o">]</span>
+
+Options:
+<span class="w">  </span>-t,<span class="w"> </span>--target<span class="w"> </span>&lt;stack<span class="p">|</span>vllm&gt;<span class="w">     </span>Target<span class="w"> </span>to<span class="w"> </span>benchmark<span class="w"> </span><span class="o">(</span>default:<span class="w"> </span>stack<span class="o">)</span>
+<span class="w">  </span>-d,<span class="w"> </span>--duration<span class="w"> </span>&lt;seconds&gt;<span class="w">      </span>Duration<span class="w"> </span><span class="k">in</span><span class="w"> </span>seconds<span class="w"> </span><span class="o">(</span>default:<span class="w"> </span><span class="m">60</span><span class="o">)</span>
+<span class="w">  </span>-c,<span class="w"> </span>--concurrent<span class="w"> </span>&lt;users&gt;<span class="w">      </span>Number<span class="w"> </span>of<span class="w"> </span>concurrent<span class="w"> </span>users<span class="w"> </span><span class="o">(</span>default:<span class="w"> </span><span class="m">10</span><span class="o">)</span>
+<span class="w">  </span>-h,<span class="w"> </span>--help<span class="w">                    </span>Show<span class="w"> </span><span class="nb">help</span><span class="w"> </span>message
+
+Examples:
+<span class="w">  </span>./run-benchmark.sh<span class="w"> </span>--target<span class="w"> </span>vllm<span class="w">              </span><span class="c1"># Benchmark vLLM direct</span>
+<span class="w">  </span>./run-benchmark.sh<span class="w"> </span>--target<span class="w"> </span>stack<span class="w">             </span><span class="c1"># Benchmark Llama Stack</span>
+<span class="w">  </span>./run-benchmark.sh<span class="w"> </span>-t<span class="w"> </span>vllm<span class="w"> </span>-d<span class="w"> </span><span class="m">120</span><span class="w"> </span>-c<span class="w"> </span><span class="m">20</span><span class="w">       </span><span class="c1"># vLLM with 120s, 20 users</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="local-testing">
+<h2>Local Testing<a class="headerlink" href="#local-testing" title="Link to this heading"></a></h2>
+<section id="running-benchmark-locally">
+<h3>Running Benchmark Locally<a class="headerlink" href="#running-benchmark-locally" title="Link to this heading"></a></h3>
+<p>For local development without Kubernetes:</p>
+<p><strong>1. Start OpenAI mock server:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>openai-mock-server.py<span class="w"> </span>--port<span class="w"> </span><span class="m">8080</span>
+</pre></div>
+</div>
+<p><strong>2. Run benchmark against mock server:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>benchmark.py<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--base-url<span class="w"> </span>http://localhost:8080/v1<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--model<span class="w"> </span>mock-inference<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--duration<span class="w"> </span><span class="m">30</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--concurrent<span class="w"> </span><span class="m">5</span>
+</pre></div>
+</div>
+<p><strong>3. Test against local vLLM server:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># If you have vLLM running locally on port 8000</span>
+uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>benchmark.py<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--base-url<span class="w"> </span>http://localhost:8000/v1<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--model<span class="w"> </span>meta-llama/Llama-3.2-3B-Instruct<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--duration<span class="w"> </span><span class="m">30</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--concurrent<span class="w"> </span><span class="m">5</span>
+</pre></div>
+</div>
+<p><strong>4. Profile the running server:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./profile_running_server.sh
+</pre></div>
+</div>
+</section>
+<section id="openai-mock-server">
+<h3>OpenAI Mock Server<a class="headerlink" href="#openai-mock-server" title="Link to this heading"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">openai-mock-server.py</span></code> provides:</p>
+<ul class="simple">
+<li><p><strong>OpenAI-compatible API</strong> for testing without real models</p></li>
+<li><p><strong>Configurable streaming delay</strong> via <code class="docutils literal notranslate"><span class="pre">STREAM_DELAY_SECONDS</span></code> env var</p></li>
+<li><p><strong>Consistent responses</strong> for reproducible benchmarks</p></li>
+<li><p><strong>Lightweight testing</strong> without GPU requirements</p></li>
+</ul>
+<p><strong>Mock server usage:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>openai-mock-server.py<span class="w"> </span>--port<span class="w"> </span><span class="m">8080</span>
+</pre></div>
+</div>
+<p>The mock server is also deployed in k8s as <code class="docutils literal notranslate"><span class="pre">openai-mock-service:8080</span></code> and can be used by changing the Llama Stack configuration to use the <code class="docutils literal notranslate"><span class="pre">mock-vllm-inference</span></code> provider.</p>
+</section>
+</section>
+<section id="files-in-this-directory">
+<h2>Files in this Directory<a class="headerlink" href="#files-in-this-directory" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">benchmark.py</span></code> - Core benchmark script with async streaming support</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">run-benchmark.sh</span></code> - Main script with target selection and configuration</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">openai-mock-server.py</span></code> - Mock OpenAI API server for local testing</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">README.md</span></code> - This documentation file</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../deploying/index.html" class="btn btn-neutral float-left" title="Deployment Examples" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="new_api_provider.html" class="btn btn-neutral float-right" title="Adding a New API Provider" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Meta.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book"> Read the Docs</span>
+    v: v0.2.20
+    <span class="fa fa-caret-down"></span>
+  </span>
+  <div class="rst-other-versions">
+    <dl>
+      <dt>Versions</dt>
+      <dd>
+        <a href="/v0.2.19/">latest</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.19/">v0.2.19</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.18/">v0.2.18</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.17/">v0.2.17</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.16/">v0.2.16</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.15/">v0.2.15</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.14/">v0.2.14</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.13/">v0.2.13</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.12/">v0.2.12</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.11/">v0.2.11</a>
+      </dd>
+    </dl>
+  </div>
+</div><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

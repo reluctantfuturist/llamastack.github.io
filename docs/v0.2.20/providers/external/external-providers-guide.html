@@ -1,0 +1,488 @@
+
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Creating External Providers &mdash; llama-stack 0.2.20 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/my_theme.css?v=f1163765" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/dark_mode_css/general.css?v=c0a7eb24" />
+      <link rel="stylesheet" type="text/css" href="../../_static/dark_mode_css/dark.css?v=70edf1c7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=20e0ead2"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=09bf800d"></script>
+      <script src="../../_static/js/detect_theme.js?v=76226c80"></script>
+      <script src="../../_static/js/keyboard_shortcuts.js?v=62563c3b"></script>
+      <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+      <script src="../../_static/dark_mode_js/default_light.js?v=c2e647ce"></script>
+      <script src="../../_static/dark_mode_js/theme_switcher.js?v=358d3910"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <script src="../../_static/js/versions.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="OpenAI API Compatibility" href="../openai.html" />
+    <link rel="prev" title="Known External Providers" href="external-providers-list.html" />
+ 
+
+<script src="../../_static/version-loader.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            llama-stack
+          </a>
+              <div class="switch-menus">
+                <div class="version-switch"></div>
+                <div class="language-switch"></div>
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Llama Stack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../concepts/index.html">Core Concepts</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">API Providers</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">External Providers</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="external-providers-list.html">Known External Providers</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Creating External Providers</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#configuration">Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#directory-structure">Directory Structure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#provider-types">Provider Types</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#required-fields">Required Fields</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dependencies">Dependencies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#best-practices">Best Practices</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#troubleshooting">Troubleshooting</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#examples">Examples</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../openai.html">OpenAI API Compatibility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inference/index.html">Inference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../agents/index.html">Agents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../datasetio/index.html">Datasetio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../safety/index.html">Safety</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../telemetry/index.html">Telemetry</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../vector_io/index.html">Vector_Io</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tool_runtime/index.html">Tool_Runtime</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../files/index.html">Files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../distributions/index.html">Distributions Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../advanced_apis/index.html">Advanced APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../building_applications/index.html">AI Application Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deploying/index.html">Deployment Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing/index.html">Contributing to Llama Stack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing/index.html#llama-stack-benchmark-suite-on-kubernetes">Llama Stack Benchmark Suite on Kubernetes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../references/index.html">References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">llama-stack</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">API Providers</a></li>
+          <li class="breadcrumb-item"><a href="index.html">External Providers</a></li>
+      <li class="breadcrumb-item active">Creating External Providers</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/providers/external/external-providers-guide.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="creating-external-providers">
+<h1>Creating External Providers<a class="headerlink" href="#creating-external-providers" title="Link to this heading"></a></h1>
+<section id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Link to this heading"></a></h2>
+<p>To enable external providers, you need to add <code class="docutils literal notranslate"><span class="pre">module</span></code> into your build yaml, allowing Llama Stack to install the required package corresponding to the external provider.</p>
+<p>an example entry in your build.yaml should look like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="n">provider_type</span><span class="p">:</span> <span class="n">remote</span><span class="p">::</span><span class="n">ramalama</span>
+  <span class="n">module</span><span class="p">:</span> <span class="n">ramalama_stack</span>
+</pre></div>
+</div>
+<p>Additionally you can configure the <code class="docutils literal notranslate"><span class="pre">external_providers_dir</span></code> in your Llama Stack configuration. This method is in the process of being deprecated in favor of the <code class="docutils literal notranslate"><span class="pre">module</span></code> method. If using this method, the external provider directory should contain your external provider specifications:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">external_providers_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~/.llama/providers.d/</span>
+</pre></div>
+</div>
+</section>
+<section id="directory-structure">
+<h2>Directory Structure<a class="headerlink" href="#directory-structure" title="Link to this heading"></a></h2>
+<p>The external providers directory should follow this structure:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">providers</span><span class="o">.</span><span class="n">d</span><span class="o">/</span>
+  <span class="n">remote</span><span class="o">/</span>
+    <span class="n">inference</span><span class="o">/</span>
+      <span class="n">custom_ollama</span><span class="o">.</span><span class="n">yaml</span>
+      <span class="n">vllm</span><span class="o">.</span><span class="n">yaml</span>
+    <span class="n">vector_io</span><span class="o">/</span>
+      <span class="n">qdrant</span><span class="o">.</span><span class="n">yaml</span>
+    <span class="n">safety</span><span class="o">/</span>
+      <span class="n">llama</span><span class="o">-</span><span class="n">guard</span><span class="o">.</span><span class="n">yaml</span>
+  <span class="n">inline</span><span class="o">/</span>
+    <span class="n">inference</span><span class="o">/</span>
+      <span class="n">custom_ollama</span><span class="o">.</span><span class="n">yaml</span>
+      <span class="n">vllm</span><span class="o">.</span><span class="n">yaml</span>
+    <span class="n">vector_io</span><span class="o">/</span>
+      <span class="n">qdrant</span><span class="o">.</span><span class="n">yaml</span>
+    <span class="n">safety</span><span class="o">/</span>
+      <span class="n">llama</span><span class="o">-</span><span class="n">guard</span><span class="o">.</span><span class="n">yaml</span>
+</pre></div>
+</div>
+<p>Each YAML file in these directories defines a provider specification for that particular API.</p>
+</section>
+<section id="provider-types">
+<h2>Provider Types<a class="headerlink" href="#provider-types" title="Link to this heading"></a></h2>
+<p>Llama Stack supports two types of external providers:</p>
+<ol class="arabic simple">
+<li><p><strong>Remote Providers</strong>: Providers that communicate with external services (e.g., cloud APIs)</p></li>
+<li><p><strong>Inline Providers</strong>: Providers that run locally within the Llama Stack process</p></li>
+</ol>
+<section id="remote-provider-specification">
+<h3>Remote Provider Specification<a class="headerlink" href="#remote-provider-specification" title="Link to this heading"></a></h3>
+<p>Remote providers are used when you need to communicate with external services. Here’s an example for a custom Ollama provider:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">adapter</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">adapter_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">custom_ollama</span>
+<span class="w">  </span><span class="nt">pip_packages</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ollama</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aiohttp</span>
+<span class="w">  </span><span class="nt">config_class</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">llama_stack_ollama_provider.config.OllamaImplConfig</span>
+<span class="w">  </span><span class="nt">module</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">llama_stack_ollama_provider</span>
+<span class="nt">api_dependencies</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span>
+<span class="nt">optional_api_dependencies</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span>
+</pre></div>
+</div>
+<section id="adapter-configuration">
+<h4>Adapter Configuration<a class="headerlink" href="#adapter-configuration" title="Link to this heading"></a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">adapter</span></code> section defines how to load and configure the provider:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">adapter_type</span></code>: A unique identifier for this adapter</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pip_packages</span></code>: List of Python packages required by the provider</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">config_class</span></code>: The full path to the configuration class</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">module</span></code>: The Python module containing the provider implementation</p></li>
+</ul>
+</section>
+</section>
+<section id="inline-provider-specification">
+<h3>Inline Provider Specification<a class="headerlink" href="#inline-provider-specification" title="Link to this heading"></a></h3>
+<p>Inline providers run locally within the Llama Stack process. Here’s an example for a custom vector store provider:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">module</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">llama_stack_vector_provider</span>
+<span class="nt">config_class</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">llama_stack_vector_provider.config.VectorStoreConfig</span>
+<span class="nt">pip_packages</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">faiss-cpu</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">numpy</span>
+<span class="nt">api_dependencies</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">inference</span>
+<span class="nt">optional_api_dependencies</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">vector_io</span>
+<span class="nt">provider_data_validator</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">llama_stack_vector_provider.validator.VectorStoreValidator</span>
+<span class="nt">container_image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">custom-vector-store:latest</span><span class="w">  </span><span class="c1"># optional</span>
+</pre></div>
+</div>
+<section id="inline-provider-fields">
+<h4>Inline Provider Fields<a class="headerlink" href="#inline-provider-fields" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">module</span></code>: The Python module containing the provider implementation</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">config_class</span></code>: The full path to the configuration class</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pip_packages</span></code>: List of Python packages required by the provider</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">api_dependencies</span></code>: List of Llama Stack APIs that this provider depends on</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">optional_api_dependencies</span></code>: List of optional Llama Stack APIs that this provider can use</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">provider_data_validator</span></code>: Optional validator for provider data</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">container_image</span></code>: Optional container image to use instead of pip packages</p></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="required-fields">
+<h2>Required Fields<a class="headerlink" href="#required-fields" title="Link to this heading"></a></h2>
+<section id="all-providers">
+<h3>All Providers<a class="headerlink" href="#all-providers" title="Link to this heading"></a></h3>
+<p>All providers must contain a <code class="docutils literal notranslate"><span class="pre">get_provider_spec</span></code> function in their <code class="docutils literal notranslate"><span class="pre">provider</span></code> module. This is a standardized structure that Llama Stack expects and is necessary for getting things such as the config class. The <code class="docutils literal notranslate"><span class="pre">get_provider_spec</span></code> method returns a structure identical to the <code class="docutils literal notranslate"><span class="pre">adapter</span></code>. An example function may look like:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">llama_stack.providers.datatypes</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">ProviderSpec</span><span class="p">,</span>
+    <span class="n">Api</span><span class="p">,</span>
+    <span class="n">AdapterSpec</span><span class="p">,</span>
+    <span class="n">remote_provider_spec</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">get_provider_spec</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">ProviderSpec</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">remote_provider_spec</span><span class="p">(</span>
+        <span class="n">api</span><span class="o">=</span><span class="n">Api</span><span class="o">.</span><span class="n">inference</span><span class="p">,</span>
+        <span class="n">adapter</span><span class="o">=</span><span class="n">AdapterSpec</span><span class="p">(</span>
+            <span class="n">adapter_type</span><span class="o">=</span><span class="s2">&quot;ramalama&quot;</span><span class="p">,</span>
+            <span class="n">pip_packages</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ramalama&gt;=0.8.5&quot;</span><span class="p">,</span> <span class="s2">&quot;pymilvus&quot;</span><span class="p">],</span>
+            <span class="n">config_class</span><span class="o">=</span><span class="s2">&quot;ramalama_stack.config.RamalamaImplConfig&quot;</span><span class="p">,</span>
+            <span class="n">module</span><span class="o">=</span><span class="s2">&quot;ramalama_stack&quot;</span><span class="p">,</span>
+        <span class="p">),</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+<section id="remote-providers">
+<h4>Remote Providers<a class="headerlink" href="#remote-providers" title="Link to this heading"></a></h4>
+<p>Remote providers must expose a <code class="docutils literal notranslate"><span class="pre">get_adapter_impl()</span></code> function in their module that takes two arguments:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">config</span></code>: An instance of the provider’s config class</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">deps</span></code>: A dictionary of API dependencies</p></li>
+</ol>
+<p>This function must return an instance of the provider’s adapter class that implements the required protocol for the API.</p>
+<p>Example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_adapter_impl</span><span class="p">(</span>
+    <span class="n">config</span><span class="p">:</span> <span class="n">OllamaImplConfig</span><span class="p">,</span> <span class="n">deps</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Api</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">OllamaInferenceAdapter</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">OllamaInferenceAdapter</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="inline-providers">
+<h4>Inline Providers<a class="headerlink" href="#inline-providers" title="Link to this heading"></a></h4>
+<p>Inline providers must expose a <code class="docutils literal notranslate"><span class="pre">get_provider_impl()</span></code> function in their module that takes two arguments:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">config</span></code>: An instance of the provider’s config class</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">deps</span></code>: A dictionary of API dependencies</p></li>
+</ol>
+<p>Example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_provider_impl</span><span class="p">(</span>
+    <span class="n">config</span><span class="p">:</span> <span class="n">VectorStoreConfig</span><span class="p">,</span> <span class="n">deps</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Api</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">VectorStoreImpl</span><span class="p">:</span>
+    <span class="n">impl</span> <span class="o">=</span> <span class="n">VectorStoreImpl</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">deps</span><span class="p">[</span><span class="n">Api</span><span class="o">.</span><span class="n">inference</span><span class="p">])</span>
+    <span class="k">await</span> <span class="n">impl</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">impl</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="dependencies">
+<h2>Dependencies<a class="headerlink" href="#dependencies" title="Link to this heading"></a></h2>
+<p>The provider package must be installed on the system. For example:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>uv<span class="w"> </span>pip<span class="w"> </span>show<span class="w"> </span>llama-stack-ollama-provider
+Name:<span class="w"> </span>llama-stack-ollama-provider
+Version:<span class="w"> </span><span class="m">0</span>.1.0
+Location:<span class="w"> </span>/path/to/venv/lib/python3.10/site-packages
+</pre></div>
+</div>
+</section>
+<section id="best-practices">
+<h2>Best Practices<a class="headerlink" href="#best-practices" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p><strong>Package Naming</strong>: Use the prefix <code class="docutils literal notranslate"><span class="pre">llama-stack-provider-</span></code> for your provider packages to make them easily identifiable.</p></li>
+<li><p><strong>Version Management</strong>: Keep your provider package versioned and compatible with the Llama Stack version you’re using.</p></li>
+<li><p><strong>Dependencies</strong>: Only include the minimum required dependencies in your provider package.</p></li>
+<li><p><strong>Documentation</strong>: Include clear documentation in your provider package about:</p>
+<ul class="simple">
+<li><p>Installation requirements</p></li>
+<li><p>Configuration options</p></li>
+<li><p>Usage examples</p></li>
+<li><p>Any limitations or known issues</p></li>
+</ul>
+</li>
+<li><p><strong>Testing</strong>: Include tests in your provider package to ensure it works correctly with Llama Stack.
+You can refer to the <a class="reference external" href="https://github.com/meta-llama/llama-stack/blob/main/tests/integration/README.md">integration tests
+guide</a> for more
+information. Execute the test for the Provider type you are developing.</p></li>
+</ol>
+</section>
+<section id="troubleshooting">
+<h2>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Link to this heading"></a></h2>
+<p>If your external provider isn’t being loaded:</p>
+<ol class="arabic simple">
+<li><p>Check that <code class="docutils literal notranslate"><span class="pre">module</span></code> points to a published pip package with a top level <code class="docutils literal notranslate"><span class="pre">provider</span></code> module including <code class="docutils literal notranslate"><span class="pre">get_provider_spec</span></code>.</p></li>
+<li><p>Check that the <code class="docutils literal notranslate"><span class="pre">external_providers_dir</span></code> path is correct and accessible.</p></li>
+<li><p>Verify that the YAML files are properly formatted.</p></li>
+<li><p>Ensure all required Python packages are installed.</p></li>
+<li><p>Check the Llama Stack server logs for any error messages - turn on debug logging to get more
+information using <code class="docutils literal notranslate"><span class="pre">LLAMA_STACK_LOGGING=all=debug</span></code>.</p></li>
+<li><p>Verify that the provider package is installed in your Python environment if using <code class="docutils literal notranslate"><span class="pre">external_providers_dir</span></code>.</p></li>
+</ol>
+</section>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading"></a></h2>
+<section id="example-using-external-providers-dir-custom-ollama-provider">
+<h3>Example using <code class="docutils literal notranslate"><span class="pre">external_providers_dir</span></code>: Custom Ollama Provider<a class="headerlink" href="#example-using-external-providers-dir-custom-ollama-provider" title="Link to this heading"></a></h3>
+<p>Here’s a complete example of creating and using a custom Ollama provider:</p>
+<ol class="arabic simple">
+<li><p>First, create the provider package:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>-p<span class="w"> </span>llama-stack-provider-ollama
+<span class="nb">cd</span><span class="w"> </span>llama-stack-provider-ollama
+git<span class="w"> </span>init
+uv<span class="w"> </span>init
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Edit <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code>:</p></li>
+</ol>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[project]</span>
+<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;llama-stack-provider-ollama&quot;</span>
+<span class="n">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;0.1.0&quot;</span>
+<span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Ollama provider for Llama Stack&quot;</span>
+<span class="n">requires-python</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&gt;=3.12&quot;</span>
+<span class="n">dependencies</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;llama-stack&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;pydantic&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ollama&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;aiohttp&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>Create the provider specification:</p></li>
+</ol>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># ~/.llama/providers.d/remote/inference/custom_ollama.yaml</span>
+<span class="nt">adapter</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">adapter_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">custom_ollama</span>
+<span class="w">  </span><span class="nt">pip_packages</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;ollama&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;aiohttp&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">  </span><span class="nt">config_class</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">llama_stack_provider_ollama.config.OllamaImplConfig</span>
+<span class="w">  </span><span class="nt">module</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">llama_stack_provider_ollama</span>
+<span class="nt">api_dependencies</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span>
+<span class="nt">optional_api_dependencies</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p>Install the provider:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
+</pre></div>
+</div>
+<ol class="arabic simple" start="5">
+<li><p>Configure Llama Stack to use external providers:</p></li>
+</ol>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">external_providers_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~/.llama/providers.d/</span>
+</pre></div>
+</div>
+<p>The provider will now be available in Llama Stack with the type <code class="docutils literal notranslate"><span class="pre">remote::custom_ollama</span></code>.</p>
+</section>
+<section id="example-using-module-ramalama-stack">
+<h3>Example using <code class="docutils literal notranslate"><span class="pre">module</span></code>: ramalama-stack<a class="headerlink" href="#example-using-module-ramalama-stack" title="Link to this heading"></a></h3>
+<p><a class="reference external" href="https://github.com/containers/ramalama-stack">ramalama-stack</a> is a recognized external provider that supports installation via module.</p>
+<p>To install Llama Stack with this external provider a user can provider the following build.yaml:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<span class="nt">distribution_spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Use (an external) Ramalama server for running LLM inference</span>
+<span class="w">  </span><span class="nt">container_image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">  </span><span class="nt">providers</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">inference</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">provider_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">remote::ramalama</span>
+<span class="w">      </span><span class="nt">module</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ramalama_stack==0.3.0a0</span>
+<span class="nt">image_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">venv</span>
+<span class="nt">image_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="nt">external_providers_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="nt">additional_pip_packages</span><span class="p">:</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aiosqlite</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sqlalchemy[asyncio]</span>
+</pre></div>
+</div>
+<p>No other steps are required other than <code class="docutils literal notranslate"><span class="pre">llama</span> <span class="pre">stack</span> <span class="pre">build</span></code> and <code class="docutils literal notranslate"><span class="pre">llama</span> <span class="pre">stack</span> <span class="pre">run</span></code>. The build process will use <code class="docutils literal notranslate"><span class="pre">module</span></code> to install all of the provider dependencies, retrieve the spec, etc.</p>
+<p>The provider will now be available in Llama Stack with the type <code class="docutils literal notranslate"><span class="pre">remote::ramalama</span></code>.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="external-providers-list.html" class="btn btn-neutral float-left" title="Known External Providers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../openai.html" class="btn btn-neutral float-right" title="OpenAI API Compatibility" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Meta.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book"> Read the Docs</span>
+    v: v0.2.20
+    <span class="fa fa-caret-down"></span>
+  </span>
+  <div class="rst-other-versions">
+    <dl>
+      <dt>Versions</dt>
+      <dd>
+        <a href="/v0.2.19/">latest</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.19/">v0.2.19</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.18/">v0.2.18</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.17/">v0.2.17</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.16/">v0.2.16</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.15/">v0.2.15</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.14/">v0.2.14</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.13/">v0.2.13</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.12/">v0.2.12</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.11/">v0.2.11</a>
+      </dd>
+    </dl>
+  </div>
+</div><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
