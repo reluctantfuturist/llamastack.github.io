@@ -1,0 +1,296 @@
+
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agents &mdash; llama-stack 0.2.21 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/my_theme.css?v=f1163765" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../_static/dark_mode_css/general.css?v=c0a7eb24" />
+      <link rel="stylesheet" type="text/css" href="../_static/dark_mode_css/dark.css?v=70edf1c7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=84986ecb"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=09bf800d"></script>
+      <script src="../_static/js/detect_theme.js?v=76226c80"></script>
+      <script src="../_static/js/keyboard_shortcuts.js?v=62563c3b"></script>
+      <script src="../_static/design-tabs.js?v=f930bc37"></script>
+      <script src="../_static/dark_mode_js/default_light.js?v=c2e647ce"></script>
+      <script src="../_static/dark_mode_js/theme_switcher.js?v=358d3910"></script>
+    <script src="../_static/js/theme.js"></script>
+    <script src="../_static/js/versions.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Agent Execution Loop" href="agent_execution_loop.html" />
+    <link rel="prev" title="Retrieval Augmented Generation (RAG)" href="rag.html" />
+ 
+
+<script src="../_static/version-loader.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            llama-stack
+          </a>
+              <div class="switch-menus">
+                <div class="version-switch"></div>
+                <div class="language-switch"></div>
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Llama Stack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">Core Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../providers/index.html">API Providers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../distributions/index.html">Distributions Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced_apis/index.html">Advanced APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">AI Application Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="rag.html">Retrieval Augmented Generation (RAG)</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Agents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#core-concepts">Core Concepts</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#agent-configuration">1. Agent Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sessions">2. Sessions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#turns">3. Turns</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#non-streaming">Non-Streaming</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#steps">4. Steps</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#agent-execution-loop">Agent Execution Loop</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="agent_execution_loop.html">Agent Execution Loop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="responses_vs_agents.html">Agents vs OpenAI Responses API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html">Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="evals.html">Evaluations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="telemetry.html">Telemetry</a></li>
+<li class="toctree-l2"><a class="reference internal" href="safety.html">Safety Guardrails</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playground/index.html">Llama Stack Playground</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../deploying/index.html">Deployment Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing/index.html">Contributing to Llama Stack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing/index.html#llama-stack-benchmark-suite-on-kubernetes">Llama Stack Benchmark Suite on Kubernetes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../references/index.html">References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">llama-stack</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">AI Application Examples</a></li>
+      <li class="breadcrumb-item active">Agents</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/building_applications/agent.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="agents">
+<h1>Agents<a class="headerlink" href="#agents" title="Link to this heading"></a></h1>
+<p>An Agent in Llama Stack is a powerful abstraction that allows you to build complex AI applications.</p>
+<p>The Llama Stack agent framework is built on a modular architecture that allows for flexible and powerful AI
+applications. This document explains the key components and how they work together.</p>
+<section id="core-concepts">
+<h2>Core Concepts<a class="headerlink" href="#core-concepts" title="Link to this heading"></a></h2>
+<section id="agent-configuration">
+<h3>1. Agent Configuration<a class="headerlink" href="#agent-configuration" title="Link to this heading"></a></h3>
+<p>Agents are configured using the <code class="docutils literal notranslate"><span class="pre">AgentConfig</span></code> class, which includes:</p>
+<ul class="simple">
+<li><p><strong>Model</strong>: The underlying LLM to power the agent</p></li>
+<li><p><strong>Instructions</strong>: System prompt that defines the agent’s behavior</p></li>
+<li><p><strong>Tools</strong>: Capabilities the agent can use to interact with external systems</p></li>
+<li><p><strong>Safety Shields</strong>: Guardrails to ensure responsible AI behavior</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">llama_stack_client</span><span class="w"> </span><span class="kn">import</span> <span class="n">Agent</span>
+
+
+<span class="c1"># Create the agent</span>
+<span class="n">agent</span> <span class="o">=</span> <span class="n">Agent</span><span class="p">(</span>
+    <span class="n">llama_stack_client</span><span class="p">,</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;meta-llama/Llama-3-70b-chat&quot;</span><span class="p">,</span>
+    <span class="n">instructions</span><span class="o">=</span><span class="s2">&quot;You are a helpful assistant that can use tools to answer questions.&quot;</span><span class="p">,</span>
+    <span class="n">tools</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;builtin::code_interpreter&quot;</span><span class="p">,</span> <span class="s2">&quot;builtin::rag/knowledge_search&quot;</span><span class="p">],</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="sessions">
+<h3>2. Sessions<a class="headerlink" href="#sessions" title="Link to this heading"></a></h3>
+<p>Agents maintain state through sessions, which represent a conversation thread:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a session</span>
+<span class="n">session_id</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">create_session</span><span class="p">(</span><span class="n">session_name</span><span class="o">=</span><span class="s2">&quot;My conversation&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="turns">
+<h3>3. Turns<a class="headerlink" href="#turns" title="Link to this heading"></a></h3>
+<p>Each interaction with an agent is called a “turn” and consists of:</p>
+<ul class="simple">
+<li><p><strong>Input Messages</strong>: What the user sends to the agent</p></li>
+<li><p><strong>Steps</strong>: The agent’s internal processing (inference, tool execution, etc.)</p></li>
+<li><p><strong>Output Message</strong>: The agent’s response</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">llama_stack_client</span><span class="w"> </span><span class="kn">import</span> <span class="n">AgentEventLogger</span>
+
+<span class="c1"># Create a turn with streaming response</span>
+<span class="n">turn_response</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">create_turn</span><span class="p">(</span>
+    <span class="n">session_id</span><span class="o">=</span><span class="n">session_id</span><span class="p">,</span>
+    <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;Tell me about Llama models&quot;</span><span class="p">}],</span>
+<span class="p">)</span>
+<span class="k">for</span> <span class="n">log</span> <span class="ow">in</span> <span class="n">AgentEventLogger</span><span class="p">()</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">turn_response</span><span class="p">):</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">print</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="non-streaming">
+<h3>Non-Streaming<a class="headerlink" href="#non-streaming" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">rich.pretty</span><span class="w"> </span><span class="kn">import</span> <span class="n">pprint</span>
+
+<span class="c1"># Non-streaming API</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">create_turn</span><span class="p">(</span>
+    <span class="n">session_id</span><span class="o">=</span><span class="n">session_id</span><span class="p">,</span>
+    <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;Tell me about Llama models&quot;</span><span class="p">}],</span>
+    <span class="n">stream</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Inputs:&quot;</span><span class="p">)</span>
+<span class="n">pprint</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">input_messages</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Output:&quot;</span><span class="p">)</span>
+<span class="n">pprint</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">output_message</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Steps:&quot;</span><span class="p">)</span>
+<span class="n">pprint</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">steps</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="steps">
+<h3>4. Steps<a class="headerlink" href="#steps" title="Link to this heading"></a></h3>
+<p>Each turn consists of multiple steps that represent the agent’s thought process:</p>
+<ul class="simple">
+<li><p><strong>Inference Steps</strong>: The agent generating text responses</p></li>
+<li><p><strong>Tool Execution Steps</strong>: The agent using tools to gather information</p></li>
+<li><p><strong>Shield Call Steps</strong>: Safety checks being performed</p></li>
+</ul>
+</section>
+</section>
+<section id="agent-execution-loop">
+<h2>Agent Execution Loop<a class="headerlink" href="#agent-execution-loop" title="Link to this heading"></a></h2>
+<p>Refer to the <a class="reference internal" href="agent_execution_loop.html"><span class="doc std std-doc">Agent Execution Loop</span></a> for more details on what happens within an agent turn.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="rag.html" class="btn btn-neutral float-left" title="Retrieval Augmented Generation (RAG)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="agent_execution_loop.html" class="btn btn-neutral float-right" title="Agent Execution Loop" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Meta.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book"> Read the Docs</span>
+    v: v0.2.21
+    <span class="fa fa-caret-down"></span>
+  </span>
+  <div class="rst-other-versions">
+    <dl>
+      <dt>Versions</dt>
+      <dd>
+        <a href="/v0.2.20/">latest</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.20/">v0.2.20</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.19/">v0.2.19</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.18/">v0.2.18</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.17/">v0.2.17</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.16/">v0.2.16</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.15/">v0.2.15</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.14/">v0.2.14</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.13/">v0.2.13</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.12/">v0.2.12</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.11/">v0.2.11</a>
+      </dd>
+    </dl>
+  </div>
+</div><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
