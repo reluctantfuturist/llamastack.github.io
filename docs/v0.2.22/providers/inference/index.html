@@ -1,0 +1,272 @@
+
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inference &mdash; llama-stack 0.2.22 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/my_theme.css?v=e0175246" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/dark_mode_css/general.css?v=c0a7eb24" />
+      <link rel="stylesheet" type="text/css" href="../../_static/dark_mode_css/dark.css?v=70edf1c7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=b360e4a1"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=09bf800d"></script>
+      <script src="../../_static/js/detect_theme.js?v=76226c80"></script>
+      <script src="../../_static/js/keyboard_shortcuts.js?v=62563c3b"></script>
+      <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+      <script src="../../_static/dark_mode_js/default_light.js?v=c2e647ce"></script>
+      <script src="../../_static/dark_mode_js/theme_switcher.js?v=358d3910"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <script src="../../_static/js/versions.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="inline::meta-reference" href="inline_meta-reference.html" />
+    <link rel="prev" title="OpenAI API Compatibility" href="../openai.html" />
+ 
+
+<script src="../../_static/version-loader.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            llama-stack
+          </a>
+              <div class="switch-menus">
+                <div class="version-switch"></div>
+                <div class="language-switch"></div>
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Llama Stack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../concepts/index.html">Core Concepts</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">API Providers</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../external/index.html">External Providers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../openai.html">OpenAI API Compatibility</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Inference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#providers">Providers</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="inline_meta-reference.html">inline::meta-reference</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inline_sentence-transformers.html">inline::sentence-transformers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="remote_anthropic.html">remote::anthropic</a></li>
+<li class="toctree-l4"><a class="reference internal" href="remote_azure.html">remote::azure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="remote_bedrock.html">remote::bedrock</a></li>
+<li class="toctree-l4"><a class="reference internal" href="remote_cerebras.html">remote::cerebras</a></li>
+<li class="toctree-l4"><a class="reference internal" href="remote_databricks.html">remote::databricks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="remote_fireworks.html">remote::fireworks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="remote_gemini.html">remote::gemini</a></li>
+<li class="toctree-l4"><a class="reference internal" href="remote_groq.html">remote::groq</a></li>
+<li class="toctree-l4"><a class="reference internal" href="remote_hf_endpoint.html">remote::hf::endpoint</a></li>
+<li class="toctree-l4"><a class="reference internal" href="remote_hf_serverless.html">remote::hf::serverless</a></li>
+<li class="toctree-l4"><a class="reference internal" href="remote_llama-openai-compat.html">remote::llama-openai-compat</a></li>
+<li class="toctree-l4"><a class="reference internal" href="remote_nvidia.html">remote::nvidia</a></li>
+<li class="toctree-l4"><a class="reference internal" href="remote_ollama.html">remote::ollama</a></li>
+<li class="toctree-l4"><a class="reference internal" href="remote_openai.html">remote::openai</a></li>
+<li class="toctree-l4"><a class="reference internal" href="remote_passthrough.html">remote::passthrough</a></li>
+<li class="toctree-l4"><a class="reference internal" href="remote_runpod.html">remote::runpod</a></li>
+<li class="toctree-l4"><a class="reference internal" href="remote_sambanova.html">remote::sambanova</a></li>
+<li class="toctree-l4"><a class="reference internal" href="remote_tgi.html">remote::tgi</a></li>
+<li class="toctree-l4"><a class="reference internal" href="remote_together.html">remote::together</a></li>
+<li class="toctree-l4"><a class="reference internal" href="remote_vertexai.html">remote::vertexai</a></li>
+<li class="toctree-l4"><a class="reference internal" href="remote_vllm.html">remote::vllm</a></li>
+<li class="toctree-l4"><a class="reference internal" href="remote_watsonx.html">remote::watsonx</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../agents/index.html">Agents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../datasetio/index.html">Datasetio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../safety/index.html">Safety</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../telemetry/index.html">Telemetry</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../vector_io/index.html">Vector_Io</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tool_runtime/index.html">Tool_Runtime</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../files/index.html">Files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../distributions/index.html">Distributions Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../advanced_apis/index.html">Advanced APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../building_applications/index.html">AI Application Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deploying/index.html">Deployment Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing/index.html">Contributing to Llama Stack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing/index.html#llama-stack-benchmark-suite-on-kubernetes">Llama Stack Benchmark Suite on Kubernetes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../references/index.html">References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">llama-stack</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">API Providers</a></li>
+      <li class="breadcrumb-item active">Inference</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/providers/inference/index.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="inference">
+<h1>Inference<a class="headerlink" href="#inference" title="Link to this heading"></a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>Llama Stack Inference API for generating completions, chat completions, and embeddings.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>This API provides the raw interface to the underlying models. Two kinds of models are supported:
+- LLM models: these models generate &quot;raw&quot; and &quot;chat&quot; (conversational) completions.
+- Embedding models: these models generate embeddings to be used for semantic search.
+</pre></div>
+</div>
+<p>This section contains documentation for all available providers for the <strong>inference</strong> API.</p>
+</section>
+<section id="providers">
+<h2>Providers<a class="headerlink" href="#providers" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="inline_meta-reference.html">inline::meta-reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="inline_sentence-transformers.html">inline::sentence-transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="remote_anthropic.html">remote::anthropic</a></li>
+<li class="toctree-l1"><a class="reference internal" href="remote_azure.html">remote::azure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="remote_bedrock.html">remote::bedrock</a></li>
+<li class="toctree-l1"><a class="reference internal" href="remote_cerebras.html">remote::cerebras</a></li>
+<li class="toctree-l1"><a class="reference internal" href="remote_databricks.html">remote::databricks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="remote_fireworks.html">remote::fireworks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="remote_gemini.html">remote::gemini</a></li>
+<li class="toctree-l1"><a class="reference internal" href="remote_groq.html">remote::groq</a></li>
+<li class="toctree-l1"><a class="reference internal" href="remote_hf_endpoint.html">remote::hf::endpoint</a></li>
+<li class="toctree-l1"><a class="reference internal" href="remote_hf_serverless.html">remote::hf::serverless</a></li>
+<li class="toctree-l1"><a class="reference internal" href="remote_llama-openai-compat.html">remote::llama-openai-compat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="remote_nvidia.html">remote::nvidia</a></li>
+<li class="toctree-l1"><a class="reference internal" href="remote_ollama.html">remote::ollama</a></li>
+<li class="toctree-l1"><a class="reference internal" href="remote_openai.html">remote::openai</a></li>
+<li class="toctree-l1"><a class="reference internal" href="remote_passthrough.html">remote::passthrough</a></li>
+<li class="toctree-l1"><a class="reference internal" href="remote_runpod.html">remote::runpod</a></li>
+<li class="toctree-l1"><a class="reference internal" href="remote_sambanova.html">remote::sambanova</a></li>
+<li class="toctree-l1"><a class="reference internal" href="remote_tgi.html">remote::tgi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="remote_together.html">remote::together</a></li>
+<li class="toctree-l1"><a class="reference internal" href="remote_vertexai.html">remote::vertexai</a></li>
+<li class="toctree-l1"><a class="reference internal" href="remote_vllm.html">remote::vllm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="remote_watsonx.html">remote::watsonx</a></li>
+</ul>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../openai.html" class="btn btn-neutral float-left" title="OpenAI API Compatibility" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="inline_meta-reference.html" class="btn btn-neutral float-right" title="inline::meta-reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Meta.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book"> Read the Docs</span>
+    v: v0.2.22
+    <span class="fa fa-caret-down"></span>
+  </span>
+  <div class="rst-other-versions">
+    <dl>
+      <dt>Versions</dt>
+      <dd>
+        <a href="/v0.2.21/">latest</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.21/">v0.2.21</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.20/">v0.2.20</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.19/">v0.2.19</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.18/">v0.2.18</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.17/">v0.2.17</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.16/">v0.2.16</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.15/">v0.2.15</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.14/">v0.2.14</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.13/">v0.2.13</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.12/">v0.2.12</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.11/">v0.2.11</a>
+      </dd>
+    </dl>
+  </div>
+</div><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

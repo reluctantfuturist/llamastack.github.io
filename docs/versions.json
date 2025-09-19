@@ -3,8 +3,14 @@
     {
       "name": "latest",
       "version": "latest",
-      "url": "/v0.2.21/",
+      "url": "/v0.2.22/",
       "preferred": true
+    },
+    {
+      "name": "v0.2.22",
+      "version": "v0.2.22",
+      "url": "/v0.2.22/",
+      "preferred": false
     },
     {
       "name": "v0.2.21",

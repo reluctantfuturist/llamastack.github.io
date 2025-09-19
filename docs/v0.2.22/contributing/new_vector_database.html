@@ -1,0 +1,333 @@
+
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Adding a New Vector Database &mdash; llama-stack 0.2.22 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/my_theme.css?v=e0175246" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../_static/dark_mode_css/general.css?v=c0a7eb24" />
+      <link rel="stylesheet" type="text/css" href="../_static/dark_mode_css/dark.css?v=70edf1c7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=b360e4a1"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=09bf800d"></script>
+      <script src="../_static/js/detect_theme.js?v=76226c80"></script>
+      <script src="../_static/js/keyboard_shortcuts.js?v=62563c3b"></script>
+      <script src="../_static/design-tabs.js?v=f930bc37"></script>
+      <script src="../_static/dark_mode_js/default_light.js?v=c2e647ce"></script>
+      <script src="../_static/dark_mode_js/theme_switcher.js?v=358d3910"></script>
+    <script src="../_static/js/theme.js"></script>
+    <script src="../_static/js/versions.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Record-Replay System" href="testing/record-replay.html" />
+    <link rel="prev" title="Adding a New API Provider" href="new_api_provider.html" />
+ 
+
+<script src="../_static/version-loader.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            llama-stack
+          </a>
+              <div class="switch-menus">
+                <div class="version-switch"></div>
+                <div class="language-switch"></div>
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Llama Stack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">Core Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../providers/index.html">API Providers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../distributions/index.html">Distributions Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced_apis/index.html">Advanced APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../building_applications/index.html">AI Application Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deploying/index.html">Deployment Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Contributing to Llama Stack</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="index.html#set-up-your-development-environment">Set up your development environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#discussions-issues-pull-requests">Discussions -&gt; Issues -&gt; Pull Requests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#repository-guidelines">Repository guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#common-tasks">Common Tasks</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#adding-a-new-provider">Adding a New Provider</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="new_api_provider.html">Adding a New API Provider</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Adding a New Vector Database</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#steps-to-add-a-new-vector-database-provider">Steps to Add a New Vector Database Provider</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#testing">Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#advanced-topics">Advanced Topics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#llama-stack-benchmark-suite-on-kubernetes">Llama Stack Benchmark Suite on Kubernetes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../references/index.html">References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">llama-stack</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Contributing to Llama Stack</a></li>
+      <li class="breadcrumb-item active">Adding a New Vector Database</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/contributing/new_vector_database.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="adding-a-new-vector-database">
+<h1>Adding a New Vector Database<a class="headerlink" href="#adding-a-new-vector-database" title="Link to this heading"></a></h1>
+<p>This guide will walk you through the process of adding a new vector database to Llama Stack.</p>
+<blockquote>
+<div><p><strong><em>NOTE:</em></strong> Here’s an example Pull Request of the <a class="reference external" href="https://github.com/meta-llama/llama-stack/pull/1467">Milvus Vector Database Provider</a>.</p>
+</div></blockquote>
+<p>Vector Database providers are used to store and retrieve vector embeddings. Vector databases are not limited to vector
+search but can support keyword and hybrid search. Additionally, vector database can also support operations like
+filtering, sorting, and aggregating vectors.</p>
+<section id="steps-to-add-a-new-vector-database-provider">
+<h2>Steps to Add a New Vector Database Provider<a class="headerlink" href="#steps-to-add-a-new-vector-database-provider" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p><strong>Choose the Database Type</strong>: Determine if your vector database is a remote service, inline, or both.</p>
+<ul class="simple">
+<li><p>Remote databases make requests to external services, while inline databases execute locally. Some providers support both.</p></li>
+</ul>
+</li>
+<li><p><strong>Implement the Provider</strong>: Create a new provider class that inherits from <code class="docutils literal notranslate"><span class="pre">VectorDatabaseProvider</span></code> and implements the required methods.</p>
+<ul class="simple">
+<li><p>Implement methods for vector storage, retrieval, search, and any additional features your database supports.</p>
+<ul>
+<li><p>You will need to implement the following methods for <code class="docutils literal notranslate"><span class="pre">YourVectorIndex</span></code>:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">YourVectorIndex.create()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">YourVectorIndex.initialize()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">YourVectorIndex.add_chunks()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">YourVectorIndex.delete_chunk()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">YourVectorIndex.query_vector()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">YourVectorIndex.query_keyword()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">YourVectorIndex.query_hybrid()</span></code></p></li>
+</ul>
+</li>
+<li><p>You will need to implement the following methods for <code class="docutils literal notranslate"><span class="pre">YourVectorIOAdapter</span></code>:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">YourVectorIOAdapter.initialize()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">YourVectorIOAdapter.shutdown()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">YourVectorIOAdapter.list_vector_dbs()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">YourVectorIOAdapter.register_vector_db()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">YourVectorIOAdapter.unregister_vector_db()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">YourVectorIOAdapter.insert_chunks()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">YourVectorIOAdapter.query_chunks()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">YourVectorIOAdapter.delete_chunks()</span></code></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Add to Registry</strong>: Register your provider in the appropriate registry file.</p>
+<ul class="simple">
+<li><p>Update <a class="reference external" href="https://github.com/llamastack/llama-stack/tree/main/llama_stack/providers/registry/vector_io.py">llama_stack/providers/registry/vector_io.py</a> to include your new provider.</p></li>
+</ul>
+</li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">llama_stack.providers.registry.specs</span><span class="w"> </span><span class="kn">import</span> <span class="n">InlineProviderSpec</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">llama_stack.providers.registry.api</span><span class="w"> </span><span class="kn">import</span> <span class="n">Api</span>
+
+<span class="n">InlineProviderSpec</span><span class="p">(</span>
+    <span class="n">api</span><span class="o">=</span><span class="n">Api</span><span class="o">.</span><span class="n">vector_io</span><span class="p">,</span>
+    <span class="n">provider_type</span><span class="o">=</span><span class="s2">&quot;inline::milvus&quot;</span><span class="p">,</span>
+    <span class="n">pip_packages</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;pymilvus&gt;=2.4.10&quot;</span><span class="p">],</span>
+    <span class="n">module</span><span class="o">=</span><span class="s2">&quot;llama_stack.providers.inline.vector_io.milvus&quot;</span><span class="p">,</span>
+    <span class="n">config_class</span><span class="o">=</span><span class="s2">&quot;llama_stack.providers.inline.vector_io.milvus.MilvusVectorIOConfig&quot;</span><span class="p">,</span>
+    <span class="n">api_dependencies</span><span class="o">=</span><span class="p">[</span><span class="n">Api</span><span class="o">.</span><span class="n">inference</span><span class="p">],</span>
+    <span class="n">optional_api_dependencies</span><span class="o">=</span><span class="p">[</span><span class="n">Api</span><span class="o">.</span><span class="n">files</span><span class="p">],</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+<span class="p">),</span>
+</pre></div>
+</div>
+<ol class="arabic" start="4">
+<li><p><strong>Add Tests</strong>: Create unit tests and integration tests for your provider in the <code class="docutils literal notranslate"><span class="pre">tests/</span></code> directory.</p>
+<ul>
+<li><p>Unit Tests</p>
+<ul>
+<li><p>By following the structure of the class methods, you will be able to easily run unit and integration tests for your database.</p>
+<ol class="arabic simple">
+<li><p>You have to configure the tests for your provide in <code class="docutils literal notranslate"><span class="pre">/tests/unit/providers/vector_io/conftest.py</span></code>.</p></li>
+<li><p>Update the <code class="docutils literal notranslate"><span class="pre">vector_provider</span></code> fixture to include your provider if they are an inline provider.</p></li>
+<li><p>Create a <code class="docutils literal notranslate"><span class="pre">your_vectorprovider_index</span></code> fixture that initializes your vector index.</p></li>
+<li><p>Create a <code class="docutils literal notranslate"><span class="pre">your_vectorprovider_adapter</span></code> fixture that initializes your vector adapter.</p></li>
+<li><p>Add your provider to the <code class="docutils literal notranslate"><span class="pre">vector_io_providers</span></code> fixture dictionary.</p></li>
+</ol>
+<ul class="simple">
+<li><p>Please follow the naming convention of <code class="docutils literal notranslate"><span class="pre">your_vectorprovider_index</span></code> and <code class="docutils literal notranslate"><span class="pre">your_vectorprovider_adapter</span></code> as the tests require this to execute properly.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Integration Tests</p>
+<ul class="simple">
+<li><p>Integration tests are located in <a class="reference external" href="https://github.com/llamastack/llama-stack/tree/main/tests/integration">tests/integration</a>. These tests use the python client-SDK APIs (from the <code class="docutils literal notranslate"><span class="pre">llama_stack_client</span></code> package) to test functionality.</p></li>
+<li><p>The two set of integration tests are:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">tests/integration/vector_io/test_vector_io.py</span></code>: This file tests registration, insertion, and retrieval.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tests/integration/vector_io/test_openai_vector_stores.py</span></code>: These tests are for OpenAI-compatible vector stores and test the OpenAI API compatibility.</p></li>
+<li><p>You will need to update <code class="docutils literal notranslate"><span class="pre">skip_if_provider_doesnt_support_openai_vector_stores</span></code> to include your provider as well as <code class="docutils literal notranslate"><span class="pre">skip_if_provider_doesnt_support_openai_vector_stores_search</span></code> to test the appropriate search functionality.</p></li>
+</ul>
+</li>
+<li><p>Running the tests in the GitHub CI</p>
+<ul>
+<li><p>You will need to update the <code class="docutils literal notranslate"><span class="pre">.github/workflows/integration-vector-io-tests.yml</span></code> file to include your provider.</p></li>
+<li><p>If your provider is a remote provider, you will also have to add a container to spin up and run it in the action.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Updating the pyproject.yml</p>
+<ul class="simple">
+<li><p>If you are adding tests for the <code class="docutils literal notranslate"><span class="pre">inline</span></code> provider you will have to update the <code class="docutils literal notranslate"><span class="pre">unit</span></code> group.</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">uv</span> <span class="pre">add</span> <span class="pre">new_pip_package</span> <span class="pre">--group</span> <span class="pre">unit</span></code></p></li>
+</ul>
+</li>
+<li><p>If you are adding tests for the <code class="docutils literal notranslate"><span class="pre">remote</span></code> provider you will have to update the <code class="docutils literal notranslate"><span class="pre">test</span></code> group, which is used in the GitHub CI for integration tests.</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">uv</span> <span class="pre">add</span> <span class="pre">new_pip_package</span> <span class="pre">--group</span> <span class="pre">test</span></code></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Update Documentation</strong>: Please update the documentation for end users</p>
+<ul class="simple">
+<li><p>Generate the provider documentation by running <a class="reference external" href="https://github.com/llamastack/llama-stack/tree/main/./scripts/provider_codegen.py">./scripts/provider_codegen.py</a>.</p></li>
+<li><p>Update the autogenerated content in the registry/vector_io.py file with information about your provider. Please see other providers for examples.</p></li>
+</ul>
+</li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="new_api_provider.html" class="btn btn-neutral float-left" title="Adding a New API Provider" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="testing/record-replay.html" class="btn btn-neutral float-right" title="Record-Replay System" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Meta.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book"> Read the Docs</span>
+    v: v0.2.22
+    <span class="fa fa-caret-down"></span>
+  </span>
+  <div class="rst-other-versions">
+    <dl>
+      <dt>Versions</dt>
+      <dd>
+        <a href="/v0.2.21/">latest</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.21/">v0.2.21</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.20/">v0.2.20</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.19/">v0.2.19</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.18/">v0.2.18</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.17/">v0.2.17</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.16/">v0.2.16</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.15/">v0.2.15</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.14/">v0.2.14</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.13/">v0.2.13</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.12/">v0.2.12</a>
+      </dd>
+      <dd>
+        <a href="/v0.2.11/">v0.2.11</a>
+      </dd>
+    </dl>
+  </div>
+</div><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
