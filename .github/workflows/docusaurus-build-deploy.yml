@@ -69,21 +69,36 @@ jobs:
       run: |
         cd ${{ runner.temp }}/llama-stack
 
+        echo "=== DEBUGGING: Current directory structure ==="
+        ls -la
+        echo "=== DEBUGGING: docs/ directory ==="
+        ls -la docs/ 2>/dev/null || echo "docs/ directory not found"
+        echo "=== DEBUGGING: docs/static/ directory ==="
+        ls -la docs/static/ 2>/dev/null || echo "docs/static/ directory not found"
+        echo "=== DEBUGGING: docs/docs/ directory ==="
+        ls -la docs/docs/ 2>/dev/null || echo "docs/docs/ directory not found"
+
         # Extract MDX documentation content
         if [ -d "docs/docs" ]; then
           cp -r docs/docs/* docs/ 2>/dev/null || true
-          echo "Extracted docs content from docs/docs/ to docs/"
+          echo "✅ Extracted docs content from docs/docs/ to docs/"
+        else
+          echo "❌ docs/docs/ directory not found"
         fi
 
         # Extract static content (move src/ and sidebars.ts to root)
         if [ -d "docs/static/src" ]; then
           cp -r docs/static/src .
-          echo "Moved src from docs/static/ to root"
+          echo "✅ Moved src from docs/static/ to root"
+        else
+          echo "❌ docs/static/src/ directory not found"
         fi
 
         if [ -f "docs/static/sidebars.ts" ]; then
           cp docs/static/sidebars.ts .
-          echo "Moved sidebars.ts to root"
+          echo "✅ Moved sidebars.ts to root"
+        else
+          echo "❌ docs/static/sidebars.ts file not found"
         fi
 
         # Copy remaining static content to static/
@@ -91,8 +106,19 @@ jobs:
         if [ -d "docs/static" ]; then
           # Copy everything except src/ and sidebars.ts
           find docs/static -mindepth 1 -maxdepth 1 ! -name "src" ! -name "sidebars.ts" -exec cp -r {} static/ \; 2>/dev/null || true
-          echo "Copied remaining static assets to static/"
+          echo "✅ Copied remaining static assets to static/"
+        else
+          echo "❌ docs/static/ directory not found"
         fi
+
+        echo "=== DEBUGGING: Final root directory structure ==="
+        ls -la
+        echo "=== DEBUGGING: Final docs/ directory ==="
+        ls -la docs/ 2>/dev/null || echo "docs/ directory not found"
+        echo "=== DEBUGGING: Final static/ directory ==="
+        ls -la static/ 2>/dev/null || echo "static/ directory not found"
+        echo "=== DEBUGGING: Looking for sidebars.ts specifically ==="
+        find . -name "sidebars.ts" -type f 2>/dev/null || echo "No sidebars.ts found anywhere"
 
     # STEP 2: Generate API specs
     - name: Generate OpenAPI documentation
