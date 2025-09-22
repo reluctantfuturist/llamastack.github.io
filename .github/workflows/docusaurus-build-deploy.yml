@@ -64,15 +64,18 @@ jobs:
     - name: Install uv for OpenAPI generator
       uses: astral-sh/setup-uv@v4
 
-    - name: Install Docusaurus dependencies
-      run: |
-        npm install
-
-    - name: Prepare Docusaurus configuration and content
+    # STEP 1: Extract content from cloned repo
+    - name: Extract content from cloned repo
       run: |
         cd ${{ runner.temp }}/llama-stack
 
-        # Move src and sidebars.ts from docs/static to root level for Docusaurus
+        # Extract MDX documentation content
+        if [ -d "docs/docs" ]; then
+          cp -r docs/docs/* docs/ 2>/dev/null || true
+          echo "Extracted docs content from docs/docs/ to docs/"
+        fi
+
+        # Extract static content (move src/ and sidebars.ts to root)
         if [ -d "docs/static/src" ]; then
           cp -r docs/static/src .
           echo "Moved src from docs/static/ to root"
@@ -80,36 +83,18 @@ jobs:
 
         if [ -f "docs/static/sidebars.ts" ]; then
           cp docs/static/sidebars.ts .
-          echo "Moved sidebars.ts from docs/static/ to root"
+          echo "Moved sidebars.ts to root"
         fi
 
-        # Copy main documentation content from docs/docs to docs/
-        if [ -d "docs/docs" ]; then
-          cp -r docs/docs/* docs/ 2>/dev/null || true
-          echo "Copied main docs content from docs/docs/ to docs/"
-        fi
-
-        # Copy Docusaurus config from our repository
-        cp ${{ github.workspace }}/docusaurus.config.ts .
-        cp ${{ github.workspace }}/package.json .
-        cp ${{ github.workspace }}/tsconfig.json .
-
-        # Copy static assets
+        # Copy remaining static content to static/
         mkdir -p static
-        if [ -d "${{ github.workspace }}/static" ]; then
-          cp -r ${{ github.workspace }}/static/* static/ 2>/dev/null || true
+        if [ -d "docs/static" ]; then
+          # Copy everything except src/ and sidebars.ts
+          find docs/static -mindepth 1 -maxdepth 1 ! -name "src" ! -name "sidebars.ts" -exec cp -r {} static/ \; 2>/dev/null || true
+          echo "Copied remaining static assets to static/"
         fi
 
-        # Copy versions.json to the right location
-        if [ -f "${{ github.workspace }}/docs/versions.json" ]; then
-          cp ${{ github.workspace }}/docs/versions.json .
-        fi
-
-    - name: Install dependencies in cloned repo
-      run: |
-        cd ${{ runner.temp }}/llama-stack
-        npm install
-
+    # STEP 2: Generate API specs
     - name: Generate OpenAPI documentation
       run: |
         cd ${{ runner.temp }}/llama-stack
@@ -121,6 +106,30 @@ jobs:
         else
           echo "OpenAPI generator script not found, skipping..."
         fi
+
+    # STEP 3: Consolidate and build
+    - name: Prepare Docusaurus build environment
+      run: |
+        cd ${{ runner.temp }}/llama-stack
+
+        # Copy our build configs
+        cp ${{ github.workspace }}/docusaurus.config.ts .
+        cp ${{ github.workspace }}/package.json .
+        cp ${{ github.workspace }}/tsconfig.json .
+
+        # Copy versions.json if it exists
+        if [ -f "${{ github.workspace }}/docs/versions.json" ]; then
+          cp ${{ github.workspace }}/docs/versions.json .
+        fi
+
+    - name: Install dependencies in cloned repo
+      run: |
+        cd ${{ runner.temp }}/llama-stack
+        npm install
+
+    - name: Generate API docs and build
+      run: |
+        cd ${{ runner.temp }}/llama-stack
 
         # Generate API docs using Docusaurus OpenAPI plugin
         if npm run | grep -q "gen-api-docs"; then
