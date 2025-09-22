@@ -1,0 +1,219 @@
+name: Build and Deploy Docusaurus Documentation
+
+on:
+  # Allow manual trigger
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to build (latest, v0.2.18, etc.'
+        required: false
+        default: 'latest'
+        type: string
+      action:
+        description: 'Action to perform'
+        required: false
+        default: 'build-and-deploy'
+        type: choice
+        options:
+          - build-only
+          - deploy-only
+          - build-and-deploy
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    if: ${{ github.event.inputs.action != 'deploy-only' }}
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout this repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Clone llama-stack repository with full history
+      run: |
+        git clone https://github.com/llamastack/llama-stack.git ${{ runner.temp }}/llama-stack
+        cd ${{ runner.temp }}/llama-stack
+        git fetch --all --tags
+
+        # Checkout the specified version or latest
+        VERSION="${{ github.event.inputs.version }}"
+        if [ -z "$VERSION" ] || [ "$VERSION" = "latest" ]; then
+          # Get the latest tag
+          VERSION=$(git for-each-ref --sort=-creatordate --format '%(refname:short)' refs/tags | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -1)
+          echo "Using latest tag: $VERSION"
+        fi
+        git checkout "$VERSION"
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+
+    - name: Set up Python for OpenAPI generator
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+
+    - name: Install uv for OpenAPI generator
+      uses: astral-sh/setup-uv@v4
+
+    - name: Install Docusaurus dependencies
+      run: |
+        npm install
+
+    - name: Prepare Docusaurus configuration and content
+      run: |
+        cd ${{ runner.temp }}/llama-stack
+
+        # Move src and sidebars.ts from static to root level for Docusaurus
+        if [ -d "${{ github.workspace }}/static/src" ]; then
+          cp -r ${{ github.workspace }}/static/src .
+        fi
+
+        if [ -f "${{ github.workspace }}/static/sidebars.ts" ]; then
+          cp ${{ github.workspace }}/static/sidebars.ts .
+        fi
+
+        # Copy Docusaurus config from our repository
+        cp ${{ github.workspace }}/docusaurus.config.ts .
+        cp ${{ github.workspace }}/package.json .
+        cp ${{ github.workspace }}/tsconfig.json .
+
+        # Copy static assets
+        mkdir -p static
+        if [ -d "${{ github.workspace }}/static" ]; then
+          cp -r ${{ github.workspace }}/static/* static/ 2>/dev/null || true
+        fi
+
+        # Copy versions.json to the right location
+        if [ -f "${{ github.workspace }}/docs/versions.json" ]; then
+          cp ${{ github.workspace }}/docs/versions.json .
+        fi
+
+    - name: Install dependencies in cloned repo
+      run: |
+        cd ${{ runner.temp }}/llama-stack
+        npm install
+
+    - name: Generate OpenAPI documentation
+      run: |
+        cd ${{ runner.temp }}/llama-stack
+
+        # Run OpenAPI generator script to generate YAML/HTML spec files
+        if [ -f "docs/openapi_generator/run_openapi_generator.sh" ]; then
+          echo "Running OpenAPI generator..."
+          uv run ./docs/openapi_generator/run_openapi_generator.sh
+        else
+          echo "OpenAPI generator script not found, skipping..."
+        fi
+
+        # Generate API docs using Docusaurus OpenAPI plugin
+        if npm run | grep -q "gen-api-docs"; then
+          echo "Generating API docs with Docusaurus..."
+          npm run gen-api-docs
+        else
+          echo "gen-api-docs script not found, skipping..."
+        fi
+
+    - name: Build documentation for the specific version
+      run: |
+        cd ${{ runner.temp }}/llama-stack
+
+        # Set version - use input if available, otherwise get latest tag
+        VERSION="${{ github.event.inputs.version }}"
+        if [ -z "$VERSION" ] || [ "$VERSION" = "latest" ]; then
+          # Get the actual version from git
+          ACTUAL_VERSION=$(git describe --tags --abbrev=0)
+          echo "Using latest tag: $ACTUAL_VERSION"
+          VERSION="$ACTUAL_VERSION"
+        fi
+
+        echo "Building version: $VERSION"
+
+        # Create version using Docusaurus native versioning if it doesn't exist
+        if [ "$VERSION" != "latest" ] && ! grep -q "\"$VERSION\"" versions.json 2>/dev/null; then
+          echo "Creating new version: $VERSION"
+          npm run docusaurus docs:version "$VERSION"
+        fi
+
+        # Build with Docusaurus (includes all versions)
+        npm run build
+
+        # Copy build output to our docs directory (overwrites previous build)
+        rm -rf ${{ github.workspace }}/docs/*
+        cp -r build/* ${{ github.workspace }}/docs/
+
+    - name: Commit and push changes
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git add .
+        # Only commit if there are changes
+        if ! git diff --staged --quiet; then
+          git commit -m "Update Docusaurus documentation from llama-stack [skip ci]"
+          git push
+        else
+          echo "No changes to commit"
+        fi
+
+    - name: Setup GitHub Pages
+      if: ${{ github.event.inputs.action == 'build-and-deploy' }}
+      uses: actions/configure-pages@v5
+
+    - name: Upload Pages artifact
+      if: ${{ github.event.inputs.action == 'build-and-deploy' }}
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: 'docs'
+
+  deploy-after-build:
+    if: ${{ github.event.inputs.action == 'build-and-deploy' }}
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4
+
+  deploy-only:
+    if: ${{ github.event.inputs.action == 'deploy-only' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Setup GitHub Pages
+      uses: actions/configure-pages@v5
+
+    - name: Upload Pages artifact
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: 'docs'
+
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4
