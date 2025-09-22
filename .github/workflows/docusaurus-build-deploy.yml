@@ -72,13 +72,21 @@ jobs:
       run: |
         cd ${{ runner.temp }}/llama-stack
 
-        # Move src and sidebars.ts from static to root level for Docusaurus
-        if [ -d "${{ github.workspace }}/static/src" ]; then
-          cp -r ${{ github.workspace }}/static/src .
+        # Move src and sidebars.ts from docs/static to root level for Docusaurus
+        if [ -d "docs/static/src" ]; then
+          cp -r docs/static/src .
+          echo "Moved src from docs/static/ to root"
         fi
 
-        if [ -f "${{ github.workspace }}/static/sidebars.ts" ]; then
-          cp ${{ github.workspace }}/static/sidebars.ts .
+        if [ -f "docs/static/sidebars.ts" ]; then
+          cp docs/static/sidebars.ts .
+          echo "Moved sidebars.ts from docs/static/ to root"
+        fi
+
+        # Copy main documentation content from docs/docs to docs/
+        if [ -d "docs/docs" ]; then
+          cp -r docs/docs/* docs/ 2>/dev/null || true
+          echo "Copied main docs content from docs/docs/ to docs/"
         fi
 
         # Copy Docusaurus config from our repository
