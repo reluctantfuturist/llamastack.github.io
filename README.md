@@ -8,7 +8,13 @@ This repository hosts the GitHub Pages documentation site generated from documen
 
 ## Overview
 
-This repository automatically syncs and builds documentation from the main Llama Stack repository using GitHub Actions. The documentation is built using Sphinx and served as static HTML via GitHub Pages.
+This repository automatically syncs and builds documentation from the main Llama Stack repository using GitHub Actions. The documentation is built using **Docusaurus** and served as static HTML via GitHub Pages.
+
+### Architecture
+
+- **Current Documentation**: Built with Docusaurus from the main repository
+- **Legacy Versions**: Preserved Sphinx builds (v0.2.11 - v0.2.22) available at `/legacy/vX.Y.Z/`
+- **Version Management**: Uses Docusaurus native versioning with `versionsArchived.json` for legacy versions
 
 ## Updates
 
@@ -16,27 +22,27 @@ This repository automatically syncs and builds documentation from the main Llama
 
 ## Local Development
 
-To manually build and sync the documentation locally:
+To manually build and test the documentation locally:
 
 ```bash
 # Clone this repository
 git clone https://github.com/llamastack/llamastack.github.io.git
 cd llamastack.github.io
 
-# Run the workflow locally (requires Python 3.12 and uv)
-./run-workflow.py
+# Run the new Docusaurus build (requires Python 3, Node.js 20+, npm)
+./local-build-test.sh
 
-# The documentation will be built and copied to the root directory
-# You can then serve it locally with any HTTP server, for example:
-uv run python -m http.server 8323 --directory docs
-```
+### Testing URLs After Build
 
-The `run-workflow.py` script parses and executes the GitHub Actions workflow locally, providing the same build process as the CI/CD pipeline.
+- **Main site**: http://localhost:8000/docs/
+- **Legacy versions**: http://localhost:8000/legacy/v0.2.22/
+- **Root redirect**: http://localhost:8000/ (should redirect to `/docs/`)
+
+The `run-docusaurus-local.py` script simulates the GitHub Actions workflow locally, providing the same build process as the CI/CD pipeline.
 
 ## Contributing
 
-Documentation content should be contributed to the main [Llama Stack repository](https://github.com/llamastack/llama-stack/tree/main/docs/source). This repository only hosts the built documentation.
-
+Documentation content should be contributed to the main [Llama Stack repository](https://github.com/llamastack/llama-stack/tree/main/docs). This repository only hosts the built documentation.
 ## License
 
 See the [Llama Stack repository](https://github.com/llamastack/llama-stack) for license information.

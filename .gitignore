@@ -25,3 +25,24 @@ Thumbs.db
 
 # Logs
 *.log
+
+# Docusaurus build artefacts
+docs/
+
+# Docusaurus build cache
+.docusaurus/
+build/
+
+# Node.js dependencies and build artifacts
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm
+.yarn-integrity
+package-lock.json
+yarn.lock
+
+# Claude
+CLAUDE.md
+.claude/settings.local.json
