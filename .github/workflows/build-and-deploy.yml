@@ -1,7 +1,6 @@
 name: Build and Deploy Docusaurus Documentation
 
 on:
-  # Allow manual trigger
   workflow_dispatch:
     inputs:
       version:
@@ -35,134 +34,85 @@ jobs:
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Clone llama-stack repository with full history
+    - name: Clone llama-stack repository
       run: |
-        echo "📥 Cloning llama-stack repository with full history..."
-        git clone https://github.com/llamastack/llama-stack.git ${{ runner.temp }}/llama-stack
-        cd ${{ runner.temp }}/llama-stack
+        echo "📥 Cloning llama-stack repository..."
+        TEMP_DIR=$(mktemp -d)
+        echo "TEMP_DIR=$TEMP_DIR" >> $GITHUB_ENV
+
+        git clone https://github.com/llamastack/llama-stack.git "$TEMP_DIR/llama-stack"
+        cd "$TEMP_DIR/llama-stack"
         git fetch --all --tags
 
-        # Determine version to build
+        # Determine version to checkout
         VERSION="${{ github.event.inputs.version }}"
-        if [ -z "$VERSION" ] || [ "$VERSION" = "latest" ]; then
-          # Use main branch for latest
+        if [ "$VERSION" = "latest" ] || [ -z "$VERSION" ]; then
           git checkout main
-          echo "Building from main branch (latest)"
+          echo "✅ Using main branch (latest)"
           echo "BUILDING_LATEST=true" >> $GITHUB_ENV
           echo "VERSION_TAG=latest" >> $GITHUB_ENV
         else
-          # Checkout specific version tag
           git checkout "$VERSION"
-          echo "Building from tag: $VERSION"
+          echo "✅ Using tag: $VERSION"
           echo "BUILDING_LATEST=false" >> $GITHUB_ENV
           echo "VERSION_TAG=$VERSION" >> $GITHUB_ENV
         fi
-
-        echo "✅ Repository prepared"
 
     - name: Set up Node.js
       uses: actions/setup-node@v4
       with:
         node-version: '20'
-        cache: 'npm'
-        cache-dependency-path: '${{ runner.temp }}/llama-stack/docs/package-lock.json'
 
-    - name: Install Docusaurus dependencies
+    - name: Install dependencies and setup versioning
       run: |
-        echo "📦 Installing Docusaurus dependencies..."
-        cd ${{ runner.temp }}/llama-stack/docs
+        echo "📦 Installing dependencies..."
+        cd "${{ env.TEMP_DIR }}/llama-stack/docs"
         npm ci
         echo "✅ Dependencies installed"
 
-    - name: Apply Docusaurus configuration patches
-      run: |
-        echo "⚙️ Applying Docusaurus configuration patches..."
-        cd ${{ runner.temp }}/llama-stack/docs
+        echo "⚙️ Setting up versioning configuration..."
 
-        # Create versioning files for current state
-        cat > versionsArchived.json << 'EOF'
-        {
-          "v0.2.22": "https://llamastack.github.io/legacy/v0.2.22/",
-          "v0.2.21": "https://llamastack.github.io/legacy/v0.2.21/",
-          "v0.2.20": "https://llamastack.github.io/legacy/v0.2.20/",
-          "v0.2.19": "https://llamastack.github.io/legacy/v0.2.19/",
-          "v0.2.18": "https://llamastack.github.io/legacy/v0.2.18/",
-          "v0.2.17": "https://llamastack.github.io/legacy/v0.2.17/",
-          "v0.2.16": "https://llamastack.github.io/legacy/v0.2.16/",
-          "v0.2.15": "https://llamastack.github.io/legacy/v0.2.15/",
-          "v0.2.14": "https://llamastack.github.io/legacy/v0.2.14/",
-          "v0.2.13": "https://llamastack.github.io/legacy/v0.2.13/",
-          "v0.2.12": "https://llamastack.github.io/legacy/v0.2.12/",
-          "v0.2.11": "https://llamastack.github.io/legacy/v0.2.11/"
-        }
-        EOF
+        # Copy persistent versionsArchived.json from repo
+        cp "${{ github.workspace }}/versionsArchived.json" ./
 
-        # Load current Docusaurus versions
+        # Load existing versions.json from deployed site or create empty
         if [ -f "${{ github.workspace }}/docs/versions.json" ]; then
           cp "${{ github.workspace }}/docs/versions.json" ./
+          echo "✅ Loaded existing versions.json"
         else
           echo "[]" > versions.json
+          echo "✅ Created empty versions.json"
         fi
 
-        echo "🔧 Patching Docusaurus configuration..."
-
-        # Create comprehensive config patch script
-        cat > patch-config.js << 'PATCH_EOF'
+        # Patch Docusaurus config for versioning
+        node << 'EOF'
         const fs = require('fs');
-        const path = require('path');
 
-        const configPath = 'docusaurus.config.ts';
-        let config = fs.readFileSync(configPath, 'utf8');
+        let config = fs.readFileSync('docusaurus.config.ts', 'utf8');
 
-        // Load versions to determine current version label
-        const buildingLatest = process.env.BUILDING_LATEST === 'true';
-        const versionTag = process.env.VERSION_TAG;
-        const currentVersionLabel = buildingLatest ? 'Latest' : versionTag;
-
-        console.log(`Patching config for version: ${versionTag} (latest: ${buildingLatest})`);
-
-        // Add versioning imports and logic
+        // Add versioning imports after OpenAPI import
         const versioningImports = `
-        // Import archived versions configuration
+        // Import fs for versioning configuration
         const fs = require('fs');
-        const path = require('path');
 
-        // Load archived versions (legacy Sphinx versions)
+        // Versioning configuration for llamastack.github.io
         const versionsArchived = (() => {
           try {
-            return JSON.parse(fs.readFileSync(path.join(__dirname, 'versionsArchived.json'), 'utf8'));
+            return JSON.parse(fs.readFileSync('./versionsArchived.json', 'utf8'));
           } catch (e) {
             console.warn('Could not load versionsArchived.json:', e);
             return {};
           }
         })();
 
-        // Load current Docusaurus versions
-        const currentVersions = (() => {
-          try {
-            return JSON.parse(fs.readFileSync(path.join(__dirname, 'versions.json'), 'utf8'));
-          } catch (e) {
-            console.warn('Could not load versions.json:', e);
-            return [];
-          }
-        })();
-
-        // Create dropdown items for archived versions (legacy Sphinx)
         const archivedVersionsDropdownItems = Object.entries(versionsArchived).map(
           ([versionName, versionUrl]) => ({
             label: versionName,
             href: versionUrl,
           })
         );
-
-        // Create dropdown items for Docusaurus versions
-        const docusaurusVersionsDropdownItems = currentVersions.map(version => ({
-          label: version,
-          to: \`/docs/\${version}/\`,
-        }));
         `;
 
-        // Insert versioning imports after existing imports
         config = config.replace(
           /import type \* as OpenApiPlugin from "docusaurus-plugin-openapi-docs";/,
           `import type * as OpenApiPlugin from "docusaurus-plugin-openapi-docs";
@@ -170,64 +120,26 @@ jobs:
         ${versioningImports}`
         );
 
-        // Update version configuration based on build type
-        const versionConfig = buildingLatest ?
-          `// Versioning configuration
-          lastVersion: 'current',
-          versions: {
-            current: {
-              label: '${currentVersionLabel}',
-              path: '',
-            },
-          },
-          onlyIncludeVersions: ['current'],` :
-          `// Versioning configuration
-          lastVersion: 'current',
-          versions: {
-            current: {
-              label: '${currentVersionLabel}',
-              path: '',
-            },
-          },
-          includeCurrentVersion: true,`;
-
-        // Add/update versioning configuration to docs config
-        if (config.includes('docItemComponent: "@theme/ApiItem"')) {
-          config = config.replace(
-            /docItemComponent: "@theme\/ApiItem", \/\/ Derived from docusaurus-theme-openapi/,
-            `docItemComponent: "@theme/ApiItem", // Derived from docusaurus-theme-openapi
-
-          ${versionConfig}`
-          );
-        }
-
-        // Create version dropdown combining Docusaurus and archived versions
+        // Add version dropdown to navbar (replace GitHub item)
         const versionDropdown = `        {
           href: 'https://github.com/llamastack/llama-stack',
           label: 'GitHub',
           position: 'right',
         },
-        // Version dropdown with current, Docusaurus, and archived versions
         {
           type: 'docsVersionDropdown',
           position: 'right',
-          dropdownItemsAfter: [
-            // Docusaurus versions (if any)
-            ...docusaurusVersionsDropdownItems,
-            // Separator before archived versions
-            ...(archivedVersionsDropdownItems.length > 0 ? [
-              {
-                type: 'html',
-                value: '<hr class="dropdown-separator">',
-              },
-              {
-                type: 'html',
-                className: 'dropdown-archived-versions',
-                value: '<b>Archived versions</b>',
-              },
-              ...archivedVersionsDropdownItems,
-            ] : []),
-            // All versions link
+          dropdownItemsAfter: archivedVersionsDropdownItems.length > 0 ? [
+            {
+              type: 'html',
+              value: '<hr class="dropdown-separator">',
+            },
+            {
+              type: 'html',
+              className: 'dropdown-archived-versions',
+              value: '<b>Archived versions</b>',
+            },
+            ...archivedVersionsDropdownItems,
             {
               type: 'html',
               value: '<hr class="dropdown-separator">',
@@ -236,151 +148,187 @@ jobs:
               to: '/versions',
               label: 'All versions',
             },
-          ],
+          ] : [],
         },`;
 
-        // Replace GitHub item with version dropdown + GitHub
         config = config.replace(
-          /        {\s*href: 'https:\/\/github\.com\/llamastack\/llama-stack',\s*label: 'GitHub',\s*position: 'right',\s*},/,
+          /\s*{\s*href:\s*'https:\/\/github\.com\/llamastack\/llama-stack',\s*label:\s*'GitHub',\s*position:\s*'right',\s*},/,
           versionDropdown
         );
 
-        fs.writeFileSync(configPath, config);
-        console.log('✅ Docusaurus configuration patched successfully');
-        PATCH_EOF
-
-        # Apply the patch
-        BUILDING_LATEST=${{ env.BUILDING_LATEST }} VERSION_TAG=${{ env.VERSION_TAG }} node patch-config.js
+        fs.writeFileSync('docusaurus.config.ts', config);
+        console.log('✅ Configuration patched');
+        EOF
 
         echo "✅ Configuration patches applied"
 
-    - name: Create Docusaurus version (if not latest)
-      if: env.BUILDING_LATEST != 'true'
+    - name: Import existing versioning artifacts
       run: |
-        echo "📚 Creating Docusaurus version for ${{ env.VERSION_TAG }}..."
-        cd ${{ runner.temp }}/llama-stack/docs
+        echo "📥 Importing existing versioning artifacts from repository..."
+        cd "${{ env.TEMP_DIR }}/llama-stack/docs"
 
-        # Generate API docs first
-        npm run gen-api-docs all
+        # Copy existing versioned_docs if they exist
+        if [ -d "${{ github.workspace }}/versioned_docs" ]; then
+          cp -r "${{ github.workspace }}/versioned_docs" ./
+          echo "✅ Imported existing versioned_docs"
+        else
+          echo "ℹ️ No existing versioned_docs found (first version)"
+        fi
 
-        # Create the version
-        npm run docusaurus docs:version ${{ env.VERSION_TAG }}
+        # Copy existing versioned_sidebars if they exist
+        if [ -d "${{ github.workspace }}/versioned_sidebars" ]; then
+          cp -r "${{ github.workspace }}/versioned_sidebars" ./
+          echo "✅ Imported existing versioned_sidebars"
+        else
+          echo "ℹ️ No existing versioned_sidebars found (first version)"
+        fi
 
-        echo "✅ Docusaurus version ${{ env.VERSION_TAG }} created"
+        # Copy existing versions.json if it exists (overrides what we loaded earlier)
+        if [ -f "${{ github.workspace }}/versions.json" ]; then
+          cp "${{ github.workspace }}/versions.json" ./
+          echo "✅ Imported existing versions.json"
+        else
+          echo "ℹ️ No existing versions.json found (first version)"
+        fi
 
-    - name: Generate API documentation
+        echo "✅ Versioning artifacts import completed"
+
+    - name: Build documentation
       run: |
-        echo "📚 Generating API documentation..."
-        cd ${{ runner.temp }}/llama-stack/docs
+        cd "${{ env.TEMP_DIR }}/llama-stack/docs"
+
+        # Generate API docs first (required for current build)
         npm run gen-api-docs all
         echo "✅ API docs generated"
+
+        # Create version if not latest (after content is ready)
+        if [ "${{ env.BUILDING_LATEST }}" != "true" ]; then
+          echo "📚 Creating Docusaurus version: ${{ env.VERSION_TAG }}"
+
+          # Create the version snapshot
+          npx docusaurus docs:version "${{ env.VERSION_TAG }}"
+
+          # Ensure prompt-format.png is available where versioned docs expect it
+          mkdir -p versioned_docs/resources
+          if [ ! -f "versioned_docs/resources/prompt-format.png" ]; then
+            echo "📥 Downloading missing prompt-format.png..."
+            curl -o versioned_docs/resources/prompt-format.png https://raw.githubusercontent.com/llamastack/llama-stack/main/docs/static/img/prompt-format.png
+            echo "✅ Downloaded prompt-format.png to versioned_docs/resources/"
+          else
+            echo "✅ prompt-format.png already exists in versioned_docs/resources/"
+          fi
+
+          echo "✅ Version ${{ env.VERSION_TAG }} created"
+        else
+          echo "🏗️ Building latest version (no version snapshot needed)"
+        fi
 
     - name: Build Docusaurus site
       run: |
         echo "🏗️ Building Docusaurus site..."
-        cd ${{ runner.temp }}/llama-stack/docs
+        cd "${{ env.TEMP_DIR }}/llama-stack/docs"
+
+        # Generate API docs for current build
+        npm run gen-api-docs all
+
+        # Build the site
         npm run build
+
         echo "✅ Docusaurus build completed"
 
-    - name: Deploy to docs directory
+    - name: Deploy to GitHub Pages
       run: |
         echo "🗂️ Deploying Docusaurus build..."
 
-        # Smart deployment: clear everything except legacy, .git, and .nojekyll
-        find ${{ github.workspace }}/docs -mindepth 1 -maxdepth 1 ! -name 'legacy' ! -name '.git' ! -name '.nojekyll' -exec rm -rf {} +
+        DOCS_DIR="${{ github.workspace }}/docs"
+
+        # Smart deployment: clear everything except legacy, .git, .nojekyll
+        find "$DOCS_DIR" -mindepth 1 -maxdepth 1 ! -name 'legacy' ! -name '.git' ! -name '.nojekyll' -exec rm -rf {} +
 
         # Copy Docusaurus build output
-        cp -r ${{ runner.temp }}/llama-stack/docs/build/* ${{ github.workspace }}/docs/
+        cp -r "${{ env.TEMP_DIR }}/llama-stack/docs/build/"* "$DOCS_DIR/"
 
         # Ensure .nojekyll exists
-        touch "${{ github.workspace }}/docs/.nojekyll"
+        touch "$DOCS_DIR/.nojekyll"
 
         echo "✅ Docusaurus content deployed"
 
-    - name: Update version management
+    - name: Update workspace artifacts
+      if: env.BUILDING_LATEST != 'true'
       run: |
-        echo "⚙️ Updating version management..."
+        echo "📋 Updating workspace versioning artifacts..."
 
-        # Copy/update versioning files to deployment
-        cp "${{ runner.temp }}/llama-stack/docs/versionsArchived.json" "${{ github.workspace }}/docs/"
+        BUILD_PATH="${{ env.TEMP_DIR }}/llama-stack/docs"
 
-        # Update versions.json if we built a new version
-        if [ "${{ env.BUILDING_LATEST }}" != "true" ]; then
-          echo "Adding version ${{ env.VERSION_TAG }} to versions.json"
-
-          # Load current versions.json
-          VERSIONS_FILE="${{ github.workspace }}/docs/versions.json"
-          if [ -f "$VERSIONS_FILE" ]; then
-            CURRENT_VERSIONS=$(cat "$VERSIONS_FILE")
-          else
-            CURRENT_VERSIONS="[]"
-          fi
-
-          # Add new version if not already present
-          NEW_VERSION="${{ env.VERSION_TAG }}"
-          UPDATED_VERSIONS=$(echo "$CURRENT_VERSIONS" | jq --arg version "$NEW_VERSION" '. as $arr | if ($arr | index($version)) then $arr else [$version] + $arr end')
-
-          echo "$UPDATED_VERSIONS" > "$VERSIONS_FILE"
-          echo "✅ Updated versions.json with $NEW_VERSION"
+        # Copy versioned docs and sidebars to workspace (for git commit)
+        if [ -d "$BUILD_PATH/versioned_docs" ]; then
+          cp -r "$BUILD_PATH/versioned_docs" "${{ github.workspace }}/"
+          echo "✅ Copied versioned_docs to workspace"
         fi
 
-        cp "${{ runner.temp }}/llama-stack/docs/versions.json" "${{ github.workspace }}/docs/" 2>/dev/null || echo "[]" > "${{ github.workspace }}/docs/versions.json"
+        if [ -d "$BUILD_PATH/versioned_sidebars" ]; then
+          cp -r "$BUILD_PATH/versioned_sidebars" "${{ github.workspace }}/"
+          echo "✅ Copied versioned_sidebars to workspace"
+        fi
 
-        echo "✅ Version management updated"
+        # Copy updated versions.json to workspace
+        cp "$BUILD_PATH/versions.json" "${{ github.workspace }}/"
+        echo "✅ Updated workspace versions.json"
+
+    - name: Setup versioning files in deployed site
+      run: |
+        echo "⚙️ Setting up versioning configuration files..."
+
+        BUILD_PATH="${{ env.TEMP_DIR }}/llama-stack/docs"
+
+        # Copy versioning files to deployment
+        cp "$BUILD_PATH/versionsArchived.json" "${{ github.workspace }}/docs/"
+        cp "$BUILD_PATH/versions.json" "${{ github.workspace }}/docs/"
+
+        echo "✅ Versioning files created"
 
     - name: Verify deployment structure
       run: |
         echo "🔍 Verifying deployment structure..."
 
         echo "Contents of docs directory:"
-        ls -la ${{ github.workspace }}/docs/ | head -10
+        ls -la "${{ github.workspace }}/docs/" | head -10
 
         echo -e "\nLegacy versions:"
-        ls -la ${{ github.workspace }}/docs/legacy/ 2>/dev/null | head -5 || echo "❌ Legacy directory missing"
+        ls -la "${{ github.workspace }}/docs/legacy/" 2>/dev/null | head -5 || echo "❌ Legacy directory missing"
 
         echo -e "\nVersioning files:"
         [ -f "${{ github.workspace }}/docs/versionsArchived.json" ] && echo "✅ versionsArchived.json exists" || echo "❌ versionsArchived.json missing"
         [ -f "${{ github.workspace }}/docs/versions.json" ] && echo "✅ versions.json exists" || echo "❌ versions.json missing"
 
-        echo -e "\nDocusaurus versions:"
-        if [ -d "${{ github.workspace }}/docs/docs" ]; then
-          ls -la "${{ github.workspace }}/docs/docs/" | head -5
-        fi
-
         echo -e "\n✅ Structure verification complete"
 
-    - name: Commit and push changes
+    - name: Commit versioning artifacts
+      if: env.BUILDING_LATEST != 'true'
       run: |
-        echo "💾 Committing changes..."
+        echo "💾 Committing versioning artifacts..."
 
-        cd ${{ github.workspace }}
+        cd "${{ github.workspace }}"
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
 
-        # Add all changes
-        git add .
+        # Add versioning artifacts
+        git add versioned_docs/ versioned_sidebars/ versions.json 2>/dev/null || true
 
-        # Only commit if there are changes
+        # Add deployment
+        git add docs/
+
+        # Commit if there are changes
         if ! git diff --staged --quiet; then
-          if [ "${{ env.BUILDING_LATEST }}" = "true" ]; then
-            git commit -m "Update Docusaurus documentation (latest)
+          git commit -m "Add Docusaurus version ${{ env.VERSION_TAG }}
 
-          - Updated latest Docusaurus build
-          - Applied configuration patches for version dropdown
-          - Maintained legacy versions in /legacy/ directory
-          - Version dropdown shows 'Latest' with archived versions
-
-          [skip ci]"
-          else
-            git commit -m "Add Docusaurus version ${{ env.VERSION_TAG }}
-
-          - Created new Docusaurus version ${{ env.VERSION_TAG }}
+          - Created version snapshot in versioned_docs/version-${{ env.VERSION_TAG }}/
           - Updated versions.json with new version
-          - Applied configuration patches for version dropdown
-          - Maintained legacy versions in /legacy/ directory
+          - Built and deployed multi-version site
+          - Integrated with legacy versions in dropdown
 
-          [skip ci]"
-          fi
+          🤖 Generated by Docusaurus versioning workflow"
+
           git push
           echo "✅ Changes committed and pushed"
         else
@@ -397,7 +345,7 @@ jobs:
       with:
         path: 'docs'
 
-  deploy-after-build:
+  deploy:
     if: ${{ github.event.inputs.action == 'build-and-deploy' }}
     runs-on: ubuntu-latest
     needs: build
