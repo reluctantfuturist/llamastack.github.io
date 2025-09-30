@@ -77,8 +77,19 @@ jobs:
 
         # Load existing versions.json from deployed site or create empty
         if [ -f "${{ github.workspace }}/docs/versions.json" ]; then
-          cp "${{ github.workspace }}/docs/versions.json" ./
-          echo "✅ Loaded existing versions.json"
+          # If we're building a specific version, exclude it from the imported versions.json
+          if [ "${{ env.BUILDING_LATEST }}" != "true" ]; then
+            # Filter out the version we're about to build
+            node -e "
+            const versions = JSON.parse(require('fs').readFileSync('${{ github.workspace }}/docs/versions.json', 'utf8'));
+            const filtered = versions.filter(v => v !== '${{ env.VERSION_TAG }}');
+            require('fs').writeFileSync('versions.json', JSON.stringify(filtered, null, 2));
+            console.log('✅ Loaded versions.json (filtered out ${{ env.VERSION_TAG }})');
+            "
+          else
+            cp "${{ github.workspace }}/docs/versions.json" ./
+            echo "✅ Loaded existing versions.json"
+          fi
         else
           echo "[]" > versions.json
           echo "✅ Created empty versions.json"
@@ -230,6 +241,16 @@ jobs:
 
         # Generate API docs for current build
         npm run gen-api-docs all
+
+        # Patch out duplicate version badges from OpenAPI MDX files
+        echo "🔧 Patching out duplicate version badges..."
+        find . -name "llama-stack-specification.info.mdx" -type f -exec sed -i '/<span$/,/<\/span>$/d' {} \;
+
+        # Also patch versioned files if they exist
+        if [ -d "versioned_docs" ]; then
+          find versioned_docs -name "llama-stack-specification.info.mdx" -type f -exec sed -i '/<span$/,/<\/span>$/d' {} \;
+        fi
+        echo "✅ Version badge patching completed"
 
         # Build the site
         npm run build
