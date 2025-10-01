@@ -42,11 +42,18 @@ class WorkflowRunner:
     def setup_runner_context(self):
         """Set up GitHub Actions runner context variables"""
         self.temp_dir = tempfile.mkdtemp(prefix="workflow-runner-")
+        self.github_env_file = os.path.join(self.temp_dir, "github_env")
+
+        # Create empty GITHUB_ENV file
+        with open(self.github_env_file, "w") as _:
+            pass
+
         self.env.update(
             {
                 "RUNNER_TEMP": self.temp_dir,
                 "GITHUB_WORKSPACE": os.getcwd(),
                 "CI": "true",
+                "GITHUB_ENV": self.github_env_file,
             }
         )
         print(f"📁 Temp directory: {self.temp_dir}")
@@ -58,6 +65,19 @@ class WorkflowRunner:
 
     def replace_variables(self, text: str) -> str:
         """Replace GitHub Actions variables with their values"""
+        # Load any environment variables from GITHUB_ENV file
+        github_env_vars = {}
+        if hasattr(self, "github_env_file") and os.path.exists(self.github_env_file):
+            try:
+                with open(self.github_env_file, "r") as f:
+                    for line in f:
+                        line = line.strip()
+                        if "=" in line:
+                            key, value = line.split("=", 1)
+                            github_env_vars[key] = value
+            except Exception:
+                pass
+
         replacements = {
             "${{ runner.temp }}": self.env.get("RUNNER_TEMP", ""),
             "${{ github.workspace }}": self.env.get("GITHUB_WORKSPACE", ""),
@@ -67,7 +87,11 @@ class WorkflowRunner:
             "${{ github.event.inputs.version || 'latest' }}": self.env.get(
                 "INPUT_VERSION", "latest"
             ),
+            "${{ env.TEMP_DIR }}": github_env_vars.get("TEMP_DIR", ""),
+            "${{ env.BUILDING_LATEST }}": github_env_vars.get("BUILDING_LATEST", ""),
+            "${{ env.VERSION_TAG }}": github_env_vars.get("VERSION_TAG", ""),
         }
+
         for key, value in replacements.items():
             text = text.replace(key, value)
         return text
@@ -135,6 +159,17 @@ class WorkflowRunner:
             if not cmd.startswith("source .venv/bin/activate"):
                 cmd = f"source .venv/bin/activate && {cmd}"
 
+        # Source GITHUB_ENV file to make environment variables available
+        if hasattr(self, "github_env_file") and os.path.exists(self.github_env_file):
+            # Check if file has content
+            try:
+                with open(self.github_env_file, "r") as f:
+                    content = f.read().strip()
+                if content:
+                    cmd = f"source {self.github_env_file} && {cmd}"
+            except Exception:
+                pass
+
         try:
             result = subprocess.run(
                 cmd,
@@ -167,9 +202,15 @@ class WorkflowRunner:
             if pattern in name.lower():
                 return True
 
-        # Skip steps that use GitHub Actions
-        if "uses" in step and "setup-uv" not in step.get("uses", ""):
-            return True
+        # Skip steps that use GitHub Actions (except setup actions we can handle)
+        if "uses" in step:
+            uses = step.get("uses", "")
+            # Allow setup actions we can handle
+            if not any(
+                allowed in uses
+                for allowed in ["setup-uv", "setup-node", "actions/setup-node"]
+            ):
+                return True
 
         return False
 
@@ -199,6 +240,20 @@ class WorkflowRunner:
                 return self.run_command(
                     "curl -LsSf https://astral.sh/uv/install.sh | sh", None
                 )
+
+        # Handle setup-node action
+        if "uses" in step and (
+            "setup-node" in step["uses"] or "actions/setup-node" in step["uses"]
+        ):
+            print(f"\n🔧 {name}")
+            # Check if node is installed
+            if shutil.which("node") and shutil.which("npm"):
+                print("   ✓ Node.js and npm are already installed")
+                return True
+            else:
+                print("   ⚠️  Node.js/npm not found. Please install Node.js 20+ first.")
+                print("       Visit: https://nodejs.org/")
+                return False
 
         return True
 
@@ -270,13 +325,18 @@ def main():
     args = parser.parse_args()
 
     # Check for required tools
-    if not shutil.which("uv"):
-        print("❌ uv is not installed. Please install it first:")
-        print("   curl -LsSf https://astral.sh/uv/install.sh | sh")
-        sys.exit(1)
-
     if not shutil.which("git"):
         print("❌ git is not installed. Please install git first.")
+        sys.exit(1)
+
+    if not shutil.which("node"):
+        print("❌ Node.js is not installed. Please install Node.js 20+ first:")
+        print("   Visit: https://nodejs.org/")
+        sys.exit(1)
+
+    if not shutil.which("npm"):
+        print("❌ npm is not installed. Please install Node.js (includes npm) first:")
+        print("   Visit: https://nodejs.org/")
         sys.exit(1)
 
     # Check if workflow file exists
