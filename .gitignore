@@ -1,8 +1,47 @@
-# Build output
+# ============================================================================
+# Docusaurus Migration - Updated .gitignore
+# ============================================================================
+
+# PRESERVE: Legacy Sphinx versions (frozen documentation)
+# ✅ docs/legacy/v0.2.11/ through docs/legacy/v0.2.22/ - TRACKED
+# ✅ docs/versionsArchived.json - TRACKED
+# ✅ docs/index.html - TRACKED (root redirect)
+# ✅ docs/.nojekyll - TRACKED (GitHub Pages config)
+
+# IGNORE: Generated Docusaurus build output (rebuilt from main repo)
+docs/docs/
+docs/assets/
+docs/js/
+docs/css/
+docs/img/
+docs/fonts/
+docs/*.js
+docs/*.css
+docs/*.map
+docs/manifest.json
+docs/sitemap.xml
+docs/robots.txt
+docs/404.html
+
+# IGNORE: Node.js dependencies and build artifacts
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm
+.yarn-integrity
+package-lock.json
+yarn.lock
+
+# IGNORE: Docusaurus build cache
+.docusaurus/
+build/
+
+# IGNORE: Legacy Sphinx build artifacts (keep content, ignore build files)
 _build/
 .sphinx/
 
-# Python
+# IGNORE: Python artifacts
 __pycache__/
 *.py[cod]
 *$py.class
@@ -12,18 +51,18 @@ env/
 venv/
 .venv/
 
-# IDE
+# IGNORE: IDE files
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
 
-# OS
+# IGNORE: OS files
 .DS_Store
 Thumbs.db
 
-# Logs
+# IGNORE: Logs and temporary files
 *.log
 
 # Docusaurus build artefacts
