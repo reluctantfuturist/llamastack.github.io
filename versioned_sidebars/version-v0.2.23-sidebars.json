@@ -322,7 +322,7 @@
       ]
     }
   ],
-  "apiSidebar": [
+  "stableApiSidebar": [
     {
       "type": "doc",
       "id": "api/llama-stack-specification"
@@ -1366,6 +1366,18 @@
           "className": "api-method post"
         }
       ]
+    }
+  ],
+  "experimentalApiSidebar": [
+    {
+      "type": "doc",
+      "id": "api-experimental/llama-stack-specification-experimental-apis"
+    }
+  ],
+  "deprecatedApiSidebar": [
+    {
+      "type": "doc",
+      "id": "api-deprecated/llama-stack-specification-deprecated-apis"
     }
   ]
 }
