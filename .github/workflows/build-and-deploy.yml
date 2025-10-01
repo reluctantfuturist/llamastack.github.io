@@ -151,14 +151,6 @@ jobs:
               value: '<b>Archived versions</b>',
             },
             ...archivedVersionsDropdownItems,
-            {
-              type: 'html',
-              value: '<hr class="dropdown-separator">',
-            },
-            {
-              to: '/versions',
-              label: 'All versions',
-            },
           ] : [],
         },`;
 
