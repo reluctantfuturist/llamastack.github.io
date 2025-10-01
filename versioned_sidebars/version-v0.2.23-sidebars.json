@@ -1368,6 +1368,16 @@
       ]
     }
   ],
-  "experimentalApiSidebar": [],
-  "deprecatedApiSidebar": []
+  "experimentalApiSidebar": [
+    {
+      "type": "doc",
+      "id": "api-experimental/llama-stack-specification-experimental-apis"
+    }
+  ],
+  "deprecatedApiSidebar": [
+    {
+      "type": "doc",
+      "id": "api-deprecated/llama-stack-specification-deprecated-apis"
+    }
+  ]
 }
