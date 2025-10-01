@@ -148,7 +148,7 @@ jobs:
             {
               type: 'html',
               className: 'dropdown-archived-versions',
-              value: '<b>Archived versions</b>',
+              value: '<b>Previous versions</b>',
             },
             ...archivedVersionsDropdownItems,
           ] : [],
