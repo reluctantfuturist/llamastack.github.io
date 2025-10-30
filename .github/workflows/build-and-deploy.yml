@@ -325,9 +325,6 @@ jobs:
         # Add versioning artifacts
         git add versioned_docs/ versioned_sidebars/ versions.json 2>/dev/null || true
 
-        # Add deployment
-        git add docs/
-
         # Commit if there are changes
         if ! git diff --staged --quiet; then
           git commit -m "Add Docusaurus version ${{ env.VERSION_TAG }}
